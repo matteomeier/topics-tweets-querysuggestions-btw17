@@ -13084,7 +13084,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># necessary imports</span>
@@ -13097,11 +13097,9 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
 <span class="n">stopwords</span> <span class="o">=</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;german&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">spacy</span>
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;de_dep_news_trf&#39;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">regexp_tokenize</span>
-<span class="kn">from</span> <span class="nn">nltk.stem</span> <span class="kn">import</span> <span class="n">WordNetLemmatizer</span>
-<span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">pos_tag</span>
-<span class="n">lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
 <span class="kn">import</span> <span class="nn">gensim</span>
 <span class="kn">from</span> <span class="nn">gensim</span> <span class="kn">import</span> <span class="n">corpora</span><span class="p">,</span> <span class="n">models</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -13224,22 +13222,24 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># preprocessing function</span>
-<span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
-    <span class="c1"># remove mentions, links, non-alphanumeric</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(@[\w]+)|(\w+:\/\/\S+)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
-    <span class="c1"># tokenizer</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">regexp_tokenize</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="s2">&quot;[\w]+&quot;</span><span class="p">))</span>
-    <span class="c1"># stopword removal</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">])</span>
-    <span class="c1"># lemmatizer</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>
-    <span class="c1"># remove short words</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">])</span>
-    <span class="c1"># tbd: only nouns and adjectives</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tqdm</span><span class="o">.</span><span class="n">pandas</span><span class="p">()</span>
+
+<span class="n">accepted_pos</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NOUN&#39;</span><span class="p">,</span> <span class="s1">&#39;PROPN&#39;</span><span class="p">,</span> <span class="s1">&#39;ADJ&#39;</span><span class="p">,</span> <span class="s1">&#39;ADV&#39;</span><span class="p">,</span> <span class="s1">&#39;VERB&#39;</span><span class="p">]</span>
+
+<span class="c1"># nlp pipeline for text</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">token</span><span class="o">.</span><span class="n">lemma_</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">nlp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">pos_</span> <span class="ow">in</span> <span class="n">accepted_pos</span><span class="p">])</span>
+       
+<span class="c1"># stopword removal</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">])</span>
+
+<span class="c1"># remove short words</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">])</span>
+
+<span class="c1"># lower all strings</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -13249,29 +13249,16 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">preprocess</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;original document: &#39;</span><span class="p">)</span>
 <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">):</span>
     <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">tokenized and lemmatized document: &#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">][</span><span class="mi">5</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -13289,11 +13276,11 @@ div#notebook {
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>original document: 
-[&#39;RT&#39;, &#39;:&#39;, &#39;Wir&#39;, &#39;werden&#39;, &#39;die&#39;, &#39;#Ehefueralle&#39;, &#39;in&#39;, &#39;dieser&#39;, &#39;Woche&#39;, &#39;im&#39;, &#39;Bundestag&#39;, &#39;zur&#39;, &#39;Abstimmung&#39;, &#39;stellen.&#39;, &#39;Endlich&#39;, &#39;-&#39;, &#39;denn&#39;, &#39;Liebe&#39;, &#39;kennt&#39;, &#39;kein&#39;, &#39;Ge…&#39;, &#39;&#39;]
+[&#39;RT&#39;, &#39;@Junge_Freiheit:&#39;, &#39;AfD-Vize&#39;, &#39;Beatrix&#39;, &#39;von&#39;, &#39;Storch&#39;, &#39;zur&#39;, &#39;#Ehefueralle:&#39;, &#39;Merkel&#39;, &#39;hat&#39;, &#39;rechten&#39;, &#39;Flügel&#39;, &#39;der&#39;, &#39;CDU&#39;, &#39;fast&#39;, &#39;widerstandslos&#39;, &#39;ausradiert&#39;, &#39;https://…&#39;]
 
 
 tokenized and lemmatized document: 
-[&#39;ehefueralle&#39;, &#39;woche&#39;, &#39;bundestag&#39;, &#39;abstimmung&#39;, &#39;stellen&#39;, &#39;endlich&#39;, &#39;liebe&#39;, &#39;kennt&#39;]
+[&#39;afd-vize&#39;, &#39;beatrix&#39;, &#39;storch&#39;, &#39;ehefueralle&#39;, &#39;merkel&#39;, &#39;recht&#39;, &#39;flügel&#39;, &#39;cdu&#39;, &#39;fast&#39;, &#39;widerstandslos&#39;, &#39;ausradieren&#39;]
 </pre>
 </div>
 </div>
@@ -13304,39 +13291,39 @@ tokenized and lemmatized document:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hashtag_list</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">topic_word_list</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hashtag_list</span><span class="p">))):</span>
     <span class="n">hashtag</span> <span class="o">=</span> <span class="n">hashtag_list</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">hashtag</span><span class="p">)</span>
     
     <span class="c1"># filter df</span>
     <span class="n">temp_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">hashtag</span><span class="p">]</span>
     
     <span class="c1"># get dictionary</span>
     <span class="n">dictionary</span> <span class="o">=</span> <span class="n">gensim</span><span class="o">.</span><span class="n">corpora</span><span class="o">.</span><span class="n">Dictionary</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">])</span>
-    <span class="c1">#dictionary.filter_extremes(no_above=0.5, keep_n=100000)</span>
         
     <span class="c1"># get bag of words corpus</span>
     <span class="n">bow_corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]]</span>
+    
     <span class="c1"># lda_model</span>
     <span class="n">lda_model</span> <span class="o">=</span> <span class="n">gensim</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">LdaMulticore</span><span class="p">(</span><span class="n">bow_corpus</span><span class="p">,</span> <span class="n">num_topics</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">id2word</span><span class="o">=</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">passes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     
-    <span class="c1"># print topics bow</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">lda_model</span><span class="o">.</span><span class="n">print_topics</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Topic BOW: </span><span class="si">{hashtag}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">Words: </span><span class="si">{topic}</span><span class="s1">&#39;</span><span class="p">)</span>    
+    <span class="c1"># get words</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">lda_model</span><span class="o">.</span><span class="n">show_topics</span><span class="p">()</span>
+    <span class="n">topic_words</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="k">2</span> != 0:
+            <span class="n">topic_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
     
-    <span class="c1">#ifidf</span>
-    <span class="n">tfidf</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TfidfModel</span><span class="p">(</span><span class="n">bow_corpus</span><span class="p">)</span>
-    <span class="n">corpus_tfidf</span> <span class="o">=</span> <span class="n">tfidf</span><span class="p">[</span><span class="n">bow_corpus</span><span class="p">]</span>
-    <span class="n">lda_model_tfidf</span> <span class="o">=</span> <span class="n">gensim</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">LdaMulticore</span><span class="p">(</span><span class="n">corpus_tfidf</span><span class="p">,</span> <span class="n">num_topics</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">id2word</span><span class="o">=</span><span class="n">dictionary</span><span class="p">,</span> <span class="n">passes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">workers</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-            
-    <span class="c1"># print topics tfidf</span>
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">lda_model_tfidf</span><span class="o">.</span><span class="n">print_topics</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Topic TF-IDF: </span><span class="si">{hashtag}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">Words: </span><span class="si">{topic}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">topic_word_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">topic_words</span><span class="p">)</span>
+    
+<span class="c1"># save hashtag and words to output df </span>
+<span class="n">output_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;hashtag&#39;</span><span class="p">:</span> <span class="n">hashtag_list</span><span class="p">,</span> <span class="s1">&#39;topic_words&#39;</span><span class="p">:</span> <span class="n">topic_word_list</span><span class="p">})</span>
 </pre></div>
 
     </div>
@@ -13357,13 +13344,13 @@ tokenized and lemmatized document:
 
  
  
-<div id="92a1ce80-2eac-4efb-9436-8689265576a4"></div>
+<div id="f8581ce9-f14d-4752-be79-09730705b25f"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#92a1ce80-2eac-4efb-9436-8689265576a4');
+var element = $('#f8581ce9-f14d-4752-be79-09730705b25f');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "83c8000678074700bde523bf741ba4d8", "version_major": 2, "version_minor": 0}
+{"model_id": "b5512beee8be4ec39da1391c72adb4e1", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -13376,880 +13363,252 @@ var element = $('#92a1ce80-2eac-4efb-9436-8689265576a4');
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>ehefueralle
-Topic BOW: ehefueralle 
-Words: 0.119*&#34;ehefueralle&#34; + 0.013*&#34;cdu&#34; + 0.013*&#34;ehe&#34; + 0.012*&#34;merkel&#34; + 0.011*&#34;homo&#34; + 0.011*&#34;abstimmung&#34; + 0.011*&#34;freitag&#34; + 0.011*&#34;marx&#34; + 0.011*&#34;wegen&#34; + 0.011*&#34;rechtsausschuss&#34;
-Topic TF-IDF: ehefueralle 
-Words: 0.009*&#34;homo&#34; + 0.009*&#34;ehe&#34; + 0.009*&#34;marx&#34; + 0.009*&#34;wegen&#34; + 0.009*&#34;kardinal&#34; + 0.009*&#34;antwortet&#34; + 0.009*&#34;gespannt&#34; + 0.009*&#34;brief&#34; + 0.009*&#34;offener&#34; + 0.009*&#34;rechtsausschuss&#34;
-
 gesundheit
-Topic BOW: gesundheit 
-Words: 0.112*&#34;gesundheit&#34; + 0.045*&#34;pflege&#34; + 0.040*&#34;umkämpft&#34; + 0.040*&#34;neues&#34; + 0.040*&#34;dossier&#34; + 0.040*&#34;prekär&#34; + 0.031*&#34;macht&#34; + 0.031*&#34;wer&#34; + 0.031*&#34;verkehrswende&#34; + 0.031*&#34;seehofer&#34;
-Topic TF-IDF: gesundheit 
-Words: 0.045*&#34;dossier&#34; + 0.045*&#34;prekär&#34; + 0.045*&#34;umkämpft&#34; + 0.045*&#34;neues&#34; + 0.043*&#34;pflege&#34; + 0.032*&#34;menschliche&#34; + 0.032*&#34;verbieten&#34; + 0.032*&#34;bund&#34; + 0.032*&#34;tiermast&#34; + 0.032*&#34;weiterhin&#34;
-
 afd
-Topic BOW: afd 
-Words: 0.127*&#34;afd&#34; + 0.065*&#34;traudichdeutschland&#34; + 0.030*&#34;btw17&#34; + 0.011*&#34;http&#34; + 0.010*&#34;merkel&#34; + 0.009*&#34;deutschland&#34; + 0.008*&#34;land&#34; + 0.008*&#34;eigenen&#34; + 0.008*&#34;wähle&#34; + 0.008*&#34;kanzlerin&#34;
-Topic TF-IDF: afd 
-Words: 0.013*&#34;traudichdeutschland&#34; + 0.012*&#34;btw17&#34; + 0.011*&#34;http&#34; + 0.010*&#34;merkel&#34; + 0.009*&#34;ziel&#34; + 0.009*&#34;schauen&#34; + 0.009*&#34;wirkliches&#34; + 0.009*&#34;verplappert&#34; + 0.009*&#34;eigenen&#34; + 0.008*&#34;leitmedien&#34;
-
 btw17
-Topic BOW: btw17 
-Words: 0.124*&#34;btw17&#34; + 0.044*&#34;afd&#34; + 0.021*&#34;traudichdeutschland&#34; + 0.019*&#34;wählen&#34; + 0.017*&#34;bpt17&#34; + 0.012*&#34;deutschland&#34; + 0.011*&#34;amp&#34; + 0.009*&#34;denkenwirneu&#34; + 0.009*&#34;wahlaufruf&#34; + 0.007*&#34;bringt&#34;
-Topic TF-IDF: btw17 
-Words: 0.012*&#34;wählen&#34; + 0.012*&#34;afd&#34; + 0.011*&#34;traudichdeutschland&#34; + 0.011*&#34;wahlaufruf&#34; + 0.010*&#34;amp&#34; + 0.010*&#34;deutschland&#34; + 0.010*&#34;unserer&#34; + 0.010*&#34;spitzenkandidatin&#34; + 0.010*&#34;bringt&#34; + 0.010*&#34;denken&#34;
-
 btw2017
-Topic BOW: btw2017 
-Words: 0.105*&#34;btw2017&#34; + 0.057*&#34;traudichdeutschland&#34; + 0.034*&#34;afd&#34; + 0.029*&#34;klar&#34; + 0.028*&#34;richtig&#34; + 0.027*&#34;schreiben&#34; + 0.027*&#34;möchte&#34; + 0.027*&#34;kinder&#34; + 0.027*&#34;denken&#34; + 0.015*&#34;btw17&#34;
-Topic TF-IDF: btw2017 
-Words: 0.027*&#34;schreiben&#34; + 0.027*&#34;kinder&#34; + 0.027*&#34;denken&#34; + 0.027*&#34;möchte&#34; + 0.027*&#34;richtig&#34; + 0.026*&#34;klar&#34; + 0.021*&#34;traudichdeutschland&#34; + 0.011*&#34;afd&#34; + 0.009*&#34;btw&#34; + 0.009*&#34;btw17&#34;
-
 bundestagswahl
-Topic BOW: bundestagswahl 
-Words: 0.111*&#34;bundestagswahl&#34; + 0.039*&#34;btw17&#34; + 0.039*&#34;traudichdeutschland&#34; + 0.030*&#34;afd&#34; + 0.026*&#34;tage&#34; + 0.024*&#34;wähle&#34; + 0.024*&#34;bundestagstagswahl2017&#34; + 0.024*&#34;warum&#34; + 0.024*&#34;ichwillmeinlandzurück&#34; + 0.021*&#34;darumgrün&#34;
-Topic TF-IDF: bundestagswahl 
-Words: 0.025*&#34;traudichdeutschland&#34; + 0.024*&#34;ichwillmeinlandzurück&#34; + 0.024*&#34;warum&#34; + 0.024*&#34;bundestagstagswahl2017&#34; + 0.024*&#34;wähle&#34; + 0.023*&#34;afd&#34; + 0.019*&#34;btw17&#34; + 0.018*&#34;tage&#34; + 0.017*&#34;mutzurwahrheit&#34; + 0.017*&#34;holdirdeinlandzurück&#34;
-
 cdu
-Topic BOW: cdu 
-Words: 0.112*&#34;cdu&#34; + 0.025*&#34;traudichdeutschland&#34; + 0.025*&#34;afd&#34; + 0.024*&#34;spd&#34; + 0.022*&#34;merkel&#34; + 0.020*&#34;btw17&#34; + 0.014*&#34;csu&#34; + 0.012*&#34;mieter&#34; + 0.011*&#34;aserbaidschan&#34; + 0.011*&#34;lassen&#34;
-Topic TF-IDF: cdu 
-Words: 0.013*&#34;traudichdeutschland&#34; + 0.013*&#34;spd&#34; + 0.012*&#34;afd&#34; + 0.012*&#34;aufholjagd&#34; + 0.012*&#34;umfragen&#34; + 0.012*&#34;fragen&#34; + 0.011*&#34;aserbaidschan&#34; + 0.011*&#34;bundestagsabgeordnete&#34; + 0.011*&#34;bestechen&#34; + 0.011*&#34;verdacht&#34;
-
 fdp
-Topic BOW: fdp 
-Words: 0.103*&#34;fdp&#34; + 0.032*&#34;afd&#34; + 0.020*&#34;btw17&#34; + 0.014*&#34;bpt17&#34; + 0.012*&#34;lindner&#34; + 0.012*&#34;traudichdeutschland&#34; + 0.012*&#34;wählt&#34; + 0.012*&#34;zeit&#34; + 0.011*&#34;mehr&#34; + 0.011*&#34;besser&#34;
-Topic TF-IDF: fdp 
-Words: 0.013*&#34;afd&#34; + 0.010*&#34;zeit&#34; + 0.009*&#34;wählt&#34; + 0.009*&#34;besser&#34; + 0.009*&#34;rechtspopulismus&#34; + 0.009*&#34;synchron&#34; + 0.009*&#34;opportunismus&#34; + 0.009*&#34;schwimmen&#34; + 0.009*&#34;ehe&#34; + 0.009*&#34;erzählt&#34;
-
 gabriel
-Topic BOW: gabriel 
-Words: 0.087*&#34;gabriel&#34; + 0.050*&#34;stegner&#34; + 0.046*&#34;spd&#34; + 0.041*&#34;wenden&#34; + 0.041*&#34;angewidert&#34; + 0.041*&#34;maas&#34; + 0.041*&#34;bisherige&#34; + 0.041*&#34;gespräche&#34; + 0.041*&#34;infoständen&#34; + 0.041*&#34;wähler&#34;
-Topic TF-IDF: gabriel 
-Words: 0.040*&#34;bisherige&#34; + 0.040*&#34;gespräche&#34; + 0.040*&#34;wenden&#34; + 0.040*&#34;angewidert&#34; + 0.040*&#34;wähler&#34; + 0.040*&#34;maas&#34; + 0.040*&#34;infoständen&#34; + 0.037*&#34;spd&#34; + 0.034*&#34;stegner&#34; + 0.027*&#34;afd&#34;
-
 glyphosat
-Topic BOW: glyphosat 
-Words: 0.090*&#34;glyphosat&#34; + 0.044*&#34;unabhängige&#34; + 0.043*&#34;kommission&#34; + 0.043*&#34;enthält&#34; + 0.043*&#34;amp&#34; + 0.043*&#34;gar&#34; + 0.043*&#34;monsato&#34; + 0.043*&#34;copy&#34; + 0.043*&#34;studie&#34; + 0.043*&#34;paste&#34;
-Topic TF-IDF: glyphosat 
-Words: 0.041*&#34;monsato&#34; + 0.041*&#34;copy&#34; + 0.041*&#34;zula&#34; + 0.041*&#34;paste&#34; + 0.041*&#34;gar&#34; + 0.041*&#34;geht&#34; + 0.041*&#34;kommission&#34; + 0.041*&#34;studie&#34; + 0.041*&#34;enthält&#34; + 0.041*&#34;amp&#34;
-
 grüne
-Topic BOW: grüne 
-Words: 0.085*&#34;grüne&#34; + 0.048*&#34;btw17&#34; + 0.038*&#34;gelb&#34; + 0.038*&#34;partei&#34; + 0.038*&#34;amp&#34; + 0.037*&#34;anti&#34; + 0.037*&#34;schwarz&#34; + 0.037*&#34;diesel&#34; + 0.037*&#34;regieren&#34; + 0.037*&#34;lobby&#34;
-Topic TF-IDF: grüne 
-Words: 0.032*&#34;http&#34; + 0.032*&#34;unglaubwürdig&#34; + 0.032*&#34;schwarz&#34; + 0.032*&#34;anti&#34; + 0.032*&#34;kretschmann&#34; + 0.032*&#34;lobby&#34; + 0.032*&#34;diesel&#34; + 0.032*&#34;regieren&#34; + 0.031*&#34;amp&#34; + 0.031*&#34;gelb&#34;
-
 grünen
-Topic BOW: grünen 
-Words: 0.101*&#34;grünen&#34; + 0.068*&#34;angie&#34; + 0.037*&#34;btw17&#34; + 0.034*&#34;lustauflinks&#34; + 0.034*&#34;lieben&#34; + 0.034*&#34;liebt&#34; + 0.034*&#34;grünistdasneueschwarz&#34; + 0.024*&#34;afd&#34; + 0.023*&#34;beschäftigen&#34; + 0.023*&#34;traudichdeutschland&#34;
-Topic TF-IDF: grünen 
-Words: 0.054*&#34;angie&#34; + 0.028*&#34;grünistdasneueschwarz&#34; + 0.028*&#34;lustauflinks&#34; + 0.028*&#34;lieben&#34; + 0.028*&#34;liebt&#34; + 0.027*&#34;btw17&#34; + 0.021*&#34;phase&#34; + 0.021*&#34;heißen&#34; + 0.021*&#34;wahlkampfes&#34; + 0.021*&#34;durchschaubares&#34;
-
 islam
-Topic BOW: islam 
-Words: 0.086*&#34;islam&#34; + 0.050*&#34;afd&#34; + 0.045*&#34;btw17&#34; + 0.039*&#34;traudichdeutschland&#34; + 0.033*&#34;statt&#34; + 0.026*&#34;journalismus&#34; + 0.026*&#34;sharia&#34; + 0.026*&#34;beide&#34; + 0.026*&#34;islamisierung&#34; + 0.026*&#34;stimmen&#34;
-Topic TF-IDF: islam 
-Words: 0.027*&#34;journalismus&#34; + 0.027*&#34;stimmen&#34; + 0.027*&#34;beide&#34; + 0.027*&#34;sharia&#34; + 0.027*&#34;findet&#34; + 0.027*&#34;islamisierung&#34; + 0.024*&#34;statt&#34; + 0.023*&#34;traudichdeutschland&#34; + 0.020*&#34;btw17&#34; + 0.018*&#34;afd&#34;
-
 kinderarmut
-Topic BOW: kinderarmut 
-Words: 0.099*&#34;kinderarmut&#34; + 0.084*&#34;fairmieten&#34; + 0.075*&#34;ungerechtigkeit&#34; + 0.072*&#34;cdu&#34; + 0.072*&#34;größte&#34; + 0.072*&#34;großstädte&#34; + 0.072*&#34;brauchen&#34; + 0.072*&#34;nix&#34; + 0.072*&#34;deutschland&#34; + 0.015*&#34;wählen&#34;
-Topic TF-IDF: kinderarmut 
-Words: 0.070*&#34;großstädte&#34; + 0.070*&#34;brauchen&#34; + 0.070*&#34;deutschland&#34; + 0.070*&#34;größte&#34; + 0.070*&#34;nix&#34; + 0.070*&#34;cdu&#34; + 0.062*&#34;ungerechtigkeit&#34; + 0.040*&#34;fairmieten&#34; + 0.020*&#34;kämpferinnen&#34; + 0.020*&#34;verkehrswende&#34;
-
 mutludirekt
-Topic BOW: mutludirekt 
-Words: 0.103*&#34;mutludirekt&#34; + 0.059*&#34;btw17&#34; + 0.047*&#34;mutlufürmitte&#34; + 0.028*&#34;abgestimmt&#34; + 0.028*&#34;innen&#34; + 0.025*&#34;angesagt&#34; + 0.025*&#34;tage&#34; + 0.025*&#34;bundestagswahl&#34; + 0.025*&#34;september&#34; + 0.025*&#34;darumgrün&#34;
-Topic TF-IDF: mutludirekt 
-Words: 0.027*&#34;tage&#34; + 0.027*&#34;darumgrün&#34; + 0.027*&#34;endspurt&#34; + 0.027*&#34;september&#34; + 0.027*&#34;angesagt&#34; + 0.027*&#34;bundestagswahl&#34; + 0.025*&#34;innen&#34; + 0.024*&#34;btw17&#34; + 0.024*&#34;abgestimmt&#34; + 0.024*&#34;mutlufürmitte&#34;
-
 rente
-Topic BOW: rente 
-Words: 0.097*&#34;rente&#34; + 0.038*&#34;politik&#34; + 0.036*&#34;große&#34; + 0.036*&#34;reichen&#34; + 0.036*&#34;ganz&#34; + 0.036*&#34;darauf&#34; + 0.036*&#34;kommt&#34; + 0.036*&#34;gemacht&#34; + 0.036*&#34;rentench&#34; + 0.036*&#34;leben&#34;
-Topic TF-IDF: rente 
-Words: 0.035*&#34;große&#34; + 0.035*&#34;kommt&#34; + 0.035*&#34;reichen&#34; + 0.035*&#34;ganz&#34; + 0.035*&#34;leben&#34; + 0.035*&#34;darauf&#34; + 0.035*&#34;rentench&#34; + 0.035*&#34;gemacht&#34; + 0.033*&#34;politik&#34; + 0.021*&#34;einzahlen&#34;
-
 spd
-Topic BOW: spd 
-Words: 0.093*&#34;spd&#34; + 0.031*&#34;btw17&#34; + 0.020*&#34;http&#34; + 0.019*&#34;linke&#34; + 0.018*&#34;union&#34; + 0.017*&#34;cdu&#34; + 0.017*&#34;amp&#34; + 0.017*&#34;afd&#34; + 0.016*&#34;mehr&#34; + 0.015*&#34;ard&#34;
-Topic TF-IDF: spd 
-Words: 0.012*&#34;http&#34; + 0.012*&#34;union&#34; + 0.011*&#34;btw17&#34; + 0.011*&#34;zdf&#34; + 0.011*&#34;linke&#34; + 0.011*&#34;ard&#34; + 0.011*&#34;mehr&#34; + 0.011*&#34;sendezeit&#34; + 0.011*&#34;merkelschulzfestspiele&#34; + 0.011*&#34;wahlsendungen&#34;
-
 afdwählen
-Topic BOW: afdwählen 
-Words: 0.112*&#34;afdwählen&#34; + 0.076*&#34;teilen&#34; + 0.068*&#34;traudichdeutschland&#34; + 0.032*&#34;afd&#34; + 0.028*&#34;deshalb&#34; + 0.028*&#34;holdirdeinlandzurück&#34; + 0.028*&#34;morgen&#34; + 0.028*&#34;islamisierung&#34; + 0.028*&#34;weit&#34; + 0.024*&#34;zukunft&#34;
-Topic TF-IDF: afdwählen 
-Words: 0.051*&#34;teilen&#34; + 0.028*&#34;holdirdeinlandzurück&#34; + 0.026*&#34;öffentlich&#34; + 0.026*&#34;kuscheln&#34; + 0.026*&#34;pärchen&#34; + 0.026*&#34;zukunft&#34; + 0.026*&#34;amp&#34; + 0.026*&#34;unbeschwert&#34; + 0.024*&#34;afd&#34; + 0.023*&#34;traudichdeutschland&#34;
-
 btw
-Topic BOW: btw 
-Words: 0.102*&#34;btw&#34; + 0.055*&#34;btw17&#34; + 0.044*&#34;btw2017&#34; + 0.035*&#34;traudichdeutschland&#34; + 0.033*&#34;afd&#34; + 0.022*&#34;cdu&#34; + 0.019*&#34;merkel&#34; + 0.014*&#34;grueneversenken&#34; + 0.014*&#34;eidbrecherin&#34; + 0.013*&#34;deutschland&#34;
-Topic TF-IDF: btw 
-Words: 0.020*&#34;btw2017&#34; + 0.019*&#34;traudichdeutschland&#34; + 0.018*&#34;eidbrecherin&#34; + 0.018*&#34;merkel&#34; + 0.017*&#34;cdu&#34; + 0.017*&#34;afd&#34; + 0.015*&#34;btw17&#34; + 0.014*&#34;deutschland&#34; + 0.013*&#34;wehrt&#34; + 0.013*&#34;merkelmussweg&#34;
-
 dresden
-Topic BOW: dresden 
-Words: 0.118*&#34;dresden&#34; + 0.084*&#34;vorfällen&#34; + 0.084*&#34;leider&#34; + 0.084*&#34;traudichdeutschland&#34; + 0.084*&#34;samstag&#34; + 0.084*&#34;gewalttätigen&#34; + 0.084*&#34;mehreren&#34; + 0.084*&#34;afd&#34; + 0.024*&#34;menschen&#34; + 0.014*&#34;mitsicherheitgutankommen&#34;
-Topic TF-IDF: dresden 
-Words: 0.091*&#34;traudichdeutschland&#34; + 0.091*&#34;afd&#34; + 0.091*&#34;leider&#34; + 0.091*&#34;mehreren&#34; + 0.091*&#34;vorfällen&#34; + 0.091*&#34;samstag&#34; + 0.091*&#34;gewalttätigen&#34; + 0.020*&#34;menschen&#34; + 0.015*&#34;forderungen&#34; + 0.015*&#34;u18&#34;
-
 grueneversenken
-Topic BOW: grueneversenken 
-Words: 0.112*&#34;grueneversenken&#34; + 0.047*&#34;traudichdeutschland&#34; + 0.036*&#34;btw17&#34; + 0.023*&#34;grüne&#34; + 0.023*&#34;afd&#34; + 0.015*&#34;afdwaehlen&#34; + 0.014*&#34;familiennachzug&#34; + 0.013*&#34;verschleierungsverbot&#34; + 0.013*&#34;spitzenkandidatin&#34; + 0.010*&#34;btw&#34;
-Topic TF-IDF: grueneversenken 
-Words: 0.023*&#34;traudichdeutschland&#34; + 0.016*&#34;grüne&#34; + 0.016*&#34;verschleierungsverbot&#34; + 0.016*&#34;spitzenkandidatin&#34; + 0.015*&#34;familiennachzug&#34; + 0.014*&#34;btw17&#34; + 0.013*&#34;afd&#34; + 0.013*&#34;afdwaehlen&#34; + 0.008*&#34;btw2017&#34; + 0.008*&#34;btw&#34;
-
 pflege
-Topic BOW: pflege 
-Words: 0.096*&#34;pflege&#34; + 0.035*&#34;mehr&#34; + 0.028*&#34;neustart&#34; + 0.020*&#34;000&#34; + 0.018*&#34;amp&#34; + 0.016*&#34;wahlarena&#34; + 0.016*&#34;merkel&#34; + 0.016*&#34;job&#34; + 0.016*&#34;neue&#34; + 0.016*&#34;deshalb&#34;
-Topic TF-IDF: pflege 
-Words: 0.019*&#34;neustart&#34; + 0.018*&#34;mehr&#34; + 0.017*&#34;job&#34; + 0.017*&#34;härtesten&#34; + 0.017*&#34;gehalt&#34; + 0.017*&#34;deshalb&#34; + 0.017*&#34;neue&#34; + 0.017*&#34;krankenhäusern&#34; + 0.017*&#34;stellen&#34; + 0.016*&#34;000&#34;
-
 stegner
-Topic BOW: stegner 
-Words: 0.103*&#34;stegner&#34; + 0.045*&#34;maas&#34; + 0.032*&#34;spd&#34; + 0.032*&#34;gabriel&#34; + 0.032*&#34;schulz&#34; + 0.026*&#34;wähler&#34; + 0.026*&#34;privat&#34; + 0.026*&#34;wenden&#34; + 0.026*&#34;infoständen&#34; + 0.026*&#34;bisherige&#34;
-Topic TF-IDF: stegner 
-Words: 0.025*&#34;mademyday&#34; + 0.025*&#34;krankenversichert&#34; + 0.025*&#34;privat&#34; + 0.025*&#34;ralf&#34; + 0.024*&#34;bisherige&#34; + 0.024*&#34;wenden&#34; + 0.024*&#34;wähler&#34; + 0.024*&#34;gespräche&#34; + 0.024*&#34;infoständen&#34; + 0.024*&#34;angewidert&#34;
-
 freiheit
-Topic BOW: freiheit 
-Words: 0.115*&#34;freiheit&#34; + 0.097*&#34;demokratie&#34; + 0.093*&#34;umwelt&#34; + 0.052*&#34;traudichdeutschland&#34; + 0.048*&#34;wähler&#34; + 0.048*&#34;geht&#34; + 0.048*&#34;grünen&#34; + 0.048*&#34;entzaubern&#34; + 0.048*&#34;btw17&#34; + 0.046*&#34;afd&#34;
-Topic TF-IDF: freiheit 
-Words: 0.062*&#34;wer&#34; + 0.062*&#34;hinterherrennen&#34; + 0.062*&#34;darumgrün&#34; + 0.062*&#34;verteidigt&#34; + 0.061*&#34;grünen&#34; + 0.061*&#34;btw17&#34; + 0.061*&#34;geht&#34; + 0.061*&#34;entzaubern&#34; + 0.061*&#34;wähler&#34; + 0.061*&#34;afd&#34;
-
 mahe
-Topic BOW: mahe 
-Words: 0.092*&#34;mahe&#34; + 0.049*&#34;linke&#34; + 0.030*&#34;platz&#34; + 0.026*&#34;mehr&#34; + 0.023*&#34;aufruf&#34; + 0.023*&#34;direkt&#34; + 0.023*&#34;thema&#34; + 0.023*&#34;politik&#34; + 0.023*&#34;berlin&#34; + 0.023*&#34;rente&#34;
-Topic TF-IDF: mahe 
-Words: 0.030*&#34;linke&#34; + 0.020*&#34;platz&#34; + 0.019*&#34;weigel&#34; + 0.019*&#34;gerade&#34; + 0.019*&#34;möchte&#34; + 0.019*&#34;informieren&#34; + 0.019*&#34;wahlkampfstand&#34; + 0.019*&#34;helene&#34; + 0.019*&#34;direkt&#34; + 0.019*&#34;rente&#34;
-
 traudichdeutschland
-Topic BOW: traudichdeutschland 
-Words: 0.118*&#34;traudichdeutschland&#34; + 0.106*&#34;afd&#34; + 0.018*&#34;land&#34; + 0.018*&#34;wähle&#34; + 0.017*&#34;http&#34; + 0.017*&#34;morgen&#34; + 0.017*&#34;guten&#34; + 0.016*&#34;btw17&#34; + 0.016*&#34;prozent&#34; + 0.016*&#34;berufsabschluss&#34;
-Topic TF-IDF: traudichdeutschland 
-Words: 0.017*&#34;http&#34; + 0.016*&#34;merkel&#34; + 0.015*&#34;schauen&#34; + 0.015*&#34;verplappert&#34; + 0.015*&#34;ziel&#34; + 0.015*&#34;wirkliches&#34; + 0.013*&#34;leitmedien&#34; + 0.013*&#34;fakenews&#34; + 0.013*&#34;oktoberfest&#34; + 0.013*&#34;widerlegen&#34;
-
 darumgrün
-Topic BOW: darumgrün 
-Words: 0.142*&#34;darumgrün&#34; + 0.022*&#34;umwelt&#34; + 0.018*&#34;wahlparteitag&#34; + 0.017*&#34;grün&#34; + 0.015*&#34;nie&#34; + 0.014*&#34;live&#34; + 0.013*&#34;wer&#34; + 0.013*&#34;freiheit&#34; + 0.013*&#34;braucht&#34; + 0.013*&#34;mehr&#34;
-Topic TF-IDF: darumgrün 
-Words: 0.021*&#34;umwelt&#34; + 0.020*&#34;grün&#34; + 0.015*&#34;gerechtigkeit&#34; + 0.015*&#34;wahlparteitag&#34; + 0.014*&#34;live&#34; + 0.013*&#34;hashtag&#34; + 0.013*&#34;natürlich&#34; + 0.013*&#34;nachh&#34; + 0.013*&#34;uhr&#34; + 0.012*&#34;nie&#34;
-
 denkenwirneu
-Topic BOW: denkenwirneu 
-Words: 0.111*&#34;denkenwirneu&#34; + 0.101*&#34;btw17&#34; + 0.067*&#34;bpt17&#34; + 0.029*&#34;fdp&#34; + 0.021*&#34;wählen&#34; + 0.021*&#34;gehen&#34; + 0.020*&#34;finde&#34; + 0.020*&#34;alexa&#34; + 0.020*&#34;gern&#34; + 0.020*&#34;clundalexa&#34;
-Topic TF-IDF: denkenwirneu 
-Words: 0.021*&#34;wählen&#34; + 0.021*&#34;gehen&#34; + 0.021*&#34;alexa&#34; + 0.021*&#34;meinst&#34; + 0.021*&#34;heraus&#34; + 0.021*&#34;folge&#34; + 0.021*&#34;finde&#34; + 0.021*&#34;gern&#34; + 0.021*&#34;clundalexa&#34; + 0.020*&#34;fdp&#34;
-
 darumgruen
-Topic BOW: darumgruen 
-Words: 0.115*&#34;darumgruen&#34; + 0.037*&#34;grün&#34; + 0.030*&#34;wahlparteitag&#34; + 0.028*&#34;umwelt&#34; + 0.027*&#34;gerechtigkeit&#34; + 0.025*&#34;gemacht&#34; + 0.025*&#34;nochmal&#34; + 0.025*&#34;klar&#34; + 0.018*&#34;katrin&#34; + 0.014*&#34;wer&#34;
-Topic TF-IDF: darumgruen 
-Words: 0.026*&#34;gerechtigkeit&#34; + 0.026*&#34;grün&#34; + 0.026*&#34;umwelt&#34; + 0.025*&#34;gemacht&#34; + 0.025*&#34;nochmal&#34; + 0.025*&#34;klar&#34; + 0.024*&#34;wahlparteitag&#34; + 0.013*&#34;katrin&#34; + 0.011*&#34;wählt&#34; + 0.011*&#34;wer&#34;
-
 dielinke
-Topic BOW: dielinke 
-Words: 0.088*&#34;dielinke&#34; + 0.023*&#34;btw17&#34; + 0.014*&#34;spd&#34; + 0.012*&#34;wk72&#34; + 0.012*&#34;hallesaale&#34; + 0.012*&#34;linkswassonst&#34; + 0.012*&#34;ansprechbar&#34; + 0.012*&#34;dietmarbartsch&#34; + 0.012*&#34;instavideo&#34; + 0.012*&#34;watch&#34;
-Topic TF-IDF: dielinke 
-Words: 0.013*&#34;btw17&#34; + 0.011*&#34;frühinfostand&#34; + 0.011*&#34;teamliebich&#34; + 0.010*&#34;hallesaale&#34; + 0.010*&#34;dietmarbartsch&#34; + 0.010*&#34;wählbar&#34; + 0.010*&#34;watch&#34; + 0.010*&#34;wk72&#34; + 0.010*&#34;instavideo&#34; + 0.010*&#34;ansprechbar&#34;
-
 fakenews
-Topic BOW: fakenews 
-Words: 0.123*&#34;fakenews&#34; + 0.120*&#34;oktoberfest&#34; + 0.109*&#34;traudichdeutschland&#34; + 0.108*&#34;schon&#34; + 0.108*&#34;leitmedien&#34; + 0.108*&#34;widerlegen&#34; + 0.108*&#34;eigenen&#34; + 0.108*&#34;afd&#34; + 0.012*&#34;beim&#34; + 0.012*&#34;jemand&#34;
-Topic TF-IDF: fakenews 
-Words: 0.141*&#34;afd&#34; + 0.138*&#34;widerlegen&#34; + 0.138*&#34;leitmedien&#34; + 0.138*&#34;eigenen&#34; + 0.138*&#34;schon&#34; + 0.129*&#34;traudichdeutschland&#34; + 0.028*&#34;oktoberfest&#34; + 0.015*&#34;verbreitet&#34; + 0.015*&#34;besucherzahlen&#34; + 0.015*&#34;jemand&#34;
-
 inklusion
-Topic BOW: inklusion 
-Words: 0.075*&#34;inklusion&#34; + 0.037*&#34;themen&#34; + 0.037*&#34;btw17&#34; + 0.037*&#34;gleichstellung&#34; + 0.037*&#34;migration&#34; + 0.037*&#34;pflege&#34; + 0.037*&#34;queer&#34; + 0.037*&#34;spd&#34; + 0.037*&#34;aktueller&#34; + 0.037*&#34;gesundheit&#34;
-Topic TF-IDF: inklusion 
-Words: 0.033*&#34;aktueller&#34; + 0.033*&#34;newsletter&#34; + 0.033*&#34;spd&#34; + 0.033*&#34;migration&#34; + 0.033*&#34;btw17&#34; + 0.033*&#34;queer&#34; + 0.033*&#34;pflege&#34; + 0.033*&#34;themen&#34; + 0.033*&#34;gleichstellung&#34; + 0.033*&#34;gesundheit&#34;
-
 linke
-Topic BOW: linke 
-Words: 0.103*&#34;linke&#34; + 0.086*&#34;btw17&#34; + 0.086*&#34;wählen&#34; + 0.083*&#34;bleiben&#34; + 0.083*&#34;hause&#34; + 0.083*&#34;meint&#34; + 0.083*&#34;geht&#34; + 0.083*&#34;altmaier&#34; + 0.083*&#34;wer&#34; + 0.006*&#34;spd&#34;
-Topic TF-IDF: linke 
-Words: 0.084*&#34;meint&#34; + 0.084*&#34;geht&#34; + 0.084*&#34;hause&#34; + 0.084*&#34;bleiben&#34; + 0.084*&#34;altmaier&#34; + 0.084*&#34;wer&#34; + 0.069*&#34;wählen&#34; + 0.067*&#34;btw17&#34; + 0.005*&#34;spd&#34; + 0.005*&#34;afd&#34;
-
 merkelmussweg
-Topic BOW: merkelmussweg 
-Words: 0.108*&#34;merkelmussweg&#34; + 0.065*&#34;afd&#34; + 0.057*&#34;btw17&#34; + 0.051*&#34;deutschland&#34; + 0.045*&#34;wer&#34; + 0.044*&#34;wählt&#34; + 0.044*&#34;immer&#34; + 0.044*&#34;kanzlerin&#34; + 0.043*&#34;schlimmer&#34; + 0.043*&#34;schande&#34;
-Topic TF-IDF: merkelmussweg 
-Words: 0.042*&#34;schlimmer&#34; + 0.042*&#34;schande&#34; + 0.041*&#34;kanzlerin&#34; + 0.041*&#34;wählt&#34; + 0.041*&#34;immer&#34; + 0.040*&#34;wer&#34; + 0.038*&#34;deutschland&#34; + 0.032*&#34;btw17&#34; + 0.027*&#34;afd&#34; + 0.019*&#34;traudichdeutschland&#34;
-
 noafd
-Topic BOW: noafd 
-Words: 0.095*&#34;noafd&#34; + 0.065*&#34;afd&#34; + 0.055*&#34;deutschland&#34; + 0.053*&#34;umfragewerte&#34; + 0.053*&#34;land&#34; + 0.053*&#34;los&#34; + 0.053*&#34;steigen&#34; + 0.053*&#34;tabubruch&#34; + 0.053*&#34;2017&#34; + 0.007*&#34;btw17&#34;
-Topic TF-IDF: noafd 
-Words: 0.044*&#34;2017&#34; + 0.044*&#34;tabubruch&#34; + 0.044*&#34;steigen&#34; + 0.044*&#34;land&#34; + 0.044*&#34;los&#34; + 0.044*&#34;umfragewerte&#34; + 0.041*&#34;deutschland&#34; + 0.030*&#34;afd&#34; + 0.006*&#34;btw17&#34; + 0.006*&#34;deutschen&#34;
-
 tegel
-Topic BOW: tegel 
-Words: 0.087*&#34;tegel&#34; + 0.051*&#34;weniger&#34; + 0.036*&#34;nächsten&#34; + 0.036*&#34;beginnt&#34; + 0.036*&#34;fdp&#34; + 0.036*&#34;befürworten&#34; + 0.036*&#34;milliardengrabs&#34; + 0.036*&#34;lindner&#34; + 0.036*&#34;rede&#34; + 0.026*&#34;txl&#34;
-Topic TF-IDF: tegel 
-Words: 0.036*&#34;befürworten&#34; + 0.036*&#34;nächsten&#34; + 0.036*&#34;milliardengrabs&#34; + 0.036*&#34;lindner&#34; + 0.036*&#34;beginnt&#34; + 0.036*&#34;rede&#34; + 0.036*&#34;fdp&#34; + 0.035*&#34;weniger&#34; + 0.023*&#34;txl&#34; + 0.023*&#34;interaktive&#34;
-
 tegelschliessen
-Topic BOW: tegelschliessen 
-Words: 0.111*&#34;tegelschliessen&#34; + 0.066*&#34;000&#34; + 0.048*&#34;ruhe&#34; + 0.039*&#34;demo&#34; + 0.027*&#34;genießen&#34; + 0.024*&#34;wohnungen&#34; + 0.024*&#34;beenden&#34; + 0.024*&#34;arbeitsplätze&#34; + 0.024*&#34;berliner&#34; + 0.024*&#34;300&#34;
-Topic TF-IDF: tegelschliessen 
-Words: 0.042*&#34;000&#34; + 0.031*&#34;genießen&#34; + 0.031*&#34;stimmen&#34; + 0.031*&#34;beteiligung&#34; + 0.031*&#34;nein&#34; + 0.027*&#34;ruhe&#34; + 0.023*&#34;niederschönhausen&#34; + 0.023*&#34;fordern&#34; + 0.023*&#34;berg&#34; + 0.023*&#34;prenzlauer&#34;
-
 gruenen
-Topic BOW: gruenen 
-Words: 0.089*&#34;gruenen&#34; + 0.018*&#34;lumpenintelligentia&#34; + 0.018*&#34;egal&#34; + 0.018*&#34;fdp&#34; + 0.018*&#34;afdwaehlen&#34; + 0.018*&#34;wählen&#34; + 0.018*&#34;hässlichen&#34; + 0.018*&#34;cdu&#34; + 0.018*&#34;spd&#34; + 0.018*&#34;koalition&#34;
-Topic TF-IDF: gruenen 
-Words: 0.019*&#34;hässlichen&#34; + 0.019*&#34;egal&#34; + 0.019*&#34;wählen&#34; + 0.016*&#34;mal&#34; + 0.016*&#34;lumpenintelligentia&#34; + 0.016*&#34;afd&#34; + 0.015*&#34;afdwaehlen&#34; + 0.015*&#34;koalition&#34; + 0.015*&#34;fdp&#34; + 0.015*&#34;linke&#34;
-
 grün
-Topic BOW: grün 
-Words: 0.095*&#34;grün&#34; + 0.043*&#34;grundeinkommen&#34; + 0.043*&#34;zweitstimme&#34; + 0.043*&#34;wahlaufruf&#34; + 0.026*&#34;bitte&#34; + 0.026*&#34;grüner&#34; + 0.026*&#34;unterstützung&#34; + 0.026*&#34;unterstützen&#34; + 0.022*&#34;kandidierenden&#34; + 0.022*&#34;http&#34;
-Topic TF-IDF: grün 
-Words: 0.028*&#34;zweitstimme&#34; + 0.028*&#34;wahlaufruf&#34; + 0.028*&#34;grundeinkommen&#34; + 0.028*&#34;grüner&#34; + 0.028*&#34;unterstützen&#34; + 0.028*&#34;bitte&#34; + 0.028*&#34;unterstützung&#34; + 0.024*&#34;grünen&#34; + 0.024*&#34;http&#34; + 0.024*&#34;kandidierenden&#34;
-
 sed
-Topic BOW: sed 
-Words: 0.090*&#34;sed&#34; + 0.034*&#34;klare&#34; + 0.034*&#34;desaster&#34; + 0.034*&#34;wesentlicher&#34; + 0.034*&#34;versäumte&#34; + 0.034*&#34;nachahmer&#34; + 0.034*&#34;grund&#34; + 0.034*&#34;fürs&#34; + 0.034*&#34;btw2017&#34; + 0.034*&#34;absage&#34;
-Topic TF-IDF: sed 
-Words: 0.036*&#34;danke&#34; + 0.036*&#34;gespräch&#34; + 0.036*&#34;mauerschützenpartei&#34; + 0.036*&#34;fürs&#34; + 0.036*&#34;propagandablatt&#34; + 0.032*&#34;versäumte&#34; + 0.032*&#34;btw2017&#34; + 0.032*&#34;desaster&#34; + 0.032*&#34;nachahmer&#34; + 0.032*&#34;klare&#34;
-
 gez
-Topic BOW: gez 
-Words: 0.196*&#34;gez&#34; + 0.128*&#34;schande&#34; + 0.042*&#34;afd&#34; + 0.030*&#34;zdf&#34; + 0.030*&#34;landes&#34; + 0.030*&#34;gewählt&#34; + 0.030*&#34;moderatoren&#34; + 0.030*&#34;bürgern&#34; + 0.030*&#34;parteiischen&#34; + 0.030*&#34;meinungsmache&#34;
-Topic TF-IDF: gez 
-Words: 0.257*&#34;schande&#34; + 0.027*&#34;afd&#34; + 0.026*&#34;bürgern&#34; + 0.026*&#34;meinungsmache&#34; + 0.026*&#34;landes&#34; + 0.026*&#34;zdf&#34; + 0.026*&#34;moderatoren&#34; + 0.026*&#34;gewählt&#34; + 0.026*&#34;tra&#34; + 0.026*&#34;parteiischen&#34;
-
 fedidwgugl
-Topic BOW: fedidwgugl 
-Words: 0.119*&#34;fedidwgugl&#34; + 0.078*&#34;traudichdeutschland&#34; + 0.051*&#34;afd&#34; + 0.046*&#34;merkel&#34; + 0.044*&#34;deutschland&#34; + 0.037*&#34;lebenswert&#34; + 0.037*&#34;bleiben&#34; + 0.027*&#34;btw17&#34; + 0.018*&#34;esistzeit&#34; + 0.012*&#34;btw2017&#34;
-Topic TF-IDF: fedidwgugl 
-Words: 0.044*&#34;lebenswert&#34; + 0.044*&#34;bleiben&#34; + 0.040*&#34;afd&#34; + 0.040*&#34;deutschland&#34; + 0.038*&#34;merkel&#34; + 0.031*&#34;traudichdeutschland&#34; + 0.018*&#34;btw17&#34; + 0.013*&#34;esistzeit&#34; + 0.009*&#34;btw2017&#34; + 0.008*&#34;merkelmussweg&#34;
-
 deutschland
-Topic BOW: deutschland 
-Words: 0.102*&#34;deutschland&#34; + 0.066*&#34;beim&#34; + 0.066*&#34;witznummer&#34; + 0.066*&#34;kriminelle&#34; + 0.066*&#34;gez&#34; + 0.066*&#34;vorsicht&#34; + 0.066*&#34;verweigern&#34; + 0.066*&#34;illegale&#34; + 0.066*&#34;falschparken&#34; + 0.018*&#34;blau&#34;
-Topic TF-IDF: deutschland 
-Words: 0.059*&#34;vorsicht&#34; + 0.059*&#34;illegale&#34; + 0.059*&#34;falschparken&#34; + 0.059*&#34;verweigern&#34; + 0.059*&#34;kriminelle&#34; + 0.059*&#34;beim&#34; + 0.059*&#34;gez&#34; + 0.059*&#34;witznummer&#34; + 0.023*&#34;stimme&#34; + 0.023*&#34;eintragen&#34;
-
 gruene
-Topic BOW: gruene 
-Words: 0.086*&#34;gruene&#34; + 0.030*&#34;spd&#34; + 0.020*&#34;merkel&#34; + 0.019*&#34;traudichdeutschland&#34; + 0.016*&#34;cdu&#34; + 0.016*&#34;grueneversenken&#34; + 0.016*&#34;fdp&#34; + 0.014*&#34;afd&#34; + 0.014*&#34;btw2017&#34; + 0.012*&#34;btw17&#34;
-Topic TF-IDF: gruene 
-Words: 0.011*&#34;traudichdeutschland&#34; + 0.011*&#34;spd&#34; + 0.011*&#34;merkel&#34; + 0.010*&#34;grueneversenken&#34; + 0.010*&#34;btw2017&#34; + 0.010*&#34;fdp&#34; + 0.010*&#34;fedidwgugl&#34; + 0.009*&#34;cdu&#34; + 0.009*&#34;islamisierung&#34; + 0.009*&#34;amp&#34;
-
 hütter
-Topic BOW: hütter 
-Words: 0.117*&#34;afd&#34; + 0.110*&#34;hütter&#34; + 0.104*&#34;traudichdeutschland&#34; + 0.026*&#34;fragerunde&#34; + 0.026*&#34;bundeskanzlerin&#34; + 0.026*&#34;regierungsmedien&#34; + 0.026*&#34;inszinieren&#34; + 0.023*&#34;städten&#34; + 0.023*&#34;leipzig&#34; + 0.023*&#34;http&#34;
-Topic TF-IDF: hütter 
-Words: 0.038*&#34;regierungsmedien&#34; + 0.038*&#34;bundeskanzlerin&#34; + 0.038*&#34;fragerunde&#34; + 0.038*&#34;inszinieren&#34; + 0.027*&#34;zielstrebig&#34; + 0.027*&#34;leipzig&#34; + 0.027*&#34;städten&#34; + 0.027*&#34;gefährlichsten&#34; + 0.027*&#34;entwickelt&#34; + 0.027*&#34;http&#34;
-
 integration
-Topic BOW: integration 
-Words: 0.108*&#34;andocken&#34; + 0.108*&#34;richtig&#34; + 0.108*&#34;amp&#34; + 0.108*&#34;sozialministerium&#34; + 0.108*&#34;integration&#34; + 0.108*&#34;merkel&#34; + 0.108*&#34;nix&#34; + 0.108*&#34;seehofer&#34; + 0.100*&#34;duve&#34; + 0.017*&#34;btw17&#34;
-Topic TF-IDF: integration 
-Words: 0.513*&#34;duve&#34; + 0.073*&#34;duverdienstmehr&#34; + 0.073*&#34;btw17&#34; + 0.043*&#34;amp&#34; + 0.043*&#34;andocken&#34; + 0.043*&#34;integration&#34; + 0.043*&#34;merkel&#34; + 0.043*&#34;nix&#34; + 0.043*&#34;richtig&#34; + 0.043*&#34;seehofer&#34;
-
 seehofer
-Topic BOW: seehofer 
-Words: 0.112*&#34;seehofer&#34; + 0.104*&#34;integration&#34; + 0.104*&#34;merkel&#34; + 0.104*&#34;richtig&#34; + 0.104*&#34;sozialministerium&#34; + 0.104*&#34;amp&#34; + 0.104*&#34;andocken&#34; + 0.104*&#34;nix&#34; + 0.096*&#34;duve&#34; + 0.016*&#34;bosse&#34;
-Topic TF-IDF: seehofer 
-Words: 0.171*&#34;duve&#34; + 0.094*&#34;andocken&#34; + 0.094*&#34;amp&#34; + 0.094*&#34;sozialministerium&#34; + 0.094*&#34;richtig&#34; + 0.094*&#34;nix&#34; + 0.094*&#34;merkel&#34; + 0.094*&#34;integration&#34; + 0.037*&#34;bosse&#34; + 0.037*&#34;lindner&#34;
-
 nonazis
-Topic BOW: nonazis 
-Words: 0.088*&#34;nonazis&#34; + 0.088*&#34;kleine&#34; + 0.088*&#34;piraten&#34; + 0.088*&#34;parteien&#34; + 0.088*&#34;ort&#34; + 0.088*&#34;btw17&#34; + 0.088*&#34;fcknzs&#34; + 0.088*&#34;irgendwas&#34; + 0.088*&#34;diverse&#34; + 0.088*&#34;soziales&#34;
-Topic TF-IDF: nonazis 
-Words: 0.143*&#34;diepartei&#34; + 0.143*&#34;dieparte&#34; + 0.071*&#34;ort&#34; + 0.071*&#34;soziales&#34; + 0.071*&#34;piraten&#34; + 0.071*&#34;parteien&#34; + 0.071*&#34;btw17&#34; + 0.071*&#34;diverse&#34; + 0.071*&#34;fcknzs&#34; + 0.071*&#34;nonazis&#34;
-
 zeitfuermartin
-Topic BOW: zeitfuermartin 
-Words: 0.117*&#34;zeitfuermartin&#34; + 0.055*&#34;esistzeit&#34; + 0.048*&#34;spd&#34; + 0.031*&#34;gestern&#34; + 0.031*&#34;nehmen&#34; + 0.031*&#34;verpasst&#34; + 0.031*&#34;wahlarena&#34; + 0.031*&#34;wer&#34; + 0.021*&#34;union&#34; + 0.021*&#34;darmstadt&#34;
-Topic TF-IDF: zeitfuermartin 
-Words: 0.029*&#34;esistzeit&#34; + 0.029*&#34;verpasst&#34; + 0.029*&#34;wer&#34; + 0.029*&#34;gestern&#34; + 0.029*&#34;nehmen&#34; + 0.029*&#34;wahlarena&#34; + 0.027*&#34;darmstadt&#34; + 0.025*&#34;spd&#34; + 0.017*&#34;union&#34; + 0.016*&#34;abstand&#34;
-
 dieselgate
-Topic BOW: dieselgate 
-Words: 0.076*&#34;dieselgate&#34; + 0.041*&#34;jahre&#34; + 0.035*&#34;entschädigungen&#34; + 0.035*&#34;gesundheitsschutz&#34; + 0.035*&#34;dobrindt&#34; + 0.035*&#34;merkel&#34; + 0.035*&#34;abgasskandal&#34; + 0.035*&#34;sitzen&#34; + 0.035*&#34;amp&#34; + 0.017*&#34;europa&#34;
-Topic TF-IDF: dieselgate 
-Words: 0.032*&#34;abgasskandal&#34; + 0.032*&#34;entschädigungen&#34; + 0.032*&#34;amp&#34; + 0.032*&#34;gesundheitsschutz&#34; + 0.032*&#34;merkel&#34; + 0.032*&#34;sitzen&#34; + 0.032*&#34;dobrindt&#34; + 0.029*&#34;jahre&#34; + 0.018*&#34;lenken&#34; + 0.018*&#34;autolobby&#34;
-
 erdogan
-Topic BOW: erdogan 
-Words: 0.183*&#34;reisewarnung&#34; + 0.111*&#34;erdogan&#34; + 0.101*&#34;türkei&#34; + 0.088*&#34;diktator&#34; + 0.088*&#34;bundesregierung&#34; + 0.087*&#34;drückt&#34; + 0.087*&#34;absurdistan&#34; + 0.010*&#34;warum&#34; + 0.008*&#34;deutschland&#34; + 0.008*&#34;amp&#34;
-Topic TF-IDF: erdogan 
-Words: 0.116*&#34;reisewarnung&#34; + 0.103*&#34;absurdistan&#34; + 0.103*&#34;drückt&#34; + 0.100*&#34;diktator&#34; + 0.100*&#34;bundesregierung&#34; + 0.071*&#34;türkei&#34; + 0.010*&#34;deutschland&#34; + 0.009*&#34;amp&#34; + 0.009*&#34;absurd&#34; + 0.009*&#34;treiben&#34;
-
 europa
-Topic BOW: europa 
-Words: 0.119*&#34;geht&#34; + 0.106*&#34;europa&#34; + 0.062*&#34;darum&#34; + 0.062*&#34;klima&#34; + 0.062*&#34;nachhaltigkeit&#34; + 0.062*&#34;gesellschaft&#34; + 0.062*&#34;zusammenhält&#34; + 0.026*&#34;frieden&#34; + 0.022*&#34;pulseofeurope&#34; + 0.022*&#34;straße&#34;
-Topic TF-IDF: europa 
-Words: 0.088*&#34;geht&#34; + 0.049*&#34;darum&#34; + 0.049*&#34;zusammenhält&#34; + 0.049*&#34;gesellschaft&#34; + 0.049*&#34;klima&#34; + 0.049*&#34;nachhaltigkeit&#34; + 0.029*&#34;pulseofeurope&#34; + 0.029*&#34;straße&#34; + 0.029*&#34;oldenburg&#34; + 0.028*&#34;frieden&#34;
-
 freedeniz
-Topic BOW: freedeniz 
-Words: 0.123*&#34;freedeniz&#34; + 0.075*&#34;geburtstag&#34; + 0.069*&#34;deniz&#34; + 0.056*&#34;gute&#34; + 0.044*&#34;freiheit&#34; + 0.043*&#34;happy&#34; + 0.043*&#34;birthday&#34; + 0.040*&#34;wünschen&#34; + 0.035*&#34;bald&#34; + 0.033*&#34;freethemall&#34;
-Topic TF-IDF: freedeniz 
-Words: 0.067*&#34;wünschen&#34; + 0.063*&#34;freiheit&#34; + 0.056*&#34;gute&#34; + 0.044*&#34;deniz&#34; + 0.040*&#34;geburtstag&#34; + 0.027*&#34;bald&#34; + 0.026*&#34;happy&#34; + 0.026*&#34;birthday&#34; + 0.025*&#34;hoffen&#34; + 0.025*&#34;freethemall&#34;
-
 groko
-Topic BOW: groko 
-Words: 0.092*&#34;groko&#34; + 0.042*&#34;mieten&#34; + 0.027*&#34;infrastruktur&#34; + 0.027*&#34;reichensteuern&#34; + 0.027*&#34;investitionen&#34; + 0.027*&#34;mehr&#34; + 0.027*&#34;geht&#34; + 0.027*&#34;verfall&#34; + 0.027*&#34;verantwortlich&#34; + 0.023*&#34;mietpreisbremse&#34;
-Topic TF-IDF: groko 
-Words: 0.031*&#34;mieten&#34; + 0.024*&#34;geht&#34; + 0.024*&#34;reichensteuern&#34; + 0.024*&#34;verfall&#34; + 0.024*&#34;mehr&#34; + 0.024*&#34;investitionen&#34; + 0.024*&#34;infrastruktur&#34; + 0.024*&#34;verantwortlich&#34; + 0.020*&#34;desaströse&#34; + 0.020*&#34;bilanz&#34;
-
 klimaschutz
-Topic BOW: klimaschutz 
-Words: 0.147*&#34;klimaschutz&#34; + 0.055*&#34;annewill&#34; + 0.051*&#34;union&#34; + 0.051*&#34;danke&#34; + 0.045*&#34;geil&#34; + 0.045*&#34;zocken&#34; + 0.045*&#34;darumgrün&#34; + 0.031*&#34;grünen&#34; + 0.030*&#34;wort&#34; + 0.030*&#34;unterschied&#34;
-Topic TF-IDF: klimaschutz 
-Words: 0.057*&#34;zocken&#34; + 0.057*&#34;darumgrün&#34; + 0.057*&#34;geil&#34; + 0.055*&#34;danke&#34; + 0.039*&#34;union&#34; + 0.039*&#34;unterschied&#34; + 0.039*&#34;wort&#34; + 0.038*&#34;grünen&#34; + 0.038*&#34;annewill&#34; + 0.025*&#34;kraft&#34;
-
 lindner
-Topic BOW: lindner 
-Words: 0.081*&#34;lindner&#34; + 0.053*&#34;fdp&#34; + 0.041*&#34;flüchtlinge&#34; + 0.037*&#34;bekommen&#34; + 0.037*&#34;widerspricht&#34; + 0.037*&#34;sollen&#34; + 0.037*&#34;schnarrenberger&#34; + 0.037*&#34;bleiben&#34; + 0.037*&#34;deutschen&#34; + 0.037*&#34;leutheusser&#34;
-Topic TF-IDF: lindner 
-Words: 0.034*&#34;bleiben&#34; + 0.034*&#34;paß&#34; + 0.034*&#34;deutschen&#34; + 0.034*&#34;bekommen&#34; + 0.034*&#34;sollen&#34; + 0.034*&#34;leutheusser&#34; + 0.034*&#34;widerspricht&#34; + 0.034*&#34;schnarrenberger&#34; + 0.031*&#34;flüchtlinge&#34; + 0.025*&#34;überlegt&#34;
-
 merkel
-Topic BOW: merkel 
-Words: 0.093*&#34;merkel&#34; + 0.018*&#34;afd&#34; + 0.017*&#34;cdu&#34; + 0.016*&#34;traudichdeutschland&#34; + 0.014*&#34;gesehen&#34; + 0.014*&#34;mal&#34; + 0.013*&#34;beim&#34; + 0.013*&#34;btw17&#34; + 0.013*&#34;gehen&#34; + 0.013*&#34;atomausstieg&#34;
-Topic TF-IDF: merkel 
-Words: 0.013*&#34;islam&#34; + 0.011*&#34;gesehen&#34; + 0.011*&#34;rückgängigmachen&#34; + 0.011*&#34;methode&#34; + 0.011*&#34;atomausstieg&#34; + 0.011*&#34;schief&#34; + 0.011*&#34;beim&#34; + 0.011*&#34;gehen&#34; + 0.011*&#34;mal&#34; + 0.010*&#34;afd&#34;
-
 schulzzug
-Topic BOW: schulzzug 
-Words: 0.159*&#34;schulzzug&#34; + 0.143*&#34;entgleist&#34; + 0.135*&#34;völlig&#34; + 0.135*&#34;siegessicherheit&#34; + 0.135*&#34;unterstellungen&#34; + 0.135*&#34;gejammer&#34; + 0.016*&#34;nirwana&#34; + 0.016*&#34;verzweiflung&#34; + 0.016*&#34;fährt&#34; + 0.016*&#34;afd&#34;
-Topic TF-IDF: schulzzug 
-Words: 0.152*&#34;völlig&#34; + 0.152*&#34;gejammer&#34; + 0.152*&#34;siegessicherheit&#34; + 0.152*&#34;unterstellungen&#34; + 0.122*&#34;entgleist&#34; + 0.026*&#34;afd&#34; + 0.026*&#34;nirwana&#34; + 0.026*&#34;fährt&#34; + 0.026*&#34;wählen&#34; + 0.025*&#34;asozialdemokratischen&#34;
-
 türkei
-Topic BOW: türkei 
-Words: 0.208*&#34;reisewarnung&#34; + 0.116*&#34;türkei&#34; + 0.096*&#34;bundesregierung&#34; + 0.095*&#34;absurdistan&#34; + 0.095*&#34;erdogan&#34; + 0.095*&#34;diktator&#34; + 0.095*&#34;drückt&#34; + 0.017*&#34;mehr&#34; + 0.017*&#34;deutschland&#34; + 0.015*&#34;repression&#34;
-Topic TF-IDF: türkei 
-Words: 0.136*&#34;erdogan&#34; + 0.136*&#34;drückt&#34; + 0.136*&#34;absurdistan&#34; + 0.136*&#34;diktator&#34; + 0.128*&#34;bundesregierung&#34; + 0.036*&#34;reisewarnung&#34; + 0.018*&#34;deutschland&#34; + 0.018*&#34;mehr&#34; + 0.018*&#34;amp&#34; + 0.018*&#34;waffe&#34;
-
 union
-Topic BOW: union 
-Words: 0.129*&#34;union&#34; + 0.120*&#34;dagegen&#34; + 0.120*&#34;essentiell&#34; + 0.120*&#34;gibt&#34; + 0.120*&#34;klimaschutz&#34; + 0.120*&#34;kraft&#34; + 0.120*&#34;erkenntnis&#34; + 0.010*&#34;kritik&#34; + 0.010*&#34;merkel&#34; + 0.010*&#34;massiv&#34;
-Topic TF-IDF: union 
-Words: 0.123*&#34;kraft&#34; + 0.123*&#34;klimaschutz&#34; + 0.123*&#34;dagegen&#34; + 0.123*&#34;gibt&#34; + 0.123*&#34;erkenntnis&#34; + 0.123*&#34;essentiell&#34; + 0.015*&#34;aufbruch&#34; + 0.015*&#34;partei&#34; + 0.015*&#34;kritiker&#34; + 0.015*&#34;planen&#34;
-
 antifa
-Topic BOW: antifa 
-Words: 0.129*&#34;antifa&#34; + 0.120*&#34;weltwahlchat&#34; + 0.101*&#34;blockade&#34; + 0.062*&#34;beginn&#34; + 0.059*&#34;überwinden&#34; + 0.059*&#34;mittlerweile&#34; + 0.059*&#34;startet&#34; + 0.046*&#34;grund&#34; + 0.046*&#34;verzögerung&#34; + 0.046*&#34;beim&#34;
-Topic TF-IDF: antifa 
-Words: 0.103*&#34;mittlerweile&#34; + 0.103*&#34;startet&#34; + 0.103*&#34;überwinden&#34; + 0.067*&#34;werte&#34; + 0.064*&#34;beim&#34; + 0.064*&#34;grund&#34; + 0.064*&#34;verzögerung&#34; + 0.053*&#34;beginn&#34; + 0.048*&#34;blockade&#34; + 0.023*&#34;afd&#34;
-
 bundesregierung
-Topic BOW: bundesregierung 
-Words: 0.213*&#34;reisewarnung&#34; + 0.120*&#34;bundesregierung&#34; + 0.107*&#34;erdogan&#34; + 0.107*&#34;türkei&#34; + 0.106*&#34;diktator&#34; + 0.106*&#34;absurdistan&#34; + 0.106*&#34;drückt&#34; + 0.010*&#34;privaten&#34; + 0.010*&#34;hedgefonds&#34; + 0.010*&#34;öffentlich&#34;
-Topic TF-IDF: bundesregierung 
-Words: 0.220*&#34;reisewarnung&#34; + 0.117*&#34;absurdistan&#34; + 0.117*&#34;diktator&#34; + 0.117*&#34;drückt&#34; + 0.111*&#34;türkei&#34; + 0.111*&#34;erdogan&#34; + 0.011*&#34;787&#34; + 0.011*&#34;hedgefonds&#34; + 0.011*&#34;partnerschaften&#34; + 0.011*&#34;ran&#34;
-
 gerechtigkeit
-Topic BOW: gerechtigkeit 
-Words: 0.095*&#34;gerechtigkeit&#34; + 0.039*&#34;mehr&#34; + 0.034*&#34;heiligenhaus&#34; + 0.034*&#34;wülfrath&#34; + 0.034*&#34;zeit&#34; + 0.034*&#34;morgen&#34; + 0.034*&#34;soziale&#34; + 0.034*&#34;velbert&#34; + 0.034*&#34;wahltag&#34; + 0.034*&#34;ratingen&#34;
-Topic TF-IDF: gerechtigkeit 
-Words: 0.030*&#34;wahltag&#34; + 0.030*&#34;zeit&#34; + 0.030*&#34;velbert&#34; + 0.030*&#34;ratingen&#34; + 0.030*&#34;wülfrath&#34; + 0.030*&#34;heiligenhaus&#34; + 0.030*&#34;morgen&#34; + 0.028*&#34;tun&#34; + 0.028*&#34;bundestagswahlkampf&#34; + 0.028*&#34;ernährung&#34;
-
 trump
-Topic BOW: trump 
-Words: 0.170*&#34;politik&#34; + 0.113*&#34;trump&#34; + 0.094*&#34;regierung&#34; + 0.094*&#34;nie&#34; + 0.094*&#34;deutschen&#34; + 0.094*&#34;spd&#34; + 0.038*&#34;fakten&#34; + 0.038*&#34;pure&#34; + 0.038*&#34;bekannt&#34; + 0.038*&#34;ausserdem&#34;
-Topic TF-IDF: trump 
-Words: 0.145*&#34;politik&#34; + 0.091*&#34;deutschen&#34; + 0.091*&#34;regierung&#34; + 0.091*&#34;nie&#34; + 0.091*&#34;spd&#34; + 0.050*&#34;fakten&#34; + 0.050*&#34;pure&#34; + 0.050*&#34;noafd&#34; + 0.050*&#34;genau&#34; + 0.050*&#34;bekannt&#34;
-
 wahlkampf
-Topic BOW: wahlkampf 
-Words: 0.111*&#34;wahlkampf&#34; + 0.046*&#34;btw17&#34; + 0.029*&#34;kathrin&#34; + 0.029*&#34;spitzenkandidatin&#34; + 0.029*&#34;attackiert&#34; + 0.029*&#34;thema&#34; + 0.024*&#34;endspurt&#34; + 0.022*&#34;video&#34; + 0.022*&#34;btw&#34; + 0.021*&#34;gute&#34;
-Topic TF-IDF: wahlkampf 
-Words: 0.033*&#34;kathrin&#34; + 0.033*&#34;spitzenkandidatin&#34; + 0.033*&#34;thema&#34; + 0.033*&#34;attackiert&#34; + 0.022*&#34;reden&#34; + 0.021*&#34;video&#34; + 0.021*&#34;btw&#34; + 0.021*&#34;endspurt&#34; + 0.020*&#34;btw17&#34; + 0.015*&#34;geht&#34;
-
 tzt
-Topic BOW: tzt 
-Words: 0.076*&#34;tzt&#34; + 0.036*&#34;000&#34; + 0.032*&#34;heute&#34; + 0.029*&#34;btw17&#34; + 0.029*&#34;nochmal&#34; + 0.029*&#34;haustürwahlkampf&#34; + 0.022*&#34;danke&#34; + 0.022*&#34;connect17&#34; + 0.018*&#34;haustüren&#34; + 0.018*&#34;geben&#34;
-Topic TF-IDF: tzt 
-Words: 0.025*&#34;000&#34; + 0.017*&#34;nochmal&#34; + 0.017*&#34;btw17&#34; + 0.017*&#34;haustürwahlkampf&#34; + 0.017*&#34;geben&#34; + 0.017*&#34;haustüren&#34; + 0.017*&#34;nächsten&#34; + 0.017*&#34;stunden&#34; + 0.017*&#34;connect17&#34; + 0.017*&#34;danke&#34;
-
 energiewende
-Topic BOW: energiewende 
-Words: 0.107*&#34;energiewende&#34; + 0.085*&#34;btw17&#34; + 0.081*&#34;teuren&#34; + 0.081*&#34;programm&#34; + 0.081*&#34;sündhaft&#34; + 0.081*&#34;planlosen&#34; + 0.081*&#34;traudichdeutschland&#34; + 0.081*&#34;afd&#34; + 0.081*&#34;schluss&#34; + 0.009*&#34;technologieoffenheit&#34;
-Topic TF-IDF: energiewende 
-Words: 0.081*&#34;traudichdeutschland&#34; + 0.081*&#34;afd&#34; + 0.081*&#34;teuren&#34; + 0.081*&#34;sündhaft&#34; + 0.081*&#34;schluss&#34; + 0.081*&#34;planlosen&#34; + 0.081*&#34;programm&#34; + 0.068*&#34;btw17&#34; + 0.011*&#34;fehler&#34; + 0.011*&#34;mobilitätswende&#34;
-
 islamisierung
-Topic BOW: islamisierung 
-Words: 0.109*&#34;islamisierung&#34; + 0.039*&#34;traudichdeutschland&#34; + 0.035*&#34;fedidwgugl&#34; + 0.035*&#34;deutschland&#34; + 0.031*&#34;grundgesetz&#34; + 0.031*&#34;grundgesetzwidriges&#34; + 0.031*&#34;art&#34; + 0.031*&#34;verstoß&#34; + 0.031*&#34;tagesspiegel&#34; + 0.031*&#34;verbreitet&#34;
-Topic TF-IDF: islamisierung 
-Words: 0.029*&#34;grundgesetz&#34; + 0.029*&#34;grundgesetzwidriges&#34; + 0.029*&#34;verstoß&#34; + 0.029*&#34;art&#34; + 0.029*&#34;verbreitet&#34; + 0.029*&#34;tagesspiegel&#34; + 0.028*&#34;findet&#34; + 0.028*&#34;deinewahl&#34; + 0.028*&#34;gegenhalten&#34; + 0.028*&#34;statt&#34;
-
 mindestlohn
-Topic BOW: mindestlohn 
-Words: 0.143*&#34;stoppen&#34; + 0.143*&#34;rentensystem&#34; + 0.143*&#34;gesetzliches&#34; + 0.143*&#34;rentenniveau&#34; + 0.143*&#34;zahlen&#34; + 0.143*&#34;altersarmut&#34; + 0.143*&#34;mindestlohn&#34;
-Topic TF-IDF: mindestlohn 
-Words: 0.143*&#34;altersarmut&#34; + 0.143*&#34;gesetzliches&#34; + 0.143*&#34;mindestlohn&#34; + 0.143*&#34;rentenniveau&#34; + 0.143*&#34;rentensystem&#34; + 0.143*&#34;stoppen&#34; + 0.143*&#34;zahlen&#34;
-
 umwelt
-Topic BOW: umwelt 
-Words: 0.112*&#34;umwelt&#34; + 0.108*&#34;freiheit&#34; + 0.108*&#34;demokratie&#34; + 0.056*&#34;btw17&#34; + 0.056*&#34;geht&#34; + 0.056*&#34;entzaubern&#34; + 0.056*&#34;grünen&#34; + 0.056*&#34;wähler&#34; + 0.056*&#34;traudichdeutschland&#34; + 0.053*&#34;afd&#34;
-Topic TF-IDF: umwelt 
-Words: 0.077*&#34;verteidigt&#34; + 0.077*&#34;darumgrün&#34; + 0.077*&#34;wer&#34; + 0.077*&#34;hinterherrennen&#34; + 0.075*&#34;traudichdeutschland&#34; + 0.075*&#34;wähler&#34; + 0.075*&#34;btw17&#34; + 0.075*&#34;entzaubern&#34; + 0.075*&#34;grünen&#34; + 0.075*&#34;geht&#34;
-
 demokratie
-Topic BOW: demokratie 
-Words: 0.111*&#34;demokratie&#34; + 0.056*&#34;umwelt&#34; + 0.056*&#34;freiheit&#34; + 0.039*&#34;dritte&#34; + 0.039*&#34;alarmiere&#34; + 0.039*&#34;gesetzt&#34; + 0.039*&#34;relativierer&#34; + 0.039*&#34;reich&#34; + 0.039*&#34;holocaustleugner&#34; + 0.039*&#34;hoffnung&#34;
-Topic TF-IDF: demokratie 
-Words: 0.041*&#34;ausmaß&#34; + 0.041*&#34;reich&#34; + 0.041*&#34;alarmiere&#34; + 0.041*&#34;holocaustleugner&#34; + 0.041*&#34;gesetzt&#34; + 0.041*&#34;dritte&#34; + 0.041*&#34;hoffnung&#34; + 0.041*&#34;relativierer&#34; + 0.036*&#34;darumgrün&#34; + 0.036*&#34;verteidigt&#34;
-
 leipzig
-Topic BOW: leipzig 
-Words: 0.116*&#34;leipzig&#34; + 0.059*&#34;btw17&#34; + 0.045*&#34;linke&#34; + 0.024*&#34;junge&#34; + 0.024*&#34;krieg&#34; + 0.024*&#34;verlassen&#34; + 0.024*&#34;wählen&#34; + 0.024*&#34;amp&#34; + 0.024*&#34;gründe&#34; + 0.024*&#34;menschen&#34;
-Topic TF-IDF: leipzig 
-Words: 0.028*&#34;nein&#34; + 0.028*&#34;partei&#34; + 0.028*&#34;immer&#34; + 0.028*&#34;verlassen&#34; + 0.028*&#34;krieg&#34; + 0.026*&#34;gibt&#34; + 0.026*&#34;junge&#34; + 0.026*&#34;wählen&#34; + 0.026*&#34;live&#34; + 0.026*&#34;gründe&#34;
-
 zukunftwirdausmutgemacht
-Topic BOW: zukunftwirdausmutgemacht 
-Words: 0.132*&#34;zukunftwirdausmutgemacht&#34; + 0.075*&#34;btw17&#34; + 0.047*&#34;kretschmann&#34; + 0.047*&#34;darumgruen&#34; + 0.047*&#34;heute&#34; + 0.047*&#34;robotics&#34; + 0.047*&#34;winfried&#34; + 0.038*&#34;katrin&#34; + 0.038*&#34;entscheidet&#34; + 0.038*&#34;recht&#34;
-Topic TF-IDF: zukunftwirdausmutgemacht 
-Words: 0.052*&#34;robotics&#34; + 0.052*&#34;winfried&#34; + 0.052*&#34;kretschmann&#34; + 0.052*&#34;heute&#34; + 0.045*&#34;btw17&#34; + 0.045*&#34;katrin&#34; + 0.045*&#34;recht&#34; + 0.045*&#34;entscheidet&#34; + 0.045*&#34;mut&#34; + 0.038*&#34;innenstadt&#34;
-
 zukunft
-Topic BOW: zukunft 
-Words: 0.118*&#34;regiert&#34; + 0.098*&#34;zukunft&#34; + 0.075*&#34;amp&#34; + 0.060*&#34;ideen&#34; + 0.060*&#34;iaa&#34; + 0.060*&#34;zeit&#34; + 0.060*&#34;umgesetzt&#34; + 0.060*&#34;bund&#34; + 0.060*&#34;grüne&#34; + 0.060*&#34;btw17&#34;
-Topic TF-IDF: zukunft 
-Words: 0.104*&#34;regiert&#34; + 0.055*&#34;bund&#34; + 0.055*&#34;grüne&#34; + 0.055*&#34;ideen&#34; + 0.055*&#34;iaa&#34; + 0.055*&#34;btw17&#34; + 0.055*&#34;zeit&#34; + 0.055*&#34;umgesetzt&#34; + 0.035*&#34;stimme&#34; + 0.032*&#34;amp&#34;
-
 arbeit
-Topic BOW: arbeit 
-Words: 0.115*&#34;arbeit&#34; + 0.051*&#34;schieben&#34; + 0.051*&#34;aufs&#34; + 0.051*&#34;zimmermann&#34; + 0.051*&#34;sabine&#34; + 0.051*&#34;abstellgleis&#34; + 0.051*&#34;länger&#34; + 0.051*&#34;erwerbslose&#34; + 0.029*&#34;sozial&#34; + 0.029*&#34;leiharbeit&#34;
-Topic TF-IDF: arbeit 
-Words: 0.051*&#34;erwerbslose&#34; + 0.051*&#34;schieben&#34; + 0.051*&#34;sabine&#34; + 0.051*&#34;länger&#34; + 0.051*&#34;zimmermann&#34; + 0.051*&#34;aufs&#34; + 0.051*&#34;abstellgleis&#34; + 0.033*&#34;neu&#34; + 0.033*&#34;regeln&#34; + 0.033*&#34;leiharbeit&#34;
-
 csu
-Topic BOW: csu 
-Words: 0.081*&#34;csu&#34; + 0.065*&#34;cdu&#34; + 0.054*&#34;amp&#34; + 0.054*&#34;warum&#34; + 0.054*&#34;spd&#34; + 0.053*&#34;erdogan&#34; + 0.052*&#34;beitrittsverhandlungen&#34; + 0.052*&#34;weitere&#34; + 0.052*&#34;nimmt&#34; + 0.052*&#34;deutsche&#34;
-Topic TF-IDF: csu 
-Words: 0.047*&#34;http&#34; + 0.046*&#34;stoppen&#34; + 0.046*&#34;nimmt&#34; + 0.046*&#34;beitrittsverhandlungen&#34; + 0.046*&#34;weitere&#34; + 0.046*&#34;deutsche&#34; + 0.046*&#34;geiseln&#34; + 0.045*&#34;erdogan&#34; + 0.043*&#34;warum&#34; + 0.043*&#34;spd&#34;
-
 schulz
-Topic BOW: schulz 
-Words: 0.098*&#34;schulz&#34; + 0.067*&#34;tvduell&#34; + 0.050*&#34;merkel&#34; + 0.038*&#34;afd&#34; + 0.022*&#34;btw17&#34; + 0.019*&#34;traudichdeutschla&#34; + 0.016*&#34;thesen&#34; + 0.016*&#34;moderatoren&#34; + 0.016*&#34;attackieren&#34; + 0.016*&#34;ecke&#34;
-Topic TF-IDF: schulz 
-Words: 0.018*&#34;afd&#34; + 0.018*&#34;ecke&#34; + 0.018*&#34;thesen&#34; + 0.018*&#34;vier&#34; + 0.018*&#34;attackieren&#34; + 0.018*&#34;moderatoren&#34; + 0.018*&#34;interessant&#34; + 0.016*&#34;merkel&#34; + 0.015*&#34;traudichdeutschla&#34; + 0.015*&#34;btw17&#34;
-
 zdf
-Topic BOW: zdf 
-Words: 0.104*&#34;zdf&#34; + 0.084*&#34;schlagabtausch&#34; + 0.034*&#34;müssen&#34; + 0.031*&#34;rentenreform&#34; + 0.031*&#34;politiker&#34; + 0.031*&#34;einzahlen&#34; + 0.031*&#34;große&#34; + 0.031*&#34;brauchen&#34; + 0.026*&#34;tot&#34; + 0.026*&#34;polizei&#34;
-Topic TF-IDF: zdf 
-Words: 0.032*&#34;einzahlen&#34; + 0.032*&#34;politiker&#34; + 0.032*&#34;rentenreform&#34; + 0.032*&#34;brauchen&#34; + 0.032*&#34;große&#34; + 0.031*&#34;müssen&#34; + 0.025*&#34;politische&#34; + 0.025*&#34;kontrovers&#34; + 0.025*&#34;diskussion&#34; + 0.025*&#34;sieht&#34;
-
 populismus
-Topic BOW: populismus 
-Words: 0.118*&#34;populismus&#34; + 0.112*&#34;fünfkampf&#34; + 0.112*&#34;link&#34; + 0.112*&#34;mag&#34; + 0.112*&#34;antieuropäischen&#34; + 0.112*&#34;rechts&#34; + 0.112*&#34;europa&#34; + 0.112*&#34;weder&#34; + 0.004*&#34;anwendung&#34; + 0.004*&#34;zurückschicken&#34;
-Topic TF-IDF: populismus 
-Words: 0.116*&#34;rechts&#34; + 0.116*&#34;weder&#34; + 0.116*&#34;link&#34; + 0.116*&#34;antieuropäischen&#34; + 0.116*&#34;europa&#34; + 0.116*&#34;fünfkampf&#34; + 0.116*&#34;mag&#34; + 0.009*&#34;juli&#34; + 0.009*&#34;gestimmt&#34; + 0.009*&#34;dagegen&#34;
-
 russland
-Topic BOW: russland 
-Words: 0.071*&#34;russland&#34; + 0.071*&#34;statt&#34; + 0.059*&#34;wolf&#34; + 0.059*&#34;inlitauen&#34; + 0.059*&#34;sorgt&#34; + 0.059*&#34;entspannung&#34; + 0.059*&#34;groko&#34; + 0.059*&#34;militärübung&#34; + 0.059*&#34;nato&#34; + 0.059*&#34;beteiligung&#34;
-Topic TF-IDF: russland 
-Words: 0.058*&#34;inlitauen&#34; + 0.058*&#34;sorgt&#34; + 0.058*&#34;wolf&#34; + 0.058*&#34;bundeswehr&#34; + 0.058*&#34;militärübung&#34; + 0.058*&#34;beteiligung&#34; + 0.058*&#34;ggü&#34; + 0.058*&#34;groko&#34; + 0.058*&#34;eiserner&#34; + 0.058*&#34;entspannung&#34;
-
 ehefüralle
-Topic BOW: ehefüralle 
-Words: 0.140*&#34;ehefüralle&#34; + 0.131*&#34;annewill&#34; + 0.131*&#34;freuen&#34; + 0.131*&#34;schäuble&#34; + 0.131*&#34;wolfgang&#34; + 0.131*&#34;heiraten&#34; + 0.131*&#34;menschen&#34; + 0.019*&#34;abgestimmt&#34; + 0.019*&#34;konservativ&#34; + 0.019*&#34;netzdg&#34;
-Topic TF-IDF: ehefüralle 
-Words: 0.141*&#34;annewill&#34; + 0.141*&#34;heiraten&#34; + 0.141*&#34;schäuble&#34; + 0.141*&#34;freuen&#34; + 0.141*&#34;menschen&#34; + 0.141*&#34;wolfgang&#34; + 0.033*&#34;zensur&#34; + 0.033*&#34;abgestimmt&#34; + 0.033*&#34;konservativ&#34; + 0.033*&#34;netzdg&#34;
-
 brexit
-Topic BOW: brexit 
-Words: 0.182*&#34;brexit&#34; + 0.091*&#34;london&#34; + 0.091*&#34;marsch&#34; + 0.091*&#34;good&#34; + 0.091*&#34;helluva&#34; + 0.091*&#34;job&#34; + 0.091*&#34;leaving&#34; + 0.091*&#34;martin&#34; + 0.091*&#34;then&#34; + 0.091*&#34;großbritannien&#34;
-Topic TF-IDF: brexit 
-Words: 0.111*&#34;großbritannien&#34; + 0.111*&#34;london&#34; + 0.111*&#34;marsch&#34; + 0.099*&#34;good&#34; + 0.099*&#34;helluva&#34; + 0.099*&#34;job&#34; + 0.099*&#34;leaving&#34; + 0.099*&#34;martin&#34; + 0.099*&#34;then&#34; + 0.071*&#34;brexit&#34;
-
 maas
-Topic BOW: maas 
-Words: 0.111*&#34;btw17&#34; + 0.111*&#34;gerade&#34; + 0.111*&#34;gut&#34; + 0.111*&#34;hohes&#34; + 0.111*&#34;maas&#34; + 0.111*&#34;netzdg&#34; + 0.111*&#34;zeiten&#34; + 0.111*&#34;afd&#34; + 0.111*&#34;meinungsfeiheit&#34;
-Topic TF-IDF: maas 
-Words: 0.111*&#34;afd&#34; + 0.111*&#34;btw17&#34; + 0.111*&#34;gerade&#34; + 0.111*&#34;gut&#34; + 0.111*&#34;hohes&#34; + 0.111*&#34;maas&#34; + 0.111*&#34;meinungsfeiheit&#34; + 0.111*&#34;netzdg&#34; + 0.111*&#34;zeiten&#34;
-
 hamburg
-Topic BOW: hamburg 
-Words: 0.096*&#34;hamburg&#34; + 0.089*&#34;afd&#34; + 0.068*&#34;volles&#34; + 0.047*&#34;dank&#34; + 0.047*&#34;gestern&#34; + 0.047*&#34;kulisse&#34; + 0.047*&#34;haus&#34; + 0.047*&#34;beeindruckende&#34; + 0.023*&#34;rathaus&#34; + 0.023*&#34;wirkung&#34;
-Topic TF-IDF: hamburg 
-Words: 0.052*&#34;haus&#34; + 0.052*&#34;beeindruckende&#34; + 0.052*&#34;kulisse&#34; + 0.052*&#34;dank&#34; + 0.052*&#34;gestern&#34; + 0.038*&#34;afd&#34; + 0.033*&#34;volles&#34; + 0.025*&#34;500&#34; + 0.025*&#34;fraktion&#34; + 0.025*&#34;rathaus&#34;
-
 mietpreisbremse
-Topic BOW: mietpreisbremse 
-Words: 0.125*&#34;berlin&#34; + 0.125*&#34;bundesrat&#34; + 0.125*&#34;mietpreisbremse&#34; + 0.125*&#34;möchte&#34; + 0.125*&#34;vorgestellt&#34; + 0.125*&#34;änderungen&#34; + 0.125*&#34;gesetzesentwurf&#34; + 0.125*&#34;september&#34;
-Topic TF-IDF: mietpreisbremse 
-Words: 0.125*&#34;berlin&#34; + 0.125*&#34;bundesrat&#34; + 0.125*&#34;gesetzesentwurf&#34; + 0.125*&#34;mietpreisbremse&#34; + 0.125*&#34;möchte&#34; + 0.125*&#34;september&#34; + 0.125*&#34;vorgestellt&#34; + 0.125*&#34;änderungen&#34;
-
 nrw
-Topic BOW: nrw 
-Words: 0.088*&#34;nrw&#34; + 0.043*&#34;afd&#34; + 0.033*&#34;btw2017&#34; + 0.033*&#34;traudichdeutschland&#34; + 0.023*&#34;starke&#34; + 0.023*&#34;münster&#34; + 0.023*&#34;liste&#34; + 0.023*&#34;frieden&#34; + 0.023*&#34;gerechtigkeit&#34; + 0.023*&#34;braucht&#34;
-Topic TF-IDF: nrw 
-Words: 0.022*&#34;braucht&#34; + 0.022*&#34;soziale&#34; + 0.022*&#34;gerechtigkeit&#34; + 0.022*&#34;frieden&#34; + 0.022*&#34;starke&#34; + 0.022*&#34;liste&#34; + 0.022*&#34;linke&#34; + 0.022*&#34;btw2017&#34; + 0.019*&#34;münster&#34; + 0.019*&#34;traudichdeutschland&#34;
-
 r2g
-Topic BOW: r2g 
-Words: 0.108*&#34;r2g&#34; + 0.076*&#34;traudichdeutschland&#34; + 0.066*&#34;dohnanyi&#34; + 0.065*&#34;afd&#34; + 0.065*&#34;klaus&#34; + 0.065*&#34;bundesregierung&#34; + 0.065*&#34;bekommt&#34; + 0.013*&#34;linke&#34; + 0.012*&#34;heute&#34; + 0.012*&#34;land&#34;
-Topic TF-IDF: r2g 
-Words: 0.063*&#34;bekommt&#34; + 0.063*&#34;bundesregierung&#34; + 0.063*&#34;afd&#34; + 0.063*&#34;klaus&#34; + 0.062*&#34;dohnanyi&#34; + 0.046*&#34;traudichdeutschland&#34; + 0.011*&#34;linke&#34; + 0.011*&#34;morgen&#34; + 0.011*&#34;droht&#34; + 0.011*&#34;kanzleramt&#34;
-
 zensur
-Topic BOW: zensur 
-Words: 0.083*&#34;spd&#34; + 0.083*&#34;zensur&#34; + 0.063*&#34;darumafd&#34; + 0.062*&#34;afd&#34; + 0.042*&#34;feindlich&#34; + 0.042*&#34;usw&#34; + 0.042*&#34;schweigt&#34; + 0.042*&#34;klartext&#34; + 0.042*&#34;btw17&#34; + 0.042*&#34;maas&#34;
-Topic TF-IDF: zensur 
-Words: 0.051*&#34;spd&#34; + 0.049*&#34;leiharbeit&#34; + 0.049*&#34;gerechtigkeit&#34; + 0.049*&#34;ggbruch&#34; + 0.049*&#34;hartz&#34; + 0.049*&#34;ausbeutung&#34; + 0.049*&#34;feindlich&#34; + 0.049*&#34;btw17&#34; + 0.049*&#34;stoppen&#34; + 0.049*&#34;maas&#34;
-
 bildung
-Topic BOW: bildung 
-Words: 0.102*&#34;bildung&#34; + 0.042*&#34;fdp&#34; + 0.038*&#34;btw2017&#34; + 0.038*&#34;einzelnen&#34; + 0.038*&#34;stark&#34; + 0.038*&#34;denkenwirneu&#34; + 0.038*&#34;kleinsten&#34; + 0.038*&#34;fangen&#34; + 0.030*&#34;digitalisierung&#34; + 0.023*&#34;moderne&#34;
-Topic TF-IDF: bildung 
-Words: 0.035*&#34;stark&#34; + 0.035*&#34;btw2017&#34; + 0.035*&#34;kleinsten&#34; + 0.035*&#34;einzelnen&#34; + 0.035*&#34;fangen&#34; + 0.035*&#34;denkenwirneu&#34; + 0.034*&#34;fdp&#34; + 0.023*&#34;digitalisierung&#34; + 0.022*&#34;rente&#34; + 0.022*&#34;beim&#34;
-
 flüchtlinge
-Topic BOW: flüchtlinge 
-Words: 0.131*&#34;flüchtlinge&#34; + 0.125*&#34;tvduell&#34; + 0.048*&#34;statt&#34; + 0.037*&#34;schulz&#34; + 0.036*&#34;sprach&#34; + 0.036*&#34;martin&#34; + 0.036*&#34;flüchtlingswelle&#34; + 0.036*&#34;eben&#34; + 0.028*&#34;geht&#34; + 0.028*&#34;aussitzt&#34;
-Topic TF-IDF: flüchtlinge 
-Words: 0.046*&#34;martin&#34; + 0.046*&#34;sprach&#34; + 0.046*&#34;flüchtlingswelle&#34; + 0.046*&#34;eben&#34; + 0.046*&#34;schulz&#34; + 0.040*&#34;statt&#34; + 0.037*&#34;horrorszenarien&#34; + 0.037*&#34;fakten&#34; + 0.032*&#34;sprachkenntnisse&#34; + 0.032*&#34;schneller&#34;
-
 nahles
-Topic BOW: nahles 
-Words: 0.084*&#34;nahles&#34; + 0.063*&#34;spd&#34; + 0.053*&#34;berlin&#34; + 0.053*&#34;malu&#34; + 0.053*&#34;nrw&#34; + 0.053*&#34;dreyer&#34; + 0.053*&#34;hamburg&#34; + 0.053*&#34;bvb&#34; + 0.053*&#34;oppermann&#34; + 0.053*&#34;schwesig&#34;
-Topic TF-IDF: nahles 
-Words: 0.049*&#34;schwesig&#34; + 0.049*&#34;gabriel&#34; + 0.049*&#34;malu&#34; + 0.049*&#34;oppermann&#34; + 0.049*&#34;dreyer&#34; + 0.049*&#34;hamburg&#34; + 0.049*&#34;berlin&#34; + 0.049*&#34;schulz&#34; + 0.049*&#34;nrw&#34; + 0.049*&#34;bvb&#34;
-
 berlin
-Topic BOW: berlin 
-Words: 0.092*&#34;berlin&#34; + 0.022*&#34;tvduell&#34; + 0.016*&#34;10827&#34; + 0.016*&#34;hauptstr&#34; + 0.016*&#34;timelessschöneberg&#34; + 0.016*&#34;unterwegs&#34; + 0.016*&#34;publicviewing&#34; + 0.016*&#34;uhr&#34; + 0.014*&#34;integration&#34; + 0.014*&#34;heute&#34;
-Topic TF-IDF: berlin 
-Words: 0.015*&#34;uhr&#34; + 0.015*&#34;10827&#34; + 0.015*&#34;hauptstr&#34; + 0.015*&#34;publicviewing&#34; + 0.015*&#34;timelessschöneberg&#34; + 0.015*&#34;tvduell&#34; + 0.013*&#34;unterwegs&#34; + 0.012*&#34;heute&#34; + 0.012*&#34;integration&#34; + 0.012*&#34;deutschland&#34;
-
 gauland
-Topic BOW: gauland 
-Words: 0.136*&#34;gauland&#34; + 0.135*&#34;afd&#34; + 0.134*&#34;alexander&#34; + 0.098*&#34;btw17&#34; + 0.074*&#34;spitzenkandidat&#34; + 0.074*&#34;spot&#34; + 0.074*&#34;radiopremiere&#34; + 0.060*&#34;amp&#34; + 0.058*&#34;spitzenkandidaten&#34; + 0.035*&#34;bundespressekonferenz&#34;
-Topic TF-IDF: gauland 
-Words: 0.135*&#34;radiopremiere&#34; + 0.135*&#34;spitzenkandidat&#34; + 0.135*&#34;spot&#34; + 0.086*&#34;btw17&#34; + 0.075*&#34;spitzenkandidaten&#34; + 0.074*&#34;amp&#34; + 0.070*&#34;bundespressekonferenz&#34; + 0.070*&#34;them&#34; + 0.065*&#34;wahlwerbespot&#34; + 0.007*&#34;alexander&#34;
-
 martinschulz
-Topic BOW: martinschulz 
-Words: 0.094*&#34;martinschulz&#34; + 0.051*&#34;tvduell&#34; + 0.026*&#34;merkel&#34; + 0.025*&#34;spd&#34; + 0.017*&#34;orban&#34; + 0.017*&#34;geht&#34; + 0.013*&#34;kommt&#34; + 0.013*&#34;durcheinander&#34; + 0.013*&#34;nächster&#34; + 0.013*&#34;angela&#34;
-Topic TF-IDF: martinschulz 
-Words: 0.015*&#34;tvduell&#34; + 0.014*&#34;wenigstens&#34; + 0.014*&#34;nachgelesen&#34; + 0.014*&#34;geht&#34; + 0.013*&#34;spd&#34; + 0.013*&#34;durcheinander&#34; + 0.013*&#34;duldungsstatus&#34; + 0.013*&#34;kommt&#34; + 0.013*&#34;bock&#34; + 0.013*&#34;bamf&#34;
-
 diesel
-Topic BOW: diesel 
-Words: 0.110*&#34;diesel&#34; + 0.047*&#34;afd&#34; + 0.037*&#34;problematik&#34; + 0.032*&#34;garantie&#34; + 0.032*&#34;spitzenkandidatin&#34; + 0.030*&#34;amp&#34; + 0.026*&#34;wer&#34; + 0.025*&#34;groko&#34; + 0.025*&#34;schmusekurs&#34; + 0.025*&#34;automobilkonzernen&#34;
-Topic TF-IDF: diesel 
-Words: 0.033*&#34;spitzenkandidatin&#34; + 0.033*&#34;garantie&#34; + 0.031*&#34;fordern&#34; + 0.031*&#34;2050&#34; + 0.029*&#34;problematik&#34; + 0.028*&#34;afd&#34; + 0.027*&#34;amp&#34; + 0.025*&#34;warum&#34; + 0.025*&#34;dieselgate&#34; + 0.025*&#34;parteispenden&#34;
-
 köln
-Topic BOW: köln 
-Words: 0.094*&#34;köln&#34; + 0.074*&#34;afd&#34; + 0.074*&#34;btw17&#34; + 0.074*&#34;traudichdeutschland&#34; + 0.060*&#34;wahlkampf&#34; + 0.047*&#34;geht&#34; + 0.047*&#34;puste&#34; + 0.047*&#34;land&#34; + 0.047*&#34;mülheim&#34; + 0.020*&#34;ergebnis&#34;
-Topic TF-IDF: köln 
-Words: 0.057*&#34;puste&#34; + 0.057*&#34;mülheim&#34; + 0.057*&#34;geht&#34; + 0.057*&#34;land&#34; + 0.047*&#34;wahlkampf&#34; + 0.036*&#34;blaue&#34; + 0.036*&#34;allee&#34; + 0.034*&#34;btw17&#34; + 0.034*&#34;afd&#34; + 0.034*&#34;traudichdeutschland&#34;
-
 terror
-Topic BOW: terror 
-Words: 0.085*&#34;terror&#34; + 0.050*&#34;spd&#34; + 0.046*&#34;barcelona&#34; + 0.035*&#34;berlin&#34; + 0.035*&#34;btw17&#34; + 0.031*&#34;spitzenkandidatin&#34; + 0.031*&#34;traudichdeutschland&#34; + 0.031*&#34;skandal&#34; + 0.031*&#34;egal&#34; + 0.031*&#34;afd&#34;
-Topic TF-IDF: terror 
-Words: 0.028*&#34;spitzenkandidatin&#34; + 0.028*&#34;högl&#34; + 0.028*&#34;zeigt&#34; + 0.028*&#34;skandal&#34; + 0.028*&#34;egal&#34; + 0.028*&#34;eva&#34; + 0.027*&#34;berlin&#34; + 0.027*&#34;btw17&#34; + 0.023*&#34;barcelona&#34; + 0.023*&#34;spd&#34;
-
 digitalisierung
-Topic BOW: digitalisierung 
-Words: 0.101*&#34;digitalisierung&#34; + 0.039*&#34;beim&#34; + 0.030*&#34;thema&#34; + 0.026*&#34;5kampf&#34; + 0.023*&#34;geht&#34; + 0.021*&#34;kompetenz&#34; + 0.021*&#34;schulen&#34; + 0.021*&#34;verbessern&#34; + 0.021*&#34;digitale&#34; + 0.017*&#34;merkel&#34;
-Topic TF-IDF: digitalisierung 
-Words: 0.022*&#34;verbessern&#34; + 0.022*&#34;schulen&#34; + 0.022*&#34;kompetenz&#34; + 0.022*&#34;digitale&#34; + 0.021*&#34;thema&#34; + 0.021*&#34;5kampf&#34; + 0.020*&#34;beim&#34; + 0.014*&#34;dsl&#34; + 0.014*&#34;geht&#34; + 0.014*&#34;breitband&#34;
-
 demaizière
-Topic BOW: demaizière 
-Words: 0.100*&#34;demaizière&#34; + 0.082*&#34;nazi&#34; + 0.078*&#34;linksextremismus&#34; + 0.078*&#34;rückt&#34; + 0.078*&#34;fokus&#34; + 0.076*&#34;bald&#34; + 0.076*&#34;sitzen&#34; + 0.076*&#34;seit&#34; + 0.076*&#34;mal&#34; + 0.076*&#34;bundestag&#34;
-Topic TF-IDF: demaizière 
-Words: 0.083*&#34;sitzen&#34; + 0.083*&#34;mal&#34; + 0.083*&#34;bundestag&#34; + 0.083*&#34;seit&#34; + 0.083*&#34;kriegsende&#34; + 0.083*&#34;bald&#34; + 0.073*&#34;linksextremismus&#34; + 0.073*&#34;rückt&#34; + 0.073*&#34;fokus&#34; + 0.060*&#34;nazi&#34;
-
 fail
-Topic BOW: fail 
-Words: 0.082*&#34;fail&#34; + 0.049*&#34;journalisten&#34; + 0.049*&#34;finden&#34; + 0.049*&#34;wichtigstes&#34; + 0.049*&#34;bildung&#34; + 0.049*&#34;thema&#34; + 0.049*&#34;tvduell&#34; + 0.049*&#34;themen&#34; + 0.049*&#34;fanden&#34; + 0.049*&#34;wichtigsten&#34;
-Topic TF-IDF: fail 
-Words: 0.046*&#34;afd&#34; + 0.046*&#34;100&#34; + 0.046*&#34;finden&#34; + 0.046*&#34;tvduell&#34; + 0.046*&#34;deutschen&#34; + 0.046*&#34;bildung&#34; + 0.046*&#34;themen&#34; + 0.046*&#34;fanden&#34; + 0.046*&#34;wichtigstes&#34; + 0.046*&#34;thema&#34;
-
 elektromobilität
-Topic BOW: elektromobilität 
-Words: 0.111*&#34;elektromobilität&#34; + 0.056*&#34;pro&#34; + 0.056*&#34;kennt&#34; + 0.056*&#34;vater&#34; + 0.056*&#34;wer&#34; + 0.037*&#34;zukunft&#34; + 0.037*&#34;fahrrad&#34; + 0.037*&#34;pkwmaut&#34; + 0.037*&#34;modell&#34; + 0.037*&#34;kontraproduktiv&#34;
-Topic TF-IDF: elektromobilität 
-Words: 0.064*&#34;kennt&#34; + 0.064*&#34;wer&#34; + 0.064*&#34;vater&#34; + 0.049*&#34;pro&#34; + 0.047*&#34;mutludirekt&#34; + 0.047*&#34;modell&#34; + 0.047*&#34;ernst&#34; + 0.040*&#34;fahrrad&#34; + 0.040*&#34;steuersenkungswahn&#34; + 0.040*&#34;porsche&#34;
-
 bundestag
-Topic BOW: bundestag 
-Words: 0.078*&#34;bundestag&#34; + 0.049*&#34;btw17&#34; + 0.029*&#34;traudichdeutschland&#34; + 0.029*&#34;verloren&#34; + 0.029*&#34;wer&#34; + 0.029*&#34;geld&#34; + 0.029*&#34;aliyew&#34; + 0.029*&#34;nimmt&#34; + 0.029*&#34;diktatoren&#34; + 0.029*&#34;afd&#34;
-Topic TF-IDF: bundestag 
-Words: 0.029*&#34;aliyew&#34; + 0.029*&#34;verloren&#34; + 0.029*&#34;geld&#34; + 0.029*&#34;diktatoren&#34; + 0.029*&#34;nimmt&#34; + 0.029*&#34;wer&#34; + 0.025*&#34;btw17&#34; + 0.024*&#34;afd&#34; + 0.024*&#34;traudichdeutschland&#34; + 0.023*&#34;schönes&#34;
-
 klimawandel
-Topic BOW: klimawandel 
-Words: 0.113*&#34;klimawandel&#34; + 0.074*&#34;recht&#34; + 0.074*&#34;wohl&#34; + 0.074*&#34;wegen&#34; + 0.074*&#34;wahlwatch&#34; + 0.074*&#34;mehr&#34; + 0.074*&#34;sagen&#34; + 0.074*&#34;extremwetter&#34; + 0.019*&#34;anfang&#34; + 0.019*&#34;jose&#34;
-Topic TF-IDF: klimawandel 
-Words: 0.072*&#34;wahlwatch&#34; + 0.072*&#34;mehr&#34; + 0.072*&#34;sagen&#34; + 0.072*&#34;extremwetter&#34; + 0.072*&#34;recht&#34; + 0.072*&#34;wegen&#34; + 0.072*&#34;wohl&#34; + 0.021*&#34;irma&#34; + 0.021*&#34;jose&#34; + 0.021*&#34;erst&#34;
-
 nato
-Topic BOW: nato 
-Words: 0.137*&#34;nato&#34; + 0.124*&#34;verteidigungsunion&#34; + 0.124*&#34;einbeziehung&#34; + 0.124*&#34;defensiven&#34; + 0.124*&#34;reform&#34; + 0.124*&#34;russlands&#34; + 0.124*&#34;fordert&#34; + 0.020*&#34;stabschefs&#34; + 0.020*&#34;shape&#34; + 0.020*&#34;früheren&#34;
-Topic TF-IDF: nato 
-Words: 0.135*&#34;russlands&#34; + 0.135*&#34;verteidigungsunion&#34; + 0.135*&#34;fordert&#34; + 0.135*&#34;einbeziehung&#34; + 0.135*&#34;defensiven&#34; + 0.135*&#34;reform&#34; + 0.029*&#34;shape&#34; + 0.029*&#34;stabschefs&#34; + 0.029*&#34;früheren&#34; + 0.029*&#34;klare&#34;
-
 ltnrw
-Topic BOW: ltnrw 
-Words: 0.106*&#34;afd&#34; + 0.106*&#34;ltnrw&#34; + 0.081*&#34;traudichdeutschland&#34; + 0.073*&#34;klare&#34; + 0.073*&#34;antisemitismus&#34; + 0.073*&#34;heimischen&#34; + 0.073*&#34;kante&#34; + 0.073*&#34;importierten&#34; + 0.033*&#34;wort&#34; + 0.033*&#34;zahn&#34;
-Topic TF-IDF: ltnrw 
-Words: 0.085*&#34;antisemitismus&#34; + 0.085*&#34;importierten&#34; + 0.085*&#34;heimischen&#34; + 0.085*&#34;kante&#34; + 0.085*&#34;klare&#34; + 0.066*&#34;traudichdeutschland&#34; + 0.041*&#34;zahn&#34; + 0.041*&#34;parteien&#34; + 0.041*&#34;wort&#34; + 0.041*&#34;fühlen&#34;
-
 antisemitismus
-Topic BOW: antisemitismus 
-Words: 0.113*&#34;antisemitismus&#34; + 0.078*&#34;klare&#34; + 0.078*&#34;traudichdeutschland&#34; + 0.078*&#34;ltnrw&#34; + 0.078*&#34;afd&#34; + 0.078*&#34;heimischen&#34; + 0.078*&#34;importierten&#34; + 0.078*&#34;kante&#34; + 0.043*&#34;mlpd&#34; + 0.043*&#34;positionen&#34;
-Topic TF-IDF: antisemitismus 
-Words: 0.083*&#34;afd&#34; + 0.083*&#34;ltnrw&#34; + 0.083*&#34;klare&#34; + 0.083*&#34;traudichdeutschland&#34; + 0.083*&#34;kante&#34; + 0.083*&#34;heimischen&#34; + 0.083*&#34;importierten&#34; + 0.050*&#34;positionen&#34; + 0.050*&#34;mlpd&#34; + 0.050*&#34;menschenfeindliche&#34;
-
 steineke
-Topic BOW: steineke 
-Words: 0.087*&#34;steineke&#34; + 0.038*&#34;sebastian&#34; + 0.029*&#34;neuruppin&#34; + 0.029*&#34;bundestagswahl&#34; + 0.029*&#34;via&#34; + 0.029*&#34;nordwes&#34; + 0.029*&#34;film&#34; + 0.029*&#34;direkt&#34; + 0.029*&#34;bundestag&#34; + 0.029*&#34;fürsieda&#34;
-Topic TF-IDF: steineke 
-Words: 0.030*&#34;sebastian&#34; + 0.029*&#34;bundestagswahl&#34; + 0.029*&#34;film&#34; + 0.029*&#34;direkt&#34; + 0.029*&#34;nordwes&#34; + 0.029*&#34;via&#34; + 0.026*&#34;neuruppin&#34; + 0.025*&#34;peter&#34; + 0.025*&#34;altmaier&#34; + 0.025*&#34;cdu&#34;
-
 unwählbar
-Topic BOW: unwählbar 
-Words: 0.140*&#34;unwählbar&#34; + 0.134*&#34;stehen&#34; + 0.134*&#34;peinlich&#34; + 0.134*&#34;fehlern&#34; + 0.134*&#34;eigenen&#34; + 0.134*&#34;mal&#34; + 0.134*&#34;seid&#34; + 0.011*&#34;unglaubwürdig&#34; + 0.011*&#34;macht&#34; + 0.011*&#34;unfassbar&#34;
-Topic TF-IDF: unwählbar 
-Words: 0.148*&#34;seid&#34; + 0.148*&#34;eigenen&#34; + 0.148*&#34;mal&#34; + 0.148*&#34;fehlern&#34; + 0.148*&#34;stehen&#34; + 0.148*&#34;peinlich&#34; + 0.020*&#34;unfassbar&#34; + 0.020*&#34;unglaubwürdig&#34; + 0.020*&#34;macht&#34; + 0.020*&#34;fakenews&#34;
-
 altersarmut
-Topic BOW: altersarmut 
-Words: 0.090*&#34;amp&#34; + 0.072*&#34;altersarmut&#34; + 0.054*&#34;löhne&#34; + 0.054*&#34;österreich&#34; + 0.054*&#34;merkel&#34; + 0.054*&#34;rente&#34; + 0.054*&#34;lassen&#34; + 0.054*&#34;http&#34; + 0.054*&#34;ansteigen&#34; + 0.054*&#34;statt&#34;
-Topic TF-IDF: altersarmut 
-Words: 0.056*&#34;löhne&#34; + 0.056*&#34;höhere&#34; + 0.056*&#34;merkel&#34; + 0.056*&#34;rente&#34; + 0.056*&#34;österreich&#34; + 0.056*&#34;ansteigen&#34; + 0.056*&#34;statt&#34; + 0.056*&#34;dramatisch&#34; + 0.056*&#34;lassen&#34; + 0.056*&#34;regierungen&#34;
-
 schäuble
-Topic BOW: schäuble 
-Words: 0.099*&#34;schäuble&#34; + 0.086*&#34;glaubt&#34; + 0.086*&#34;merkel&#34; + 0.086*&#34;unfinanzierbar&#34; + 0.086*&#34;sei&#34; + 0.086*&#34;geht&#34; + 0.086*&#34;gerechtigkeit&#34; + 0.086*&#34;erzählen&#34; + 0.086*&#34;info&#34; + 0.016*&#34;zusammen&#34;
-Topic TF-IDF: schäuble 
-Words: 0.084*&#34;merkel&#34; + 0.084*&#34;gerechtigkeit&#34; + 0.084*&#34;sei&#34; + 0.084*&#34;glaubt&#34; + 0.084*&#34;erzählen&#34; + 0.084*&#34;info&#34; + 0.084*&#34;geht&#34; + 0.084*&#34;unfinanzierbar&#34; + 0.017*&#34;zusammen&#34; + 0.013*&#34;gehört&#34;
-
 txl
-Topic BOW: txl 
-Words: 0.200*&#34;gegriffen&#34; + 0.200*&#34;letzten&#34; + 0.200*&#34;tegelschliessen&#34; + 0.200*&#34;txl&#34; + 0.200*&#34;mittel&#34;
-Topic TF-IDF: txl 
-Words: 0.200*&#34;gegriffen&#34; + 0.200*&#34;letzten&#34; + 0.200*&#34;mittel&#34; + 0.200*&#34;tegelschliessen&#34; + 0.200*&#34;txl&#34;
-
 afghanistan
-Topic BOW: afghanistan 
-Words: 0.109*&#34;afghanistan&#34; + 0.065*&#34;trump&#34; + 0.054*&#34;strategie&#34; + 0.031*&#34;gast&#34; + 0.031*&#34;türkei&#34; + 0.024*&#34;beenden&#34; + 0.024*&#34;ausbildung&#34; + 0.024*&#34;widerspricht&#34; + 0.024*&#34;töten&#34; + 0.024*&#34;sprecher&#34;
-Topic TF-IDF: afghanistan 
-Words: 0.035*&#34;türkei&#34; + 0.035*&#34;gast&#34; + 0.033*&#34;strategie&#34; + 0.026*&#34;sprecher&#34; + 0.026*&#34;trump&#34; + 0.025*&#34;außenpolitische&#34; + 0.025*&#34;befürwortet&#34; + 0.024*&#34;töten&#34; + 0.024*&#34;beenden&#34; + 0.024*&#34;deutschland&#34;
-
 brandenburg
-Topic BOW: brandenburg 
-Words: 0.088*&#34;brandenburg&#34; + 0.055*&#34;kohle&#34; + 0.044*&#34;raus&#34; + 0.044*&#34;wirbt&#34; + 0.044*&#34;braunkohle&#34; + 0.044*&#34;kohlepolitik&#34; + 0.044*&#34;bundestagswahl&#34; + 0.044*&#34;spd&#34; + 0.033*&#34;luft&#34; + 0.033*&#34;verpestet&#34;
-Topic TF-IDF: brandenburg 
-Words: 0.039*&#34;umstimmen&#34; + 0.039*&#34;trägtlinke&#34; + 0.039*&#34;dielinke&#34; + 0.037*&#34;wasser&#34; + 0.037*&#34;verpestet&#34; + 0.037*&#34;los&#34; + 0.037*&#34;http&#34; + 0.037*&#34;luft&#34; + 0.037*&#34;klima&#34; + 0.037*&#34;linke&#34;
-
 sicherheit
-Topic BOW: sicherheit 
-Words: 0.132*&#34;sicherheit&#34; + 0.113*&#34;denkenwirneu&#34; + 0.113*&#34;btw17&#34; + 0.113*&#34;besser&#34; + 0.113*&#34;verbrechen&#34; + 0.113*&#34;mehrpolizisten&#34; + 0.113*&#34;organisiert&#34; + 0.019*&#34;kinderbetreuung&#34; + 0.019*&#34;bildung&#34; + 0.013*&#34;hund&#34;
-Topic TF-IDF: sicherheit 
-Words: 0.115*&#34;verbrechen&#34; + 0.115*&#34;denkenwirneu&#34; + 0.115*&#34;organisiert&#34; + 0.115*&#34;btw17&#34; + 0.115*&#34;mehrpolizisten&#34; + 0.115*&#34;besser&#34; + 0.029*&#34;deutschland&#34; + 0.023*&#34;bildung&#34; + 0.023*&#34;kinderbetreuung&#34; + 0.020*&#34;einwanderung&#34;
-
 ard
-Topic BOW: ard 
-Words: 0.091*&#34;afd&#34; + 0.091*&#34;ard&#34; + 0.084*&#34;fake&#34; + 0.084*&#34;news&#34; + 0.084*&#34;löscht&#34; + 0.084*&#34;seiten&#34; + 0.084*&#34;gibt&#34; + 0.084*&#34;traudichdeutschland&#34; + 0.084*&#34;zdf&#34; + 0.084*&#34;facebook&#34;
-Topic TF-IDF: ard 
-Words: 0.117*&#34;btw17&#34; + 0.098*&#34;löscht&#34; + 0.098*&#34;news&#34; + 0.098*&#34;seiten&#34; + 0.098*&#34;traudichdeutschland&#34; + 0.098*&#34;fake&#34; + 0.098*&#34;facebook&#34; + 0.098*&#34;gibt&#34; + 0.098*&#34;zdf&#34; + 0.011*&#34;cdu&#34;
-
 fürsieda
-Topic BOW: fürsieda 
-Words: 0.090*&#34;fürsieda&#34; + 0.077*&#34;bundestag&#34; + 0.077*&#34;cdu&#34; + 0.077*&#34;steineke&#34; + 0.051*&#34;fedidwgugl&#34; + 0.051*&#34;tage&#34; + 0.038*&#34;morgen&#34; + 0.038*&#34;btw17&#34; + 0.038*&#34;tour&#34; + 0.038*&#34;gilt&#34;
-Topic TF-IDF: fürsieda 
-Words: 0.058*&#34;gilt&#34; + 0.058*&#34;morgen&#34; + 0.050*&#34;fedidwgugl&#34; + 0.043*&#34;btw17&#34; + 0.042*&#34;region&#34; + 0.042*&#34;bilanz&#34; + 0.039*&#34;ikarus&#34; + 0.039*&#34;tour&#34; + 0.038*&#34;kitas&#34; + 0.038*&#34;gründe&#34;
-
 klima
-Topic BOW: klima 
-Words: 0.077*&#34;klima&#34; + 0.037*&#34;nix&#34; + 0.033*&#34;wählbar&#34; + 0.033*&#34;schützt&#34; + 0.033*&#34;politik&#34; + 0.033*&#34;menschen&#34; + 0.033*&#34;darumgrün&#34; + 0.033*&#34;natur&#34; + 0.033*&#34;september&#34; + 0.033*&#34;tiere&#34;
-Topic TF-IDF: klima 
-Words: 0.033*&#34;menschen&#34; + 0.033*&#34;politik&#34; + 0.033*&#34;wählbar&#34; + 0.033*&#34;tiere&#34; + 0.033*&#34;september&#34; + 0.033*&#34;darumgrün&#34; + 0.033*&#34;schützt&#34; + 0.033*&#34;natur&#34; + 0.028*&#34;nix&#34; + 0.018*&#34;amp&#34;
-
 zeitfürmartin
-Topic BOW: zeitfürmartin 
-Words: 0.135*&#34;zeitfürmartin&#34; + 0.054*&#34;land&#34; + 0.054*&#34;stimmung&#34; + 0.054*&#34;landtagswahl&#34; + 0.054*&#34;menschen&#34; + 0.054*&#34;gute&#34; + 0.054*&#34;kämpferisch&#34; + 0.054*&#34;göttingen&#34; + 0.054*&#34;bundestags&#34; + 0.054*&#34;500&#34;
-Topic TF-IDF: zeitfürmartin 
-Words: 0.063*&#34;deutschland&#34; + 0.063*&#34;führen&#34; + 0.063*&#34;mehr&#34; + 0.063*&#34;land&#34; + 0.059*&#34;göttingen&#34; + 0.059*&#34;500&#34; + 0.059*&#34;mindestens&#34; + 0.059*&#34;stimmung&#34; + 0.059*&#34;landtagswahl&#34; + 0.059*&#34;mann&#34;
-
 eu
-Topic BOW: eu 
-Words: 0.046*&#34;diktatur&#34; + 0.038*&#34;volk&#34; + 0.038*&#34;frey&#34; + 0.038*&#34;europäisches&#34; + 0.038*&#34;enteignen&#34; + 0.031*&#34;europa&#34; + 0.023*&#34;afd&#34; + 0.023*&#34;geht&#34; + 0.023*&#34;traudichdeutschland&#34; + 0.023*&#34;konfrontationsstrategie&#34;
-Topic TF-IDF: eu 
-Words: 0.034*&#34;frey&#34; + 0.034*&#34;enteignen&#34; + 0.034*&#34;volk&#34; + 0.034*&#34;europäisches&#34; + 0.032*&#34;diktatur&#34; + 0.022*&#34;btw17&#34; + 0.022*&#34;afd&#34; + 0.022*&#34;bundesregierung&#34; + 0.022*&#34;konfrontationsstrategie&#34; + 0.022*&#34;geht&#34;
-
 politik
-Topic BOW: politik 
-Words: 0.095*&#34;politik&#34; + 0.048*&#34;nachgefragt&#34; + 0.048*&#34;persönlich&#34; + 0.048*&#34;wolfgangclement&#34; + 0.048*&#34;sagen&#34; + 0.048*&#34;kemmerichthomasl&#34; + 0.048*&#34;kemmerich&#34; + 0.048*&#34;thomas&#34; + 0.032*&#34;könnt&#34; + 0.032*&#34;linke&#34;
-Topic TF-IDF: politik 
-Words: 0.045*&#34;nachgefragt&#34; + 0.045*&#34;kemmerichthomasl&#34; + 0.045*&#34;kemmerich&#34; + 0.045*&#34;persönlich&#34; + 0.045*&#34;sagen&#34; + 0.045*&#34;thomas&#34; + 0.045*&#34;wolfgangclement&#34; + 0.037*&#34;mehr&#34; + 0.037*&#34;könnt&#34; + 0.037*&#34;wählbar&#34;
-
 twitter
-Topic BOW: twitter 
-Words: 0.118*&#34;twitter&#34; + 0.088*&#34;stark&#34; + 0.088*&#34;zusammen&#34; + 0.088*&#34;unterstützern&#34; + 0.088*&#34;afd&#34; + 0.088*&#34;dank&#34; + 0.088*&#34;genug&#34; + 0.088*&#34;sagen&#34; + 0.088*&#34;herzlichen&#34; + 0.059*&#34;mehr&#34;
-Topic TF-IDF: twitter 
-Words: 0.088*&#34;dank&#34; + 0.088*&#34;stark&#34; + 0.088*&#34;zusammen&#34; + 0.088*&#34;unterstützern&#34; + 0.088*&#34;afd&#34; + 0.088*&#34;genug&#34; + 0.088*&#34;sagen&#34; + 0.088*&#34;herzlichen&#34; + 0.081*&#34;mehr&#34; + 0.081*&#34;darum&#34;
-
 heimat
-Topic BOW: heimat 
-Words: 0.098*&#34;heimat&#34; + 0.090*&#34;winfried&#34; + 0.090*&#34;badurach&#34; + 0.090*&#34;wandern&#34; + 0.090*&#34;wer&#34; + 0.090*&#34;alb&#34; + 0.090*&#34;kretschmann&#34; + 0.090*&#34;liebt&#34; + 0.090*&#34;schwäbischen&#34; + 0.090*&#34;natur&#34;
-Topic TF-IDF: heimat 
-Words: 0.089*&#34;wandern&#34; + 0.089*&#34;natur&#34; + 0.089*&#34;winfried&#34; + 0.089*&#34;wer&#34; + 0.089*&#34;badurach&#34; + 0.089*&#34;alb&#34; + 0.089*&#34;kretschmann&#34; + 0.089*&#34;schwäbischen&#34; + 0.089*&#34;liebt&#34; + 0.017*&#34;ruhrgebiet&#34;
-
 heuchler
-Topic BOW: heuchler 
-Words: 0.132*&#34;heuchler&#34; + 0.114*&#34;traudichdeutschland&#34; + 0.070*&#34;afd&#34; + 0.053*&#34;btw2017&#34; + 0.053*&#34;zeitfürveränderung&#34; + 0.044*&#34;krasser&#34; + 0.035*&#34;übrigens&#34; + 0.035*&#34;immer&#34; + 0.035*&#34;verrückter&#34; + 0.035*&#34;bezahlt&#34;
-Topic TF-IDF: heuchler 
-Words: 0.070*&#34;krasser&#34; + 0.065*&#34;btw2017&#34; + 0.050*&#34;wähle&#34; + 0.045*&#34;afd&#34; + 0.042*&#34;zeitfürveränderung&#34; + 0.041*&#34;immer&#34; + 0.041*&#34;übrigens&#34; + 0.041*&#34;verrückter&#34; + 0.041*&#34;bezahlt&#34; + 0.034*&#34;schau&#34;
-
 obergrenze
-Topic BOW: obergrenze 
-Words: 0.137*&#34;obergrenze&#34; + 0.123*&#34;seehofer&#34; + 0.096*&#34;csu&#34; + 0.096*&#34;aufgabe&#34; + 0.096*&#34;alexander&#34; + 0.096*&#34;getöse&#34; + 0.096*&#34;gauland&#34; + 0.096*&#34;entlarvt&#34; + 0.027*&#34;tag&#34; + 0.027*&#34;http&#34;
-Topic TF-IDF: obergrenze 
-Words: 0.103*&#34;alexander&#34; + 0.103*&#34;csu&#34; + 0.103*&#34;entlarvt&#34; + 0.103*&#34;gauland&#34; + 0.103*&#34;getöse&#34; + 0.103*&#34;aufgabe&#34; + 0.066*&#34;seehofer&#34; + 0.052*&#34;drehhofer&#34; + 0.052*&#34;wohin&#34; + 0.045*&#34;tag&#34;
-
 kretschmann
-Topic BOW: kretschmann 
-Words: 0.122*&#34;kretschmann&#34; + 0.073*&#34;freuen&#34; + 0.073*&#34;brauern&#34; + 0.073*&#34;macht&#34; + 0.073*&#34;station&#34; + 0.073*&#34;sommertour&#34; + 0.073*&#34;morgen&#34; + 0.049*&#34;opa&#34; + 0.049*&#34;diesel&#34; + 0.049*&#34;partei&#34;
-Topic TF-IDF: kretschmann 
-Words: 0.072*&#34;station&#34; + 0.072*&#34;sommertour&#34; + 0.072*&#34;freuen&#34; + 0.072*&#34;brauern&#34; + 0.072*&#34;morgen&#34; + 0.072*&#34;macht&#34; + 0.063*&#34;opa&#34; + 0.063*&#34;gesehen&#34; + 0.063*&#34;schon&#34; + 0.056*&#34;diesel&#34;
-
 viersen
-Topic BOW: viersen 
-Words: 0.093*&#34;viersen&#34; + 0.067*&#34;beim&#34; + 0.067*&#34;fest&#34; + 0.040*&#34;zapfen&#34; + 0.040*&#34;geburtsta&#34; + 0.040*&#34;tolles&#34; + 0.040*&#34;miriam&#34; + 0.040*&#34;sondermarken&#34; + 0.040*&#34;verkauft&#34; + 0.040*&#34;boes&#34;
-Topic TF-IDF: viersen 
-Words: 0.055*&#34;beim&#34; + 0.044*&#34;geburtsta&#34; + 0.044*&#34;verkauft&#34; + 0.044*&#34;miriam&#34; + 0.044*&#34;boes&#34; + 0.044*&#34;sondermarken&#34; + 0.044*&#34;tolles&#34; + 0.040*&#34;spülen&#34; + 0.040*&#34;zapfen&#34; + 0.040*&#34;inklusive&#34;
-
 sachsen
-Topic BOW: sachsen 
-Words: 0.091*&#34;sachsen&#34; + 0.068*&#34;aufnahme&#34; + 0.068*&#34;kommunen&#34; + 0.068*&#34;geschultert&#34; + 0.068*&#34;flüchtlingen&#34; + 0.068*&#34;bewundernswert&#34; + 0.068*&#34;beispiel&#34; + 0.068*&#34;wurde&#34; + 0.068*&#34;borna&#34; + 0.045*&#34;afd&#34;
-Topic TF-IDF: sachsen 
-Words: 0.067*&#34;aufnahme&#34; + 0.067*&#34;wurde&#34; + 0.067*&#34;kommunen&#34; + 0.067*&#34;geschultert&#34; + 0.067*&#34;flüchtlingen&#34; + 0.067*&#34;borna&#34; + 0.067*&#34;bewundernswert&#34; + 0.067*&#34;beispiel&#34; + 0.053*&#34;afd&#34; + 0.053*&#34;außer&#34;
-
 nazis
-Topic BOW: nazis 
-Words: 0.105*&#34;nazi&#34; + 0.053*&#34;gleichsetzt&#34; + 0.053*&#34;spd&#34; + 0.053*&#34;türkeibashing&#34; + 0.053*&#34;deutscheparteien&#34; + 0.053*&#34;özdemir&#34; + 0.053*&#34;herr&#34; + 0.053*&#34;grünen&#34; + 0.053*&#34;bundestag&#34; + 0.053*&#34;afd&#34;
-Topic TF-IDF: nazis 
-Words: 0.063*&#34;deutscheparteien&#34; + 0.063*&#34;türkeibashing&#34; + 0.063*&#34;türkenbashing&#34; + 0.056*&#34;afd&#34; + 0.056*&#34;özdemir&#34; + 0.056*&#34;herr&#34; + 0.056*&#34;grünen&#34; + 0.056*&#34;gleichsetzt&#34; + 0.056*&#34;gelten&#34; + 0.054*&#34;spd&#34;
-
 bayern
-Topic BOW: bayern 
-Words: 0.192*&#34;csu&#34; + 0.115*&#34;bayern&#34; + 0.115*&#34;findet&#34; + 0.115*&#34;bisherige&#34; + 0.115*&#34;echte&#34; + 0.115*&#34;mehr&#34; + 0.115*&#34;programm&#34; + 0.115*&#34;wählbar&#34;
-Topic TF-IDF: bayern 
-Words: 0.125*&#34;bayern&#34; + 0.125*&#34;bisherige&#34; + 0.125*&#34;csu&#34; + 0.125*&#34;echte&#34; + 0.125*&#34;findet&#34; + 0.125*&#34;mehr&#34; + 0.125*&#34;programm&#34; + 0.125*&#34;wählbar&#34;
-
 rlp
-Topic BOW: rlp 
-Words: 0.100*&#34;rlp&#34; + 0.067*&#34;print&#34; + 0.067*&#34;humorvoll&#34; + 0.067*&#34;gelesen&#34; + 0.067*&#34;sympathisch&#34; + 0.067*&#34;heute&#34; + 0.067*&#34;klar&#34; + 0.067*&#34;lohnt&#34; + 0.050*&#34;obst&#34; + 0.050*&#34;nie&#34;
-Topic TF-IDF: rlp 
-Words: 0.070*&#34;print&#34; + 0.070*&#34;humorvoll&#34; + 0.070*&#34;klar&#34; + 0.070*&#34;lohnt&#34; + 0.070*&#34;sympathisch&#34; + 0.070*&#34;heute&#34; + 0.070*&#34;gelesen&#34; + 0.054*&#34;obst&#34; + 0.054*&#34;mwvlw&#34; + 0.054*&#34;selbstverständlich&#34;
-
 schöneberg
-Topic BOW: schöneberg 
-Words: 0.079*&#34;schöneberg&#34; + 0.030*&#34;aktion&#34; + 0.030*&#34;mechthild&#34; + 0.030*&#34;rawert&#34; + 0.021*&#34;berlin&#34; + 0.021*&#34;park&#34; + 0.021*&#34;parkplätze&#34; + 0.021*&#34;goltzstraße&#34; + 0.021*&#34;stimme&#34; + 0.021*&#34;parkingday&#34;
-Topic TF-IDF: schöneberg 
-Words: 0.019*&#34;aktion&#34; + 0.019*&#34;berlin&#34; + 0.019*&#34;parkingday&#34; + 0.019*&#34;goltzstraße&#34; + 0.019*&#34;parkplätze&#34; + 0.019*&#34;park&#34; + 0.019*&#34;darumgruen&#34; + 0.019*&#34;gemütliche&#34; + 0.018*&#34;htt&#34; + 0.017*&#34;mechthild&#34;
-
 asyl
-Topic BOW: asyl 
-Words: 0.123*&#34;asyl&#34; + 0.107*&#34;beim&#34; + 0.107*&#34;untergrenze&#34; + 0.107*&#34;schlagabtausch&#34; + 0.107*&#34;heißt&#34; + 0.107*&#34;gilt&#34; + 0.107*&#34;asylrecht&#34; + 0.098*&#34;flüchtlin&#34; + 0.025*&#34;flucht&#34; + 0.025*&#34;zuwanderung&#34;
-Topic TF-IDF: asyl 
-Words: 0.143*&#34;flüchtlin&#34; + 0.100*&#34;beim&#34; + 0.100*&#34;schlagabtausch&#34; + 0.100*&#34;heißt&#34; + 0.100*&#34;asylrecht&#34; + 0.100*&#34;untergrenze&#34; + 0.100*&#34;gilt&#34; + 0.041*&#34;flüchtlinge&#34; + 0.039*&#34;brauchen&#34; + 0.039*&#34;einwanderungsgesetz&#34;
-
 wagenknecht
-Topic BOW: wagenknecht 
-Words: 0.135*&#34;wagenknecht&#34; + 0.108*&#34;frühstückt&#34; + 0.108*&#34;2017&#34; + 0.108*&#34;uhr&#34; + 0.054*&#34;spd&#34; + 0.054*&#34;stegner&#34; + 0.054*&#34;rotrotgrün&#34; + 0.054*&#34;schulz&#34; + 0.054*&#34;dielinke&#34; + 0.054*&#34;grunen&#34;
-Topic TF-IDF: wagenknecht 
-Words: 0.122*&#34;frühstückt&#34; + 0.122*&#34;uhr&#34; + 0.122*&#34;2017&#34; + 0.059*&#34;spd&#34; + 0.059*&#34;stegner&#34; + 0.059*&#34;claudiaroth&#34; + 0.059*&#34;kipping&#34; + 0.059*&#34;macht&#34; + 0.059*&#34;grunen&#34; + 0.059*&#34;rotrotgrün&#34;
-
 nordkorea
-Topic BOW: nordkorea 
-Words: 0.153*&#34;droht&#34; + 0.082*&#34;nordkorea&#34; + 0.078*&#34;trump&#34; + 0.077*&#34;iran&#34; + 0.077*&#34;entmachten&#34; + 0.077*&#34;uno&#34; + 0.077*&#34;sagen&#34; + 0.077*&#34;völlig&#34; + 0.077*&#34;vernichtung&#34; + 0.077*&#34;frau&#34;
-Topic TF-IDF: nordkorea 
-Words: 0.148*&#34;droht&#34; + 0.088*&#34;merke&#34; + 0.075*&#34;völlig&#34; + 0.075*&#34;iran&#34; + 0.075*&#34;frau&#34; + 0.075*&#34;sagen&#34; + 0.075*&#34;vernichtung&#34; + 0.075*&#34;entmachten&#34; + 0.075*&#34;uno&#34; + 0.063*&#34;trump&#34;
-
 polizei
-Topic BOW: polizei 
-Words: 0.125*&#34;amp&#34; + 0.067*&#34;polizei&#34; + 0.063*&#34;danke&#34; + 0.063*&#34;ausstattung&#34; + 0.063*&#34;bessere&#34; + 0.062*&#34;kopf&#34; + 0.062*&#34;haltet&#34; + 0.062*&#34;mio&#34; + 0.062*&#34;überstunden&#34; + 0.062*&#34;personal&#34;
-Topic TF-IDF: polizei 
-Words: 0.097*&#34;amp&#34; + 0.067*&#34;mehr&#34; + 0.067*&#34;haltet&#34; + 0.067*&#34;schiebt&#34; + 0.067*&#34;ständig&#34; + 0.067*&#34;kopf&#34; + 0.067*&#34;mio&#34; + 0.067*&#34;überstunden&#34; + 0.067*&#34;personal&#34; + 0.067*&#34;daher&#34;
-
 wirtschaft
-Topic BOW: wirtschaft 
-Words: 0.109*&#34;wirtschaft&#34; + 0.065*&#34;leisten&#34; + 0.065*&#34;mindestlöhne&#34; + 0.065*&#34;nachbarstaaten&#34; + 0.065*&#34;fordern&#34; + 0.065*&#34;höhere&#34; + 0.043*&#34;transformation&#34; + 0.043*&#34;kretschmann&#34; + 0.043*&#34;ziel&#34; + 0.043*&#34;winfried&#34;
-Topic TF-IDF: wirtschaft 
-Words: 0.066*&#34;fordern&#34; + 0.066*&#34;leisten&#34; + 0.066*&#34;mindestlöhne&#34; + 0.066*&#34;nachbarstaaten&#34; + 0.066*&#34;höhere&#34; + 0.051*&#34;deutschen&#34; + 0.051*&#34;zahlungsmittel&#34; + 0.051*&#34;verhältnis&#34; + 0.051*&#34;digitalisierung&#34; + 0.051*&#34;bargeld&#34;
-
 bge
-Topic BOW: bge 
-Words: 0.083*&#34;bge&#34; + 0.042*&#34;bekommt&#34; + 0.042*&#34;hoffe&#34; + 0.042*&#34;chance&#34; + 0.042*&#34;zwangsrentensteuer&#34; + 0.042*&#34;grundeinkommen&#34; + 0.042*&#34;jahrhundert&#34; + 0.042*&#34;facharbeiter&#34; + 0.042*&#34;realistische&#34; + 0.042*&#34;raus&#34;
-Topic TF-IDF: bge 
-Words: 0.045*&#34;geht&#34; + 0.045*&#34;hamsterrad&#34; + 0.045*&#34;grundeinkommen&#34; + 0.045*&#34;idee&#34; + 0.045*&#34;realistische&#34; + 0.045*&#34;chance&#34; + 0.045*&#34;wahn&#34; + 0.045*&#34;raus&#34; + 0.045*&#34;bekommt&#34; + 0.045*&#34;hoffe&#34;
-
 linken
-Topic BOW: linken 
-Words: 0.116*&#34;linken&#34; + 0.047*&#34;chancen&#34; + 0.047*&#34;packen&#34; + 0.047*&#34;einzuziehen&#34; + 0.047*&#34;seid&#34; + 0.047*&#34;hauptsache&#34; + 0.047*&#34;lächeln&#34; + 0.047*&#34;gute&#34; + 0.047*&#34;afd&#34; + 0.047*&#34;hyperventiliern&#34;
-Topic TF-IDF: linken 
-Words: 0.071*&#34;lächeln&#34; + 0.050*&#34;bundestag&#34; + 0.050*&#34;einzuziehen&#34; + 0.050*&#34;endlich&#34; + 0.050*&#34;chancen&#34; + 0.050*&#34;gute&#34; + 0.050*&#34;wesen&#34; + 0.050*&#34;packen&#34; + 0.050*&#34;klar&#34; + 0.050*&#34;afd&#34;
-
 hartz4
-Topic BOW: hartz4 
-Words: 0.078*&#34;hartz4&#34; + 0.059*&#34;schroeder&#34; + 0.039*&#34;göringeckardt&#34; + 0.039*&#34;meint&#34; + 0.039*&#34;boring&#34; + 0.039*&#34;einführung&#34; + 0.039*&#34;echt&#34; + 0.039*&#34;mindestlohn&#34; + 0.039*&#34;heißt&#34; + 0.039*&#34;gruensozial&#34;
-Topic TF-IDF: hartz4 
-Words: 0.043*&#34;stimmen&#34; + 0.043*&#34;mindestlohn&#34; + 0.043*&#34;heißt&#34; + 0.043*&#34;göringeckardt&#34; + 0.043*&#34;gruensozial&#34; + 0.043*&#34;einführung&#34; + 0.043*&#34;boring&#34; + 0.042*&#34;armut&#34; + 0.042*&#34;arbeit&#34; + 0.042*&#34;fragen&#34;
-
 hartziv
-Topic BOW: hartziv 
-Words: 0.085*&#34;hartziv&#34; + 0.068*&#34;junge&#34; + 0.068*&#34;050&#34; + 0.068*&#34;statt&#34; + 0.068*&#34;schikanen&#34; + 0.068*&#34;endlich&#34; + 0.068*&#34;brauchen&#34; + 0.068*&#34;sanktionsfreie&#34; + 0.068*&#34;wah&#34; + 0.068*&#34;mindestsicherung&#34;
-Topic TF-IDF: hartziv 
-Words: 0.061*&#34;sanktionsfreie&#34; + 0.061*&#34;junge&#34; + 0.061*&#34;mindestsicherung&#34; + 0.061*&#34;wah&#34; + 0.061*&#34;schikanen&#34; + 0.061*&#34;menschen&#34; + 0.061*&#34;050&#34; + 0.061*&#34;brauchen&#34; + 0.061*&#34;endlich&#34; + 0.061*&#34;statt&#34;
-
 ddr
-Topic BOW: ddr 
-Words: 0.125*&#34;ddr&#34; + 0.125*&#34;erklärt&#34; + 0.125*&#34;jet&#34; + 0.125*&#34;jungen&#34; + 0.125*&#34;mauer&#34; + 0.125*&#34;menschen&#34; + 0.125*&#34;sed&#34; + 0.125*&#34;stasi&#34;
-Topic TF-IDF: ddr 
-Words: 0.125*&#34;ddr&#34; + 0.125*&#34;erklärt&#34; + 0.125*&#34;jet&#34; + 0.125*&#34;jungen&#34; + 0.125*&#34;mauer&#34; + 0.125*&#34;menschen&#34; + 0.125*&#34;sed&#34; + 0.125*&#34;stasi&#34;
-
 bureg
-Topic BOW: bureg 
-Words: 0.100*&#34;amp&#34; + 0.100*&#34;anti&#34; + 0.100*&#34;auslegungen&#34; + 0.100*&#34;bureg&#34; + 0.100*&#34;cdu&#34; + 0.100*&#34;eigensinnigen&#34; + 0.100*&#34;gesetz&#34; + 0.100*&#34;korruption&#34; + 0.100*&#34;moral&#34; + 0.100*&#34;recht&#34;
-Topic TF-IDF: bureg 
-Words: 0.100*&#34;amp&#34; + 0.100*&#34;anti&#34; + 0.100*&#34;auslegungen&#34; + 0.100*&#34;bureg&#34; + 0.100*&#34;cdu&#34; + 0.100*&#34;eigensinnigen&#34; + 0.100*&#34;gesetz&#34; + 0.100*&#34;korruption&#34; + 0.100*&#34;moral&#34; + 0.100*&#34;recht&#34;
-
 frankfurt
-Topic BOW: frankfurt 
-Words: 0.333*&#34;frankfurt&#34; + 0.333*&#34;heimatstadt&#34; + 0.333*&#34;iaa2017&#34;
-Topic TF-IDF: frankfurt 
-Words: 0.333*&#34;frankfurt&#34; + 0.333*&#34;heimatstadt&#34; + 0.333*&#34;iaa2017&#34;
-
 grundeinkommen
-Topic BOW: grundeinkommen 
-Words: 0.143*&#34;bge&#34; + 0.143*&#34;demokratie&#34; + 0.143*&#34;finde&#34; + 0.143*&#34;grundeinkommen&#34; + 0.143*&#34;idee&#34; + 0.143*&#34;stärkt&#34; + 0.143*&#34;tolle&#34;
-Topic TF-IDF: grundeinkommen 
-Words: 0.143*&#34;bge&#34; + 0.143*&#34;demokratie&#34; + 0.143*&#34;finde&#34; + 0.143*&#34;grundeinkommen&#34; + 0.143*&#34;idee&#34; + 0.143*&#34;stärkt&#34; + 0.143*&#34;tolle&#34;
-
 nsu
-Topic BOW: nsu 
-Words: 0.125*&#34;abend&#34; + 0.125*&#34;andré&#34; + 0.125*&#34;erlassen&#34; + 0.125*&#34;haftbefehl&#34; + 0.125*&#34;helfer&#34; + 0.125*&#34;mutmaßlichen&#34; + 0.125*&#34;nsu&#34; + 0.125*&#34;text&#34;
-Topic TF-IDF: nsu 
-Words: 0.125*&#34;abend&#34; + 0.125*&#34;andré&#34; + 0.125*&#34;erlassen&#34; + 0.125*&#34;haftbefehl&#34; + 0.125*&#34;helfer&#34; + 0.125*&#34;mutmaßlichen&#34; + 0.125*&#34;nsu&#34; + 0.125*&#34;text&#34;
-
 
 </pre>
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">output_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[63]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>hashtag</th>
+      <th>topic_words</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>ehefueralle</td>
+      <td>[ehefueralle, @volker_beck, @beatrix_vstorch, ...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>gesundheit</td>
+      <td>[gesundheit, pflege, neues, dossier, prekär, u...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>afd</td>
+      <td>[afd, traudichdeutschland, @afd, @joerg_meuthe...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>btw17</td>
+      <td>[btw17, afd, @afd, wählen, traudichdeutschland...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>btw2017</td>
+      <td>[btw2017, traudichdeutschland, @fraukepetry, k...</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[64]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># save to csv</span>
+<span class="n">path_file</span> <span class="o">=</span> <span class="s1">&#39;../../data/BTW17_Twitter/lda/topics.csv&#39;</span>
+<span class="n">output_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_file</span><span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
