@@ -14,3 +14,4 @@ This is the repository for my Bachelor-Thesis **Topic-Analyse politischer Tweets
 | `btw17_twitter_lda_preprocess.ipynb` | Retrieve the peak date +- 3 days per hashtag for LDA. |
 | `btw17_twitter_lda_preprocess_text.ipynb` | Retrieve the tweets for identified days for LDA. |
 | `btw17_twitter_lda.ipynb` | Latent Dirichlet Allocation on identified peaks per hashtag. |
+| 'btw17_compare_topics_suggestions.ipynb' | Word2Vec, K-Means-Clustering of topics, comparing vectors of topics and suggestions. |
