@@ -34,4 +34,8 @@ With these two datasets, execute the described notebooks in the following order:
 * `btw17_querysuggestions_preprocessing.ipynb`
 * `btw17_querysuggestions_kmeans.ipynb`
 * `btw17_compare_topics_suggestions.ipynb`
+<<<<<<< HEAD
 * `btw17_analysis.ipynb`
+=======
+* `btw17_analysis.ipynb`
+>>>>>>> 01e8f1a18a60ce80df3cef86bffa36c3382d554d

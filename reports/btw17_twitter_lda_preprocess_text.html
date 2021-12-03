@@ -13185,7 +13185,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># set to *.json to load all</span>
@@ -13194,8 +13194,13 @@ div#notebook {
 <span class="n">hashtag_list</span> <span class="o">=</span> <span class="n">dates_df</span><span class="p">[</span><span class="s1">&#39;hashtag&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 <span class="n">lda_dates_list</span> <span class="o">=</span> <span class="n">dates_df</span><span class="p">[</span><span class="s1">&#39;lda_dates&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
-
-<span class="n">output_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">created_at_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">id_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">text_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">user_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">extended_tweet_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">retweeted_status_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">tags_list</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="c1"># iterate through files create output csv</span>
 <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">file_list</span><span class="p">))):</span>
@@ -13213,15 +13218,25 @@ div#notebook {
         
         <span class="c1"># change datetime to date and lower all hashtags</span>
         <span class="n">df</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
         <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
                 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dates_df</span><span class="p">)):</span>
-            <span class="c1">#hashtag = &#39;ehrenwertegesellschaft&#39;</span>
-            <span class="c1">#lda_dates = [&#39;2017-07-25&#39;, &#39;2021-01-01&#39;, &#39;2022-03-01&#39;]</span>
             <span class="n">hashtag</span> <span class="o">=</span> <span class="n">hashtag_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">lda_dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">lda_dates_list</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">lda_dates</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">lda_dates_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
             <span class="n">temp_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">hashtag</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">lda_dates</span><span class="p">))]</span>
-            <span class="n">output_df</span> <span class="o">=</span> <span class="n">output_df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_df</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp_df</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># append data to lists</span>
+                <span class="n">created_at_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;created_at&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                <span class="n">id_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                <span class="n">text_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                <span class="n">user_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                <span class="n">extended_tweet_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;extended_tweet&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                <span class="n">retweeted_status_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;retweeted_status&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                <span class="n">tags_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp_df</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -13242,13 +13257,13 @@ div#notebook {
 
  
  
-<div id="251e08cd-52ad-4e71-aec9-68a580597086"></div>
+<div id="eb24c4c4-38d7-4aa3-b39d-e0e41afd7803"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#251e08cd-52ad-4e71-aec9-68a580597086');
+var element = $('#eb24c4c4-38d7-4aa3-b39d-e0e41afd7803');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "1fea7b7aa5414c7da742385ff4b4881a", "version_major": 2, "version_minor": 0}
+{"model_id": "128286cb9451451fb22d1b7e21a67a4c", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -13271,10 +13286,20 @@ var element = $('#251e08cd-52ad-4e71-aec9-68a580597086');
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">output_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create df</span>
+<span class="n">output_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;created_at&#39;</span><span class="p">:</span> <span class="n">created_at_list</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">id_list</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">:</span> <span class="n">text_list</span><span class="p">,</span>
+                               <span class="s1">&#39;user&#39;</span><span class="p">:</span> <span class="n">user_list</span><span class="p">,</span> <span class="s1">&#39;extended_tweet&#39;</span><span class="p">:</span> <span class="n">extended_tweet_list</span><span class="p">,</span>
+                               <span class="s1">&#39;retweeted_status&#39;</span><span class="p">:</span> <span class="n">retweeted_status_list</span><span class="p">,</span> <span class="s1">&#39;tags&#39;</span><span class="p">:</span> <span class="n">tags_list</span><span class="p">})</span>
+
+<span class="c1"># explode df after setting fake column</span>
+<span class="n">output_df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">output_df</span> <span class="o">=</span> <span class="n">output_df</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="o">.</span><span class="n">explode</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">output_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">output_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13287,7 +13312,7 @@ var element = $('#251e08cd-52ad-4e71-aec9-68a580597086');
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+    <div class="prompt output_prompt">Out[27]:</div>
 
 
 
@@ -13312,255 +13337,63 @@ var element = $('#251e08cd-52ad-4e71-aec9-68a580597086');
       <th></th>
       <th>created_at</th>
       <th>id</th>
-      <th>id_str</th>
       <th>text</th>
-      <th>display_text_range</th>
-      <th>source</th>
-      <th>truncated</th>
-      <th>in_reply_to_status_id</th>
-      <th>in_reply_to_status_id_str</th>
-      <th>in_reply_to_user_id</th>
-      <th>in_reply_to_user_id_str</th>
-      <th>in_reply_to_screen_name</th>
       <th>user</th>
-      <th>geo</th>
-      <th>coordinates</th>
-      <th>place</th>
-      <th>contributors</th>
-      <th>is_quote_status</th>
-      <th>retweet_count</th>
-      <th>favorite_count</th>
-      <th>entities</th>
-      <th>extended_entities</th>
-      <th>favorited</th>
-      <th>retweeted</th>
-      <th>possibly_sensitive</th>
-      <th>filter_level</th>
-      <th>lang</th>
-      <th>timestamp_ms</th>
-      <th>retweeted_status</th>
-      <th>quoted_status_id</th>
-      <th>quoted_status_id_str</th>
-      <th>quoted_status</th>
       <th>extended_tweet</th>
+      <th>retweeted_status</th>
       <th>tags</th>
-      <th>withheld_in_countries</th>
-      <th>quote_count</th>
-      <th>reply_count</th>
-      <th>delete</th>
-      <th>status_withheld</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>18</th>
-      <td>2017-06-28</td>
-      <td>8.798635e+17</td>
-      <td>8.798635e+17</td>
-      <td>RT @Junge_Freiheit: AfD-Vize Beatrix von Storc...</td>
-      <td>NaN</td>
-      <td>&lt;a href="http://twitter.com/download/iphone" r...</td>
-      <td>0.0</td>
+      <th>0</th>
+      <td>2017-08-02</td>
+      <td>892871750018621440</td>
+      <td>Endlich sagts mal einer, immerhin im Leitartik...</td>
+      <td>{'id': 52024480, 'id_str': '52024480', 'name':...</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>None</td>
-      <td>{'id': 728326774027919360, 'id_str': '72832677...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>None</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>{'hashtags': [{'text': 'Ehefueralle', 'indices...</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>low</td>
-      <td>de</td>
-      <td>2017-06-28 00:46:10.413</td>
-      <td>{'created_at': 'Tue Jun 27 16:01:11 +0000 2017...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>ehefueralle</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>dobrindt</td>
     </tr>
     <tr>
-      <th>67</th>
-      <td>2017-06-28</td>
-      <td>8.798879e+17</td>
-      <td>8.798879e+17</td>
-      <td>RT @AfD_Bund: Dr. @Alice_Weidel:\n»#Ehefuerall...</td>
+      <th>1</th>
+      <td>2017-08-02</td>
+      <td>892872839916859392</td>
+      <td>RT @DJanecek: Endlich sagts mal einer, immerhi...</td>
+      <td>{'id': 3338824444, 'id_str': '3338824444', 'na...</td>
       <td>NaN</td>
-      <td>&lt;a href="http://twitter.com/download/android" ...</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>None</td>
-      <td>{'id': 1222045254, 'id_str': '1222045254', 'na...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>None</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>{'hashtags': [{'text': 'Ehefueralle', 'indices...</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>low</td>
-      <td>de</td>
-      <td>2017-06-28 02:23:26.159</td>
-      <td>{'created_at': 'Tue Jun 27 17:40:08 +0000 2017...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>ehefueralle</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>{'created_at': 'Wed Aug 02 22:16:28 +0000 2017...</td>
+      <td>dobrindt</td>
     </tr>
     <tr>
-      <th>70</th>
-      <td>2017-06-28</td>
-      <td>8.798901e+17</td>
-      <td>8.798901e+17</td>
-      <td>RT @hessenSPD: Abstimmen, abstimmen, abstimmen...</td>
+      <th>2</th>
+      <td>2017-08-02</td>
+      <td>892874663499632640</td>
+      <td>RT @DJanecek: Endlich sagts mal einer, immerhi...</td>
+      <td>{'id': 4828089006, 'id_str': '4828089006', 'na...</td>
       <td>NaN</td>
-      <td>&lt;a href="http://twitter.com/download/iphone" r...</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>None</td>
-      <td>{'id': 2443895924, 'id_str': '2443895924', 'na...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>None</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>{'hashtags': [{'text': 'ehefueralle', 'indices...</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>low</td>
-      <td>de</td>
-      <td>2017-06-28 02:32:06.046</td>
-      <td>{'created_at': 'Tue Jun 27 09:19:12 +0000 2017...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>ehefueralle</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>{'created_at': 'Wed Aug 02 22:16:28 +0000 2017...</td>
+      <td>dobrindt</td>
     </tr>
     <tr>
-      <th>71</th>
-      <td>2017-06-28</td>
-      <td>8.798903e+17</td>
-      <td>8.798903e+17</td>
-      <td>RT @Die_Gruenen: Hallo @spdbt! Jetzt hindert E...</td>
-      <td>NaN</td>
-      <td>&lt;a href="http://twitter.com/download/iphone" r...</td>
-      <td>0.0</td>
+      <th>3</th>
+      <td>2017-08-03</td>
+      <td>892911669633966080</td>
+      <td>#Diesel #Dobrindt's schützende Hand über Autok...</td>
+      <td>{'id': 22900494, 'id_str': '22900494', 'name':...</td>
       <td>NaN</td>
       <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>None</td>
-      <td>{'id': 12302322, 'id_str': '12302322', 'name':...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>None</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>{'hashtags': [{'text': 'Ehefueralle', 'indices...</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>low</td>
-      <td>de</td>
-      <td>2017-06-28 02:32:59.178</td>
-      <td>{'created_at': 'Tue Jun 27 07:59:48 +0000 2017...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>ehefueralle</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>dobrindt</td>
     </tr>
     <tr>
-      <th>72</th>
-      <td>2017-06-28</td>
-      <td>8.798903e+17</td>
-      <td>8.798903e+17</td>
-      <td>RT @Die_Gruenen: "Wer die Debatte auch nur hal...</td>
+      <th>4</th>
+      <td>2017-08-25</td>
+      <td>901122414809100288</td>
+      <td>RT @DuHugonotte: Nun kommt auch der #Staatssen...</td>
+      <td>{'id': 4830265798, 'id_str': '4830265798', 'na...</td>
       <td>NaN</td>
-      <td>&lt;a href="http://twitter.com/download/iphone" r...</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>None</td>
-      <td>{'id': 391983270, 'id_str': '391983270', 'name...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>None</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>{'hashtags': [{'text': 'Ehefueralle', 'indices...</td>
-      <td>NaN</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>NaN</td>
-      <td>low</td>
-      <td>de</td>
-      <td>2017-06-28 02:33:00.094</td>
-      <td>{'created_at': 'Tue Jun 27 20:27:15 +0000 2017...</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>ehefueralle</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <td>{'created_at': 'Fri Aug 25 05:32:42 +0000 2017...</td>
+      <td>ard</td>
     </tr>
   </tbody>
 </table>
@@ -13575,20 +13408,10 @@ var element = $('#251e08cd-52ad-4e71-aec9-68a580597086');
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># drop unnecessary columns</span>
-<span class="n">output_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;id_str&#39;</span><span class="p">,</span> <span class="s1">&#39;display_text_range&#39;</span><span class="p">,</span> <span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="s1">&#39;truncated&#39;</span><span class="p">,</span> <span class="s1">&#39;in_reply_to_status_id&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;in_reply_to_status_id_str&#39;</span><span class="p">,</span> <span class="s1">&#39;in_reply_to_user_id&#39;</span><span class="p">,</span> <span class="s1">&#39;in_reply_to_user_id_str&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;in_reply_to_screen_name&#39;</span><span class="p">,</span> <span class="s1">&#39;geo&#39;</span><span class="p">,</span> <span class="s1">&#39;coordinates&#39;</span><span class="p">,</span> <span class="s1">&#39;place&#39;</span><span class="p">,</span> <span class="s1">&#39;contributors&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;is_quote_status&#39;</span><span class="p">,</span> <span class="s1">&#39;retweet_count&#39;</span><span class="p">,</span> <span class="s1">&#39;favorite_count&#39;</span><span class="p">,</span> <span class="s1">&#39;extended_entities&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;favorited&#39;</span><span class="p">,</span> <span class="s1">&#39;retweeted&#39;</span><span class="p">,</span> <span class="s1">&#39;possibly_sensitive&#39;</span><span class="p">,</span> <span class="s1">&#39;filter_level&#39;</span><span class="p">,</span> <span class="s1">&#39;lang&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;timestamp_ms&#39;</span><span class="p">,</span> <span class="s1">&#39;retweeted_status&#39;</span><span class="p">,</span> <span class="s1">&#39;quoted_status_id&#39;</span><span class="p">,</span> <span class="s1">&#39;quoted_status_id_str&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;quoted_status&#39;</span><span class="p">,</span> <span class="s1">&#39;extended_tweet&#39;</span><span class="p">,</span> <span class="s1">&#39;withheld_in_countries&#39;</span><span class="p">,</span> <span class="s1">&#39;quote_count&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;reply_count&#39;</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="s1">&#39;status_withheld&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># save to csv</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># save to csv</span>
 <span class="n">path_file</span> <span class="o">=</span> <span class="s1">&#39;../../data/BTW17_Twitter/lda/lda_tweets.csv&#39;</span>
 <span class="n">output_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_file</span><span class="p">)</span>
 </pre></div>
