@@ -18,6 +18,7 @@ def get_hashtags(x):
 
 # define function get text
 # for extracting full tweet text per tweet
+# define function to retrieve text
 def get_text(ext_tweet, retweet_stat, text):
     '''
     :param ext_tweet: column extended_tweet of twitter df
@@ -29,7 +30,7 @@ def get_text(ext_tweet, retweet_stat, text):
         if retweet_stat == 0:
             full_text = text
         else:
-            full_text = ast.literal_eval(retweet_stat).get('text')
+            full_text = retweet_stat.get('text')
     else:
-        full_text = ast.literal_eval(ext_tweet).get('full_text')
+        full_text = ext_tweet.get('full_text')
     return full_text
