@@ -15,7 +15,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+#
+# Edit Matteo Meier: additional function to plot the filtering on data.
 
 """Numpy implementation of the Kolmogorov-Zurbenko filter
 
@@ -25,9 +26,12 @@ https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Zurbenko_filter
 """
 
 import numpy as np
+import pandas as pd # edit mm
+import plotly.express as px # edit mm
+
 
 __author__ = 'Mathieu Schopfer'
-__version__ = '2017-03-31'
+__version__ = '2021-12-28' # edit mm
 
 
 def sliding_window(arr, window):
@@ -329,3 +333,32 @@ def kzp(data, nu, m, k, dt=1.):
     l = np.floor(l).astype(int)
 
     return np.sqrt(np.nanmean(np.square(2*np.abs(kzft(data, nu, m, k, t=l))), axis=-1))
+
+
+# define function plot_kzfilter
+# to plot the kzfilter for one hashtag
+# implementation mm
+def plot_kzfilter(hashtag, input_df):
+    '''
+    :params hashtag: hashtag to plot
+    :params input_df: input dataframe
+    :return: plot
+    '''
+    # plot kz-filter on hashtag btw17
+    df_plot = input_df[input_df['hashtag']=='btw2017']
+    df_plot.rename(columns={'date':'Datum', 'hashtag':'Hashtag', 'count':'Häufigkeit'}, inplace=True)
+    df_plot['Zeitreihe'] = 'Originale Zeitreihe'
+
+    df_plot2 = df_plot.copy()
+    filtered = [0] * len(df_plot2)
+    filtered[1:-1] = kz_filter(df_plot2['Häufigkeit'].to_numpy(), 3, 1)
+    df_plot2['Häufigkeit'] = filtered
+    df_plot2['Zeitreihe'] = 'Bereinigte Zeitreihe'
+
+    df_plot = df_plot.append(df_plot2)
+    df_plot.sort_values(by=['Datum', 'Zeitreihe'], inplace=True)
+
+    fig = px.line(df_plot, x='Datum', y='Häufigkeit', color='Zeitreihe',
+                template='simple_white', color_discrete_sequence=px.colors.qualitative.Antique,
+                line_dash='Zeitreihe')
+    fig.show()
