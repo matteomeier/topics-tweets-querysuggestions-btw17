@@ -7,7 +7,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var scriptElement = document.createElement('script');
+    var widgetRendererSrc = '@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
 
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    scriptElement.src = widgetRendererSrc;
+    document.body.appendChild(scriptElement);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
 
 <style type="text/css">
     /*!
@@ -13080,12 +13103,15 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../scripts/&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">lda_preprocessing</span> <span class="kn">import</span> <span class="n">mark_peaks</span><span class="p">,</span> <span class="n">retrieve_peak_dates</span><span class="p">,</span> <span class="n">nlp_pipeline</span>
+<span class="kn">from</span> <span class="nn">twitter</span> <span class="kn">import</span> <span class="n">filter_tweets</span><span class="p">,</span> <span class="n">get_text</span><span class="p">,</span> <span class="n">get_hashtags</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span> <span class="nn">glob</span>
 </pre></div>
 
     </div>
@@ -13098,71 +13124,12 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># set to *.csv to process all</span>
-<span class="n">path_to_csv</span> <span class="o">=</span> <span class="s1">&#39;../../data/BTW17_Twitter/hashtags/*.csv&#39;</span>
-<span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path_to_csv</span><span class="p">)</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-
-<span class="c1"># concatenate dataframes</span>
-<span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">file_list</span><span class="p">))):</span>
-    <span class="n">file</span> <span class="o">=</span> <span class="n">file_list</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-    
-    <span class="c1"># read file to df if first file</span>
-    <span class="k">if</span> <span class="n">index</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    
-    <span class="c1"># append to df if not first file</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-        <span class="n">df2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df2</span><span class="p">)</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="s1">&#39;hashtag&#39;</span><span class="p">],</span> <span class="n">as_index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get data</span>
+<span class="n">hashtag_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Twitter/hashtags/hashtag_counts.json&#39;</span><span class="p">)</span>
+<span class="n">peak_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Twitter/peaks/peaks.json&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
-
- 
- 
-<div id="09ecd321-cffe-4c5c-8322-59cee900fd0f"></div>
-<div class="output_subarea output_widget_view ">
-<script type="text/javascript">
-var element = $('#09ecd321-cffe-4c5c-8322-59cee900fd0f');
-</script>
-<script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "8956d6534a874c3bb7e8246fc4f0b4ab", "version_major": 2, "version_minor": 0}
-</script>
-</div>
-
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -13172,35 +13139,8 @@ var element = $('#09ecd321-cffe-4c5c-8322-59cee900fd0f');
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get peak indices</span>
-<span class="n">peak_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Twitter/peaks/peaks.csv&#39;</span><span class="p">)</span>
-<span class="n">peak_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># mark peaks in dataframe and save to complete_df</span>
-<span class="n">hashtag_list</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hashtag&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-
-<span class="n">complete_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hashtag_list</span><span class="p">))):</span>
-    <span class="n">hashtag</span> <span class="o">=</span> <span class="n">hashtag_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">small_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;hashtag&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">hashtag</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-    <span class="n">small_peak_df</span> <span class="o">=</span> <span class="n">peak_df</span><span class="p">[</span><span class="n">peak_df</span><span class="p">[</span><span class="s1">&#39;hashtag&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">hashtag</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-    <span class="n">small_df</span><span class="p">[</span><span class="s1">&#39;peak&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">peak</span> <span class="ow">in</span> <span class="n">small_peak_df</span><span class="p">[</span><span class="s1">&#39;peak&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
-        <span class="n">small_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">peak</span><span class="p">),</span> <span class="s1">&#39;peak&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">complete_df</span> <span class="o">=</span> <span class="n">complete_df</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">small_df</span><span class="p">)</span>
-    
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">mark_peaks</span><span class="p">(</span><span class="n">hashtag_df</span><span class="p">,</span> <span class="n">peak_df</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
     </div>
@@ -13221,13 +13161,13 @@ var element = $('#09ecd321-cffe-4c5c-8322-59cee900fd0f');
 
  
  
-<div id="544dfb1e-aa5a-42fe-8fd5-7fa071fd7b8f"></div>
+<div id="59299a14-1826-4bf7-aba3-821d5bcf185b"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#544dfb1e-aa5a-42fe-8fd5-7fa071fd7b8f');
+var element = $('#59299a14-1826-4bf7-aba3-821d5bcf185b');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "90f1922240b34d5886f405b12f26db20", "version_major": 2, "version_minor": 0}
+{"model_id": "5a32341e8d02487d915339585edd4179", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -13235,38 +13175,7 @@ var element = $('#544dfb1e-aa5a-42fe-8fd5-7fa071fd7b8f');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">complete_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[5]:</div>
+    <div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -13289,53 +13198,101 @@ var element = $('#544dfb1e-aa5a-42fe-8fd5-7fa071fd7b8f');
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>index</th>
-      <th>date</th>
-      <th>hashtag</th>
       <th>count</th>
-      <th>peak</th>
+      <th>unique</th>
+      <th>top</th>
+      <th>freq</th>
+      <th>first</th>
+      <th>last</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>0</td>
+      <th>index</th>
+      <td>99170.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaT</td>
+      <td>49584.5</td>
+      <td>28628.057435</td>
+      <td>0.0</td>
+      <td>24792.25</td>
+      <td>49584.5</td>
+      <td>74376.75</td>
+      <td>99169.0</td>
+    </tr>
+    <tr>
+      <th>date</th>
+      <td>99170</td>
+      <td>120</td>
+      <td>2017-09-24 00:00:00</td>
+      <td>1386</td>
       <td>2017-05-29</td>
-      <td>150jahrekapital</td>
-      <td>1</td>
-      <td>0</td>
+      <td>2017-09-25</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>2017-05-29</td>
-      <td>a19</td>
-      <td>1</td>
-      <td>0</td>
+      <th>hashtag</th>
+      <td>99170</td>
+      <td>30596</td>
+      <td>berlin</td>
+      <td>120</td>
+      <td>NaT</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>0</th>
-      <td>2</td>
-      <td>2017-05-29</td>
-      <td>abschiebung</td>
-      <td>14</td>
-      <td>0</td>
+      <th>count</th>
+      <td>99170.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaT</td>
+      <td>10.305304</td>
+      <td>84.493636</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>4.0</td>
+      <td>9412.0</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>1725</td>
-      <td>2017-05-31</td>
-      <td>abschiebung</td>
-      <td>19</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>2613</td>
-      <td>2017-06-01</td>
-      <td>abschiebung</td>
-      <td>23</td>
-      <td>0</td>
+      <th>peak</th>
+      <td>99170.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaT</td>
+      <td>NaT</td>
+      <td>0.009307</td>
+      <td>0.096025</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
@@ -13350,29 +13307,12 @@ var element = $('#544dfb1e-aa5a-42fe-8fd5-7fa071fd7b8f');
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get hashtag and peak +- 3 days for topic modeling</span>
-<span class="n">hashtag_list</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hashtag&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-<span class="n">lda_dates</span> <span class="o">=</span> <span class="p">[]</span>    
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hashtag_list</span><span class="p">))):</span>
-    <span class="n">hashtag</span> <span class="o">=</span> <span class="n">hashtag_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">peak_dates</span> <span class="o">=</span> <span class="n">complete_df</span><span class="p">[(</span><span class="n">complete_df</span><span class="p">[</span><span class="s1">&#39;peak&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span><span class="o">&amp;</span><span class="p">(</span><span class="n">complete_df</span><span class="p">[</span><span class="s1">&#39;hashtag&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">hashtag</span><span class="p">)][</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">peak</span> <span class="ow">in</span> <span class="n">peak_dates</span><span class="p">:</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">peak</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
-        <span class="n">end</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">peak</span><span class="p">,</span> <span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">date</span><span class="p">()</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
-        <span class="n">daterange</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
-        <span class="n">output_dates</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">daterange</span><span class="p">:</span>
-            <span class="n">output_dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">peak_dates</span><span class="p">:</span>
-        <span class="n">lda_dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output_dates</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">lda_dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">peak_dates</span><span class="p">)</span>
-
-<span class="n">output_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;hashtag&#39;</span><span class="p">:</span> <span class="n">hashtag_list</span><span class="p">,</span> <span class="s1">&#39;lda_dates&#39;</span><span class="p">:</span> <span class="n">lda_dates</span><span class="p">})</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dates_df</span> <span class="o">=</span> <span class="n">retrieve_peak_dates</span><span class="p">(</span><span class="n">hashtag_df</span><span class="p">,</span> <span class="n">df</span><span class="p">)</span>
+<span class="n">dates_df</span> <span class="o">=</span> <span class="n">dates_df</span><span class="p">[</span><span class="n">dates_df</span><span class="p">[</span><span class="s1">&#39;lda_dates&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">len</span><span class="p">()</span><span class="o">!=</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">dates_df</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 
     </div>
@@ -13393,13 +13333,13 @@ var element = $('#544dfb1e-aa5a-42fe-8fd5-7fa071fd7b8f');
 
  
  
-<div id="5cc6058b-0d13-4f7a-8dd5-1a6ecfca46e0"></div>
+<div id="8a54adb6-5e9f-45f1-820f-9c9e65709a69"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#5cc6058b-0d13-4f7a-8dd5-1a6ecfca46e0');
+var element = $('#8a54adb6-5e9f-45f1-820f-9c9e65709a69');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "8233423b95014fe7936a81b3e9f01479", "version_major": 2, "version_minor": 0}
+{"model_id": "c0e16ad39cc54d1085a3931c67915b44", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -13407,15 +13347,165 @@ var element = $('#5cc6058b-0d13-4f7a-8dd5-1a6ecfca46e0');
 
 <div class="output_area">
 
+    <div class="prompt output_prompt">Out[4]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>unique</th>
+      <th>top</th>
+      <th>freq</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>index</th>
+      <td>162.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1244.006173</td>
+      <td>2017.581307</td>
+      <td>9.0</td>
+      <td>237.25</td>
+      <td>492.0</td>
+      <td>1570.75</td>
+      <td>15246.0</td>
+    </tr>
+    <tr>
+      <th>hashtag</th>
+      <td>162</td>
+      <td>162</td>
+      <td>hütter</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>lda_dates</th>
+      <td>162</td>
+      <td>38</td>
+      <td>[2017-09-20, 2017-09-21, 2017-09-22, 2017-09-2...</td>
+      <td>22</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># save to json</span>
+<span class="n">dates_df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Twitter/peaks/peak_dates.json&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># set to *.json to load all</span>
+<span class="n">path_to_json</span> <span class="o">=</span> <span class="s1">&#39;../../data/BTW17_Twitter/tweets/*.json&#39;</span>
+<span class="n">file_list</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">path_to_json</span><span class="p">)</span>
+<span class="n">lda_tweets</span> <span class="o">=</span> <span class="n">filter_tweets</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">dates_df</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-</pre>
+
+
+
+ 
+ 
+<div id="5f2d455e-1d32-41ed-a855-62ee5a58ac76"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#5f2d455e-1d32-41ed-a855-62ee5a58ac76');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "6f2dc0b8d82944308337394cbab229d1", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
+
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># save to json</span>
+<span class="n">lda_tweets</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Twitter/lda/lda_tweets.json&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
@@ -13425,12 +13515,120 @@ var element = $('#5cc6058b-0d13-4f7a-8dd5-1a6ecfca46e0');
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># save to csv</span>
-<span class="n">path_file</span> <span class="o">=</span> <span class="s1">&#39;../../data/BTW17_Twitter/peaks/hashtags_dates.csv&#39;</span>
-<span class="n">output_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">path_file</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get full tweets text</span>
+<span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;retweeted_status&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;extended_tweet&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;full_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lda_tweets</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">get_text</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;extended_tweet&#39;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;retweeted_status&#39;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># remove mentions</span>
+<span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;full_text_processed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;full_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;@[A-Za-z0-9_]+&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+
+<span class="c1"># remove numbers</span>
+<span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;full_text_processed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;full_text_processed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;[0-9]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># preprocess tokens</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">tweet_list</span> <span class="o">=</span> <span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;full_text_processed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lda_tweets</span><span class="p">))):</span>
+    <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nlp_pipeline</span><span class="p">(</span><span class="n">tweet_list</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+ 
+ 
+<div id="a6824ebc-4755-43c8-85ce-575adc63854b"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#a6824ebc-4755-43c8-85ce-575adc63854b');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "8910fbdbcc25401787d770696d621107", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tokens</span>
+
+<span class="c1"># save preprocessed tweets</span>
+<span class="n">lda_tweets</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Twitter/lda/preprocessed_lda_tweets.json&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># evaluate preprocessing</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;original document: &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;full_text&#39;</span><span class="p">][</span><span class="mi">100</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">tokenized and lemmatized document: &#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">][</span><span class="mi">100</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>original document: 
+&#34;Wir werden der soziale Oppositionsführer bleiben. Und wir werden den Regierenden Beine machen.&#34; @SWagenknecht #btw17
+
+tokenized and lemmatized document: 
+[&#39;soziale&#39;, &#39;oppositionsführer&#39;, &#39;bleiben&#39;, &#39;regierende&#39;, &#39;bein&#39;, &#39;btw&#39;]
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13440,6 +13638,10 @@ var element = $('#5cc6058b-0d13-4f7a-8dd5-1a6ecfca46e0');
 </body>
 
  
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"033bcc7141cc42358249f6727767c2e5": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "03e0f315604b4c2999b8235c91a41cab": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "0d838dcadf594f9d9a5cf0e598d8e370": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"description_width": ""}}, "279d4feae97746e98868f947e02eaa42": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_72d33ffe83114ec19c080674dc6eb9fb", "style": "IPY_MODEL_c89a24d6a57940f3a6c964d6305b54a6", "value": "100%"}}, "2d0f01c3e53845f6ad6a63ec8dd4df83": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"description_width": ""}}, "2e30150f75a642e1bd4f3cf6d3c02b63": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_f4eaf558550d4ef1b950484037ef59e6", "style": "IPY_MODEL_ddc42abf122f4fcd810dc90fe3742be3", "value": " 62986/62986 [3:17:55&lt;00:00,  5.33it/s]"}}, "3172a58bcb1248d4a20c90a0928da263": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "36a7e8dd5dea4474bce9fff35dae4a94": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_5c65df45835e46c68f3bfe0eefdc85f2", "style": "IPY_MODEL_939a4828dcaf4b369a43cde8ee5974e1", "value": " 30596/30596 [08:08&lt;00:00, 67.45it/s]"}}, "454801f217924bc48505aae5b6a362c3": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}, "53135c3148044810bcca7550f1d0b6bc": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "59d504cffc5b4a95a60a8c1107a29d82": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "5a32341e8d02487d915339585edd4179": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_84eaea1037404ec3b21e9abe04e6130d", "IPY_MODEL_5b0c94c7c10f46188b29aa2440224d8e", "IPY_MODEL_c8b711edb8bd47f8abcac6fa98c1d966"], "layout": "IPY_MODEL_3172a58bcb1248d4a20c90a0928da263"}}, "5b0c94c7c10f46188b29aa2440224d8e": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"bar_style": "success", "layout": "IPY_MODEL_6f75f5f69f274798bad155de6bb43a31", "max": 30596, "style": "IPY_MODEL_b2bb5e1236e645c7ae45ff1bbbd6d290", "value": 30596}}, "5c65df45835e46c68f3bfe0eefdc85f2": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "6381f819010040dead8590300612696a": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "6801e659b3044abaacda476d11757d36": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_6c604dd648c44338827a0a360a5e3cb7", "style": "IPY_MODEL_fccb39783fec40218dc35a6e5843e618", "value": "100%"}}, "6c604dd648c44338827a0a360a5e3cb7": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "6f2dc0b8d82944308337394cbab229d1": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_cfd4b6cb55054b8da05b819a2d34410c", "IPY_MODEL_9034b29da7584358ab323536dc3583d7", "IPY_MODEL_ea255716b6a04eb4a76dbedb0198fa1d"], "layout": "IPY_MODEL_59d504cffc5b4a95a60a8c1107a29d82"}}, "6f75f5f69f274798bad155de6bb43a31": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "70ba0df4f18e41cea7d5ea01877a2598": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}, "72d33ffe83114ec19c080674dc6eb9fb": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "782b6a868a9a433992e3e48c2fd7a90b": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "84eaea1037404ec3b21e9abe04e6130d": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_cad8b893f9f54f92814b049e932fd940", "style": "IPY_MODEL_853f6360ecb84f1980f1513552100811", "value": "100%"}}, "853f6360ecb84f1980f1513552100811": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}, "8910fbdbcc25401787d770696d621107": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_6801e659b3044abaacda476d11757d36", "IPY_MODEL_f3f6ea4d957c45ddbe0fe507056b74a3", "IPY_MODEL_2e30150f75a642e1bd4f3cf6d3c02b63"], "layout": "IPY_MODEL_9fdd01446fb04af495bb6854e19cffd2"}}, "8dae35699a344d5fa81341f9c5a242ae": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}, "9034b29da7584358ab323536dc3583d7": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"bar_style": "success", "layout": "IPY_MODEL_6381f819010040dead8590300612696a", "max": 1308, "style": "IPY_MODEL_cc3d043e9f7f46b98a745e9b1bac0eb9", "value": 1308}}, "939a4828dcaf4b369a43cde8ee5974e1": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}, "9fdd01446fb04af495bb6854e19cffd2": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "b2bb5e1236e645c7ae45ff1bbbd6d290": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"description_width": ""}}, "c0e16ad39cc54d1085a3931c67915b44": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_279d4feae97746e98868f947e02eaa42", "IPY_MODEL_cbdca3c172bc4359a644c5e860877938", "IPY_MODEL_36a7e8dd5dea4474bce9fff35dae4a94"], "layout": "IPY_MODEL_cdb0965815f14c8d9c5c13f59c43e776"}}, "c89a24d6a57940f3a6c964d6305b54a6": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}, "c8b711edb8bd47f8abcac6fa98c1d966": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_033bcc7141cc42358249f6727767c2e5", "style": "IPY_MODEL_454801f217924bc48505aae5b6a362c3", "value": " 30596/30596 [09:17&lt;00:00, 50.25it/s]"}}, "cad8b893f9f54f92814b049e932fd940": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "cbdca3c172bc4359a644c5e860877938": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"bar_style": "success", "layout": "IPY_MODEL_03e0f315604b4c2999b8235c91a41cab", "max": 30596, "style": "IPY_MODEL_2d0f01c3e53845f6ad6a63ec8dd4df83", "value": 30596}}, "cc3d043e9f7f46b98a745e9b1bac0eb9": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"description_width": ""}}, "cdb0965815f14c8d9c5c13f59c43e776": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "cfd4b6cb55054b8da05b819a2d34410c": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_782b6a868a9a433992e3e48c2fd7a90b", "style": "IPY_MODEL_8dae35699a344d5fa81341f9c5a242ae", "value": "100%"}}, "ddc42abf122f4fcd810dc90fe3742be3": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}, "ea255716b6a04eb4a76dbedb0198fa1d": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_f2944333e3964906ae98a658e46b1af5", "style": "IPY_MODEL_70ba0df4f18e41cea7d5ea01877a2598", "value": " 1308/1308 [12:51&lt;00:00,  1.16it/s]"}}, "f2944333e3964906ae98a658e46b1af5": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "f3f6ea4d957c45ddbe0fe507056b74a3": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"bar_style": "success", "layout": "IPY_MODEL_53135c3148044810bcca7550f1d0b6bc", "max": 62986, "style": "IPY_MODEL_0d838dcadf594f9d9a5cf0e598d8e370", "value": 62986}}, "f4eaf558550d4ef1b950484037ef59e6": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "fccb39783fec40218dc35a6e5843e618": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}}, "version_major": 2, "version_minor": 0}
+</script>
 
 
 </html>

@@ -97,3 +97,70 @@ def plot_top_hashtags(input_df, num_hashtags):
     fig = px.line(df_plot, x='Datum', y='Häufigkeit', color='Hashtag',
               template='simple_white', color_discrete_sequence=px.colors.qualitative.Antique)
     fig.show()
+
+# define function filter_tweets
+# to filter tweets on peak dates
+def filter_tweets(input_files, dates_df):
+    '''
+    :params input_files: file list for twitter chunks
+    :params dates_df: dataframe with hashtags and peak dates
+    :return: output dataframe
+    '''
+    hashtag_list = dates_df['hashtag'].tolist()
+    lda_dates_list = dates_df['lda_dates'].tolist()    
+
+    created_at_list = []
+    id_list = []
+    text_list = []
+    user_list = []
+    extended_tweet_list = []
+    retweeted_status_list = []
+    tags_list = []
+
+    # iterate through files create output csv
+    for index in tqdm(range(len(input_files))):
+        file = input_files[index]
+        with open(file, 'r') as f:
+            
+            # read df
+            df = pd.read_json(f)
+            # apply function get hashtags
+            df['tags'] = df['entities'].apply(get_hashtags)
+            
+            # explode tags to rows and drop na values
+            df = df.explode('tags')
+            df = df[df['tags'].notna()]
+            
+            # change datetime to date and lower all hashtags
+            df['created_at'] = pd.to_datetime(df['created_at']).dt.date
+            df['created_at'] = df['created_at'].apply(str)
+            df['tags'] = df['tags'].apply(lambda x: str(x).lower())
+                    
+            for i in range(len(dates_df)):
+                hashtag = hashtag_list[i]
+                lda_dates = lda_dates_list[i]
+                temp_df = df[(df['tags']==hashtag)&(df['created_at'].isin(lda_dates))]
+                
+                if len(temp_df)==0:
+                    pass
+                else:
+                    # append data to lists
+                    created_at_list.append(temp_df['created_at'].tolist())
+                    id_list.append(temp_df['id'].tolist())
+                    text_list.append(temp_df['text'].tolist())
+                    user_list.append(temp_df['user'].tolist())
+                    extended_tweet_list.append(temp_df['extended_tweet'].tolist())
+                    retweeted_status_list.append(temp_df['retweeted_status'].tolist())
+                    tags_list.append(temp_df['tags'].tolist())
+
+    # create df
+    output = pd.DataFrame(data={'created_at': created_at_list, 'id': id_list, 'text': text_list,
+                                'user': user_list, 'extended_tweet': extended_tweet_list,
+                                'retweeted_status': retweeted_status_list, 'tags': tags_list})
+
+    # explode df after setting fake column
+    output['A'] = 1
+    output = output.set_index(['A']).apply(pd.Series.explode).reset_index()
+    output.drop(columns='A', inplace=True)
+
+    return output
