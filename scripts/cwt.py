@@ -49,11 +49,12 @@ def plot_peak_detection(hashtag, input_df):
     
     for item in peakind:
         peak = wavelets['Datum'].tolist()[item]
-        fig.add_vrect(x0=str(datetime.strptime(str(peak), '%Y-%m-%d %H:%M:%S').date() - timedelta(days=3)),
-                      x1=str(datetime.strptime(str(peak), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=3)),
+        fig.add_vrect(x0=str(datetime.strptime(str(peak), '%Y-%m-%d').date() - timedelta(days=3)),
+                      x1=str(datetime.strptime(str(peak), '%Y-%m-%d').date() + timedelta(days=3)),
                       line_width=0,
                       fillcolor='grey',
                       opacity=0.2)
+    fig.update_layout(font=dict(family='Computer Modern', color='black', size=15))
     fig.show()
 
 # define function peak_detection

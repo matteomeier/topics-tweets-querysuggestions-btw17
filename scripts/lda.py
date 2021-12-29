@@ -4,7 +4,6 @@ from tqdm.notebook import tqdm
 import gensim
 from gensim import corpora, models
 from gensim.models import CoherenceModel
-import ast
 
 # define function create_documents
 # to join different tweets from single user with one hashtag
@@ -24,7 +23,7 @@ def create_documents(input_df):
             doc = []
             tmp_user = tmp[tmp['username']==user_list[i]]
             for sublist in tmp_user['tokens']:
-                for item in ast.literal_eval(sublist):
+                for item in sublist:
                     doc.append(item)
             documents.append(doc)
     
@@ -110,7 +109,7 @@ def get_tweet_topic(lda_model, input_df):
     '''
     documents = []
     for item in input_df['tokens'].tolist():
-        documents.append(ast.literal_eval(item))
+        documents.append(item)
 
     # get dictionary
     dictionary = gensim.corpora.Dictionary(documents)

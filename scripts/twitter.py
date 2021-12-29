@@ -96,6 +96,7 @@ def plot_top_hashtags(input_df, num_hashtags):
 
     fig = px.line(df_plot, x='Datum', y='Häufigkeit', color='Hashtag',
               template='simple_white', color_discrete_sequence=px.colors.qualitative.Antique)
+    fig.update_layout(font=dict(family='Computer Modern', color='black', size=15))
     fig.show()
 
 # define function filter_tweets
