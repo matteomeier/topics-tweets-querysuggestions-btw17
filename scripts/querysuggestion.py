@@ -1,5 +1,6 @@
 # functions to process querysuggestion
 import pandas as pd
+import numpy as np
 import glob
 from tqdm.notebook import tqdm
 from datetime import datetime, timedelta

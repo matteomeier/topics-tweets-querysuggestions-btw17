@@ -72,7 +72,7 @@ def get_topicwords_scores(lda_model):
     :return: pd dataframe
     '''
 
-    x = lda_model.print_topics()
+    x = lda_model.print_topics(-1)
     topic_word_list = []
     score_list = []
     topic_list = []
