@@ -7,7 +7,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var scriptElement = document.createElement('script');
+    var widgetRendererSrc = '@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
 
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    scriptElement.src = widgetRendererSrc;
+    document.body.appendChild(scriptElement);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
 
 <style type="text/css">
     /*!
@@ -13082,17 +13105,11 @@ div#notebook {
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import relevant moduls</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">ast</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">gensim.models</span> <span class="kn">import</span> <span class="n">Word2Vec</span>
-<span class="kn">from</span> <span class="nn">gensim</span> <span class="kn">import</span> <span class="n">models</span>
-<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../scripts/&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">analysis</span> <span class="kn">import</span> <span class="n">vectorize_hashtags</span><span class="p">,</span> <span class="n">compare_vectors</span>
 </pre></div>
 
     </div>
@@ -13106,10 +13123,8 @@ div#notebook {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># read and clean files</span>
-<span class="n">cluster_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Suggestions/suggestions/cluster.csv&#39;</span><span class="p">)</span>
-<span class="n">cluster_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">topics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Twitter/lda/topics.csv&#39;</span><span class="p">)</span>
-<span class="n">topics_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">cluster_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Suggestions/suggestions/cluster.json&#39;</span><span class="p">)</span>
+<span class="n">topics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Twitter/lda/hashtag_topics.json&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13122,7 +13137,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cluster_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cluster_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13158,9 +13173,8 @@ div#notebook {
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>x</th>
-      <th>y</th>
-      <th>z</th>
+      <th>t-SNE(x)</th>
+      <th>t-SNE(y)</th>
       <th>suggestion</th>
       <th>cluster</th>
       <th>vector</th>
@@ -13169,48 +13183,27 @@ div#notebook {
   <tbody>
     <tr>
       <th>0</th>
-      <td>-5.934507</td>
-      <td>-13.884504</td>
-      <td>-15.370424</td>
-      <td>['waz']</td>
+      <td>35.856171</td>
+      <td>-3.091094</td>
+      <td>[twitter, detlev, pilger]</td>
       <td>0</td>
-      <td>[-0.2414  0.4842 -0.1616 -0.0521  0.6159 -0.84...</td>
+      <td>[0.0947333276, 0.2205666453, -0.06523333490000...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>-4.854665</td>
-      <td>-10.565660</td>
-      <td>-15.258295</td>
-      <td>['bild', 'zeitung']</td>
+      <td>31.699930</td>
+      <td>0.692133</td>
+      <td>[luczak]</td>
       <td>0</td>
-      <td>[-0.1158      0.48233333 -0.212      -0.3332  ...</td>
+      <td>[-0.157949999, 0.2531000078, 0.2230499983, -0....</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>-4.574384</td>
-      <td>-12.412379</td>
-      <td>-15.251037</td>
-      <td>['interview', 'badische', 'zeitung']</td>
+      <td>39.212925</td>
+      <td>-7.432727</td>
+      <td>[sebastian, bachelorette, facebook]</td>
       <td>0</td>
-      <td>[ 9.11500007e-02  1.71550006e-01  1.30000710e-...</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>-5.265123</td>
-      <td>-12.737933</td>
-      <td>-17.156967</td>
-      <td>['tagesanzeiger']</td>
-      <td>0</td>
-      <td>[-0.43395     0.10869999 -0.36154997 -0.757949...</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>-2.996472</td>
-      <td>-10.088203</td>
-      <td>-17.916126</td>
-      <td>['traueranzeigen']</td>
-      <td>0</td>
-      <td>[-0.9071 -0.1063 -0.4996  0.0197 -0.5739 -0.61...</td>
+      <td>[-0.24370001260000002, 0.4702000022, 0.0838999...</td>
     </tr>
   </tbody>
 </table>
@@ -13228,7 +13221,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">topics_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">topics_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13265,46 +13258,32 @@ div#notebook {
     <tr style="text-align: right;">
       <th></th>
       <th>hashtag</th>
+      <th>topic</th>
       <th>topic_words</th>
       <th>scores</th>
-      <th>coherence</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>dobrindt</td>
-      <td>['dobrindt', 'dieselgate', 'fahrverbote', 'ver...</td>
-      <td>['0.082', '0.070', '0.039', '0.037', '0.035', ...</td>
-      <td>0.374704</td>
+      <td>diesel</td>
+      <td>71</td>
+      <td>[schlussrunde, fast, deshalb, deutsch, rente, ...</td>
+      <td>[0.428, 0.040, 0.039, 0.033, 0.022, 0.020, 0.0...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>ard</td>
-      <td>['ard', 'afd', 'btw', 'zdf', 'traudichdeutschl...</td>
-      <td>['0.112', '0.101', '0.094', '0.088', '0.085', ...</td>
-      <td>0.249636</td>
+      <td>denkenwirneu</td>
+      <td>27</td>
+      <td>[völlig, frei, polizei, islam, zeit, verändern...</td>
+      <td>[0.046, 0.042, 0.041, 0.041, 0.038, 0.030, 0.0...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>zeitfürmartin</td>
-      <td>['zeitfürmartin', 'meineschule', 'gebührenfrei...</td>
-      <td>['0.171', '0.037', '0.037', '0.037', '0.025', ...</td>
-      <td>0.421646</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>ehefueralle</td>
-      <td>['ehefueralle', 'bundestag', 'merkel', 'stimme...</td>
-      <td>['0.124', '0.017', '0.017', '0.012', '0.011', ...</td>
-      <td>0.324373</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>digitalisierung</td>
-      <td>['digitalisierung', 'nix', 'zukunft', 'eigentl...</td>
-      <td>['0.102', '0.049', '0.030', '0.029', '0.028', ...</td>
-      <td>0.258874</td>
+      <td>bundestag</td>
+      <td>62</td>
+      <td>[stoppen, sozial, bekämpfen, mindestlohn, schü...</td>
+      <td>[0.075, 0.068, 0.064, 0.053, 0.052, 0.044, 0.0...</td>
     </tr>
   </tbody>
 </table>
@@ -13322,8 +13301,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># read pretrained word2vec model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">KeyedVectors</span><span class="o">.</span><span class="n">load_word2vec_format</span><span class="p">(</span><span class="s1">&#39;../../data/Word2Vec/dewiki_20180420_100d.txt&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hashtag_vectors</span> <span class="o">=</span> <span class="n">vectorize_hashtags</span><span class="p">(</span><span class="n">topics_df</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13336,99 +13314,8 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get lists for faster iterating</span>
-<span class="n">hashtag</span> <span class="o">=</span> <span class="n">topics_df</span><span class="p">[</span><span class="s1">&#39;hashtag&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-<span class="n">topic_words</span> <span class="o">=</span> <span class="n">topics_df</span><span class="p">[</span><span class="s1">&#39;topic_words&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-<span class="n">scores</span> <span class="o">=</span> <span class="n">topics_df</span><span class="p">[</span><span class="s1">&#39;scores&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># retrieve vector per hashtag </span>
-<span class="n">vectors</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="c1"># iterate through hashtags</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hashtag</span><span class="p">)):</span>
-    <span class="n">hashtag_vector</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">word_vectors</span> <span class="o">=</span> <span class="p">[]</span>
-    
-    <span class="c1"># get word scores from lda</span>
-    <span class="n">word_scores</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">scores</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-    <span class="n">topics</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">topic_words</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">topics</span><span class="p">))):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># append word vector from word2vec model</span>
-            <span class="n">word_vectors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model</span><span class="p">[</span><span class="n">topics</span><span class="p">[</span><span class="n">j</span><span class="p">]])</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="c1"># clean lists </span>
-            <span class="n">topics</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
-            <span class="n">word_scores</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
-    
-    <span class="c1"># get weighted average vector per hashtag and save them in one list</span>
-    <span class="n">hashtag_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">word_vectors</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">word_scores</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">))</span>
-    <span class="n">vectors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hashtag_vector</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># retrieve lists for suggestion and suggestions word2vec vectors</span>
-<span class="n">suggestions</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cluster_df</span><span class="p">)):</span>
-    <span class="n">suggestions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;suggestion&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
-
-<span class="n">sugg_vectors</span> <span class="o">=</span> <span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;vector&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get similarity score for every suggestion per hashtag</span>
-<span class="n">sim_scores</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="c1"># iterate through suggestions</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">suggestions</span><span class="p">))):</span>
-    <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">vector</span> <span class="ow">in</span> <span class="n">vectors</span><span class="p">:</span>
-        
-        <span class="c1"># clean suggestions vector because of shitty format</span>
-        <span class="n">sugg_vector</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">sugg_vectors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                                       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-                                       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
-                                       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;[,&#39;</span><span class="p">,</span> <span class="s1">&#39;[&#39;</span><span class="p">)</span>
-                                       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,]&#39;</span><span class="p">,</span> <span class="s1">&#39;]&#39;</span><span class="p">)</span>
-                                       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,,,,&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
-                                       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,,,&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
-                                       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;,,&#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">))</span>
-        
-        <span class="c1"># calculate vector similarity for suggestions vector and hashtag vector</span>
-        <span class="n">score</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sugg_vector</span><span class="p">,</span> <span class="n">vector</span><span class="p">)</span>
-                      <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">sugg_vector</span><span class="p">)</span>
-                       <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector</span><span class="p">)),</span><span class="mi">3</span><span class="p">)</span>
-        <span class="n">temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
-    <span class="n">sim_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">similarity_df</span> <span class="o">=</span> <span class="n">compare_vectors</span><span class="p">(</span><span class="n">hashtag_vectors</span><span class="p">,</span> <span class="n">cluster_df</span><span class="p">)</span>
+<span class="n">similarity_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13449,57 +13336,21 @@ div#notebook {
 
  
  
-<div id="33cd9f57-1329-4aee-910f-7cb201c0b0cf"></div>
+<div id="e99f50a5-720f-4b25-8b34-84e6cb0728ce"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#33cd9f57-1329-4aee-910f-7cb201c0b0cf');
+var element = $('#e99f50a5-720f-4b25-8b34-84e6cb0728ce');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "8f6ee7b5452a4bdd8c6ec095c893f7de", "version_major": 2, "version_minor": 0}
+{"model_id": "7d459dedc11f45dfa54dde5dbc301689", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
 </div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cluster</span> <span class="o">=</span> <span class="n">cluster_df</span><span class="p">[</span><span class="s1">&#39;cluster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
-
-<span class="c1"># create output df</span>
-<span class="n">similarity_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;suggestion&#39;</span><span class="p">:</span> <span class="n">suggestions</span><span class="p">,</span> <span class="s1">&#39;cluster&#39;</span><span class="p">:</span> <span class="n">cluster</span><span class="p">,</span> <span class="s1">&#39;similarity_scores&#39;</span><span class="p">:</span> <span class="n">sim_scores</span><span class="p">})</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">similarity_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[18]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
@@ -13530,21 +13381,21 @@ var element = $('#33cd9f57-1329-4aee-910f-7cb201c0b0cf');
   <tbody>
     <tr>
       <th>0</th>
-      <td>[waz]</td>
+      <td>[twitter, detlev, pilger]</td>
       <td>0</td>
-      <td>[0.39, 0.465, 0.393, 0.428, 0.296, 0.533, 0.29...</td>
+      <td>[0.458, 0.588, 0.505, 0.659, 0.588, 0.604, 0.5...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>[bild, zeitung]</td>
+      <td>[luczak]</td>
       <td>0</td>
-      <td>[0.525, 0.605, 0.657, 0.57, 0.574, 0.516, 0.52...</td>
+      <td>[0.321, 0.614, 0.45, 0.622, 0.614, 0.619, 0.45...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>[interview, badische, zeitung]</td>
+      <td>[sebastian, bachelorette, facebook]</td>
       <td>0</td>
-      <td>[0.525, 0.511, 0.527, 0.495, 0.586, 0.509, 0.4...</td>
+      <td>[0.306, 0.564, 0.407, 0.617, 0.564, 0.592, 0.4...</td>
     </tr>
   </tbody>
 </table>
@@ -13559,11 +13410,11 @@ var element = $('#33cd9f57-1329-4aee-910f-7cb201c0b0cf');
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># save dfs to csv</span>
-<span class="n">similarity_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Suggestions/suggestions/topic_similarity.csv&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># save df to json</span>
+<span class="n">similarity_df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Suggestions/suggestions/vector_similarity.json&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13576,6 +13427,10 @@ var element = $('#33cd9f57-1329-4aee-910f-7cb201c0b0cf');
 </body>
 
  
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"1bdc1bbb3c3f4709b39854cbf2515035": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"description_width": ""}}, "1e803bdedc32415297909c46f29d5b5a": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "20893f37e36f48c1a43f5f4182eea2fc": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}, "2362cadea39249ecab5287604f0de1c3": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "3dcb3b9bf2fd41a481115d7992a7672f": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_1e803bdedc32415297909c46f29d5b5a", "style": "IPY_MODEL_20893f37e36f48c1a43f5f4182eea2fc", "value": "100%"}}, "7264b575035f4a0d95463e27d3adc62f": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "ProgressStyleModel", "state": {"description_width": ""}}, "72b761c99e2f40e3aae4015bca30e98a": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}, "75a0d792e1ed45f885e9bd0d2817f36b": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"bar_style": "success", "layout": "IPY_MODEL_95e613cf3ada45e1aa5778d260fd756d", "max": 25321, "style": "IPY_MODEL_1bdc1bbb3c3f4709b39854cbf2515035", "value": 25321}}, "773d4dcb564648c09f19ef5f6728a24e": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}, "7ca3a2d1dd644e82b9809d7335572b1b": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "7d459dedc11f45dfa54dde5dbc301689": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_3dcb3b9bf2fd41a481115d7992a7672f", "IPY_MODEL_75a0d792e1ed45f885e9bd0d2817f36b", "IPY_MODEL_bfce70eef10543c5b952c6a6cdc7a716"], "layout": "IPY_MODEL_801d86803604481187a30891c1bb2b8a"}}, "801d86803604481187a30891c1bb2b8a": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "86b41352c6b0474facee497640eaf6b8": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_2362cadea39249ecab5287604f0de1c3", "style": "IPY_MODEL_72b761c99e2f40e3aae4015bca30e98a", "value": "100%"}}, "95e613cf3ada45e1aa5778d260fd756d": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "a2d0882fd7c34e2c8fe32be6ac14862a": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "DescriptionStyleModel", "state": {"description_width": ""}}, "b07f27b0af294764b0067ce0bd7cb896": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "bfce70eef10543c5b952c6a6cdc7a716": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_d83bb1a32adc4ce5a5afa9fc8e4a1667", "style": "IPY_MODEL_773d4dcb564648c09f19ef5f6728a24e", "value": " 25321/25321 [03:08&lt;00:00, 106.86it/s]"}}, "c459d24d06a842969534e50f34f6bc79": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "caad584af4164b0a805c492235729185": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HBoxModel", "state": {"children": ["IPY_MODEL_86b41352c6b0474facee497640eaf6b8", "IPY_MODEL_d86f1999465e44b3ad4e4633198c25f8", "IPY_MODEL_e3e76ec77f8647079534cd7862420eb9"], "layout": "IPY_MODEL_c459d24d06a842969534e50f34f6bc79"}}, "d83bb1a32adc4ce5a5afa9fc8e4a1667": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "d86f1999465e44b3ad4e4633198c25f8": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "FloatProgressModel", "state": {"bar_style": "success", "layout": "IPY_MODEL_7ca3a2d1dd644e82b9809d7335572b1b", "max": 25321, "style": "IPY_MODEL_7264b575035f4a0d95463e27d3adc62f", "value": 25321}}, "e3e76ec77f8647079534cd7862420eb9": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "HTMLModel", "state": {"layout": "IPY_MODEL_b07f27b0af294764b0067ce0bd7cb896", "style": "IPY_MODEL_a2d0882fd7c34e2c8fe32be6ac14862a", "value": " 25321/25321 [02:24&lt;00:00, 168.05it/s]"}}}, "version_major": 2, "version_minor": 0}
+</script>
 
 
 </html>

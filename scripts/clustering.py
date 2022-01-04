@@ -20,7 +20,7 @@ def kmeans_suggestions(vectorized_suggestions, min_num_cluster, max_num_cluster)
 
     # kmeans clustering for different num cluster and return coherence
     for i in tqdm(range(min_num_cluster, max_num_cluster+1)):
-        kmeans = cluster.KMeans(n_clusters=i)
+        kmeans = cluster.KMeans(n_clusters=i, random_state=1410)
         kmeans.fit(vectorized_suggestions)
         labels = kmeans.predict(vectorized_suggestions)
 
