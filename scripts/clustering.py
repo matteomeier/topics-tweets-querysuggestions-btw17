@@ -42,17 +42,26 @@ def dbscan_suggestions(vectorized_suggestions):
     :return: dict of scores and parameters
     '''
     
-    scores = {'eps':[], 'silhouette_score':[], 'calinski_harabasz_score':[], 'num_cluster':[], 'num_noise':[]}
+    scores = {'eps':[], 'min_samples':[], 'silhouette_score':[], 'num_cluster':[], 'num_noise':[]}
 
-    # dbscan clustering for different eps and return silhuoette
+    # dbscan clustering for different eps and different min_samples and return silhuoette
     for i in tqdm(np.arange(0.05, 1, 0.05)):
-        dbscan = cluster.DBSCAN(eps=i).fit(vectorized_suggestions)
-        labels = dbscan.labels_
+        for j in np.arange(5, 16):
+            dbscan = cluster.DBSCAN(eps=i, min_samples=j).fit(vectorized_suggestions)
+            labels = dbscan.labels_
 
-        # append to dict
-        scores['eps'].append(i)
-        scores['silhouette_score'].append(metrics.silhouette_score(vectorized_suggestions, labels))
-        scores['calinski_harabasz_score'].append(metrics.calinski_harabasz_score(vectorized_suggestions, labels))
-        scores['num_cluster'].append(len(set(labels)) - (1 if -1 in labels else 0))
-        scores['num_noise'].append(list(labels).count(-1))
+            # drop noise points from labels
+            tmp = pd.DataFrame()
+            tmp['labels'] = labels
+            tmp['vector'] = vectorized_suggestions.tolist()
+            tmp = tmp[tmp['labels']!=-1]
+            labels_clean = tmp['labels'].tolist()
+            vectors_clean = np.array(tmp['vector'].tolist())
+
+            # append to dict
+            scores['eps'].append(i)
+            scores['min_samples'].append(j)
+            scores['silhouette_score'].append(metrics.silhouette_score(vectors_clean, labels_clean))
+            scores['num_cluster'].append(len(set(labels_clean)) - (1 if -1 in labels else 0))
+            scores['num_noise'].append(list(labels).count(-1))
     return scores

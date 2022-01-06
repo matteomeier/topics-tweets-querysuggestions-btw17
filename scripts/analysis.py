@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 from tqdm.notebook import tqdm
 from gensim import models
-from gensim.models import Word2Vec
 
 # define function vectorize_hashtags
 # to vectorize the hashtags via word2vec
@@ -91,30 +90,19 @@ def compare_vectors(hashtag_vectors, cluster_df):
 # define function get_correlation
 # to compare the hashtag timeseries and the suggesion cluster timeseries
 # via pearson correlation
-def get_correlation(hashtag_df, suggestions_df, similarity_df):
+def get_correlation(delay, hashtag_df, cluster_df, cluster_gender_df, cluster_party_df, sim_df):
     '''
     :params hashtag_df: df with hashtag time series
     :params suggestions_df: df with cluster time series
-    :params similarity_df: df with relevant hashtags and cluster
+    :params sim_df: df with relevant hashtags and cluster
     :return: output dict
     '''
-    
-    cluster_df = suggestions_df.groupby(['date', 'cluster'], as_index=False).sum('count')
-    cluster_df.rename(columns={'count':'cluster_count'}, inplace=True)
-
-    cluster_party_df = suggestions_df.groupby(['date', 'party', 'cluster'], as_index=False).sum('count')
-    cluster_party_df.rename(columns={'count':'cluster_count'}, inplace=True)
-
-    cluster_gender_df = suggestions_df.groupby(['date', 'gender', 'cluster'], as_index=False).sum('count')
-    cluster_gender_df.rename(columns={'count':'cluster_count'}, inplace=True)
-
-    hashtag_df.rename(columns={'count':'hashtag_count'}, inplace=True)
 
     output = {'hashtags':[], 'cluster':[], 'party':[], 'gender':[], 'correlation':[]}
 
-    for i in tqdm(range(len(similarity_df))):
-        hashtag = similarity_df['hashtags'][i]
-        cluster = similarity_df['cluster'][i]
+    for i in tqdm(range(len(sim_df))):
+        hashtag = sim_df['hashtags'][i]
+        cluster = sim_df['cluster'][i]
 
         # define time series hashtag
         ts_hashtag = hashtag_df[hashtag_df['hashtag']==hashtag][['date', 'hashtag_count']]
@@ -130,11 +118,11 @@ def get_correlation(hashtag_df, suggestions_df, similarity_df):
         ts = ts.merge(ts_cluster, how='left', on='date')
         ts = ts.merge(ts_hashtag, how='left', on='date')
         
-        for party in set(suggestions_df['party']):
+        for party in set(cluster_party_df['party']):
             tmp = ts[ts['party']==party]
             
             # get correlation for party
-            corr = tmp['hashtag_count'].corr(tmp['cluster_count'], method='pearson')
+            corr = tmp['hashtag_count'].corr(tmp['cluster_count'].shift(periods=delay), method='pearson')
             
             # append to output df
             output['hashtags'].append(hashtag)
@@ -153,11 +141,11 @@ def get_correlation(hashtag_df, suggestions_df, similarity_df):
         ts = ts.merge(ts_cluster, how='left', on='date')
         ts = ts.merge(ts_hashtag, how='left', on='date')
 
-        for gender in set(suggestions_df['gender']):
+        for gender in set(cluster_gender_df['gender']):
             tmp = ts[ts['gender']==gender]
             
             # get correlation for gender
-            corr = tmp['hashtag_count'].corr(tmp['cluster_count'], method='pearson')
+            corr = tmp['hashtag_count'].corr(tmp['cluster_count'].shift(periods=delay), method='pearson')
             
             # append to output df
             output['hashtags'].append(hashtag)
@@ -177,7 +165,7 @@ def get_correlation(hashtag_df, suggestions_df, similarity_df):
         ts['date'] = pd.date_range(start='2017-05-29', end='2017-10-08')
         ts = ts.merge(ts_cluster, how='left', on='date')
         ts = ts.merge(ts_hashtag, how='left', on='date')
-        corr = ts['hashtag_count'].corr(ts['cluster_count'], method='pearson')
+        corr = ts['hashtag_count'].corr(ts['cluster_count'].shift(periods=delay), method='pearson')
             
         # append to output df
         output['hashtags'].append(hashtag)
@@ -186,6 +174,26 @@ def get_correlation(hashtag_df, suggestions_df, similarity_df):
         output['gender'].append('all')
         output['correlation'].append(corr)
 
-    output = similarity_df.merge(pd.DataFrame(output), how='left', on=['cluster', 'hashtags'])
+    output = sim_df.merge(pd.DataFrame(output), how='left', on=['cluster', 'hashtags'])
     
     return output
+
+def crosscorr(datax, datay, lag=0, wrap=False):
+    """ Lag-N cross correlation. 
+    Shifted data filled with NaNs
+    Code from https://towardsdatascience.com/four-ways-to-quantify-synchrony-between-time-series-data-b99136c4a9c9
+    
+    Parameters
+    ----------
+    lag : int, default 0
+    datax, datay : pandas.Series objects of equal length
+    Returns
+    ----------
+    crosscorr : float
+    """
+    if wrap:
+        shiftedy = datay.shift(lag)
+        shiftedy.iloc[:lag] = datay.iloc[-lag:].values
+        return datax.corr(shiftedy)
+    else: 
+        return datax.corr(datay.shift(lag))
