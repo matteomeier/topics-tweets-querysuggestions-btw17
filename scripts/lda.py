@@ -54,7 +54,7 @@ def run_ldas(documents, min_num_topics, max_num_topics):
 
     # run lda models for different num_topics and extract coherence scores
     for i in range(min_num_topics, max_num_topics+1):
-        lda_model = gensim.models.LdaMulticore(corpus_tfidf, num_topics=i, id2word=dictionary, passes=2, workers=4)
+        lda_model = gensim.models.LdaMulticore(corpus_tfidf, num_topics=i, id2word=dictionary, passes=2, workers=4, random_state=1410)
         coherence_model_lda = CoherenceModel(model=lda_model, texts=documents, dictionary=dictionary, coherence='c_v')  
         coherence_lda = coherence_model_lda.get_coherence()     
         model_list.append(lda_model)
@@ -138,13 +138,15 @@ def get_tweet_topic(lda_model, input_df):
 # define function get_hashtag_topic
 # to compute the topic for every hashtag
 # from tweet topic distribution
-def get_hashtag_topic(input_df):
+def get_hashtag_topic(input_df, topic_df):
     '''
     :params input_df: input dataframe
+    :params topic_df: topic dataframe
     :return: pd dataframe
     '''
-    hashtag_list = input_df['tags'].tolist()
-    topic_list = []
+    hashtag_list = input_df['tags'].unique()
+    word_list = []
+    score_list = []
 
     for i in tqdm(range(len(hashtag_list))):
         hashtag = hashtag_list[i]
@@ -153,16 +155,19 @@ def get_hashtag_topic(input_df):
         tmp = input_df[input_df['tags']==hashtag]
         
         # calculate ranking score
-        calc = tmp.groupby('topic', as_index=False)['id'].count()
-        calc.rename(columns={'id':'count'}, inplace=True)
-        calc['mean_topic_score'] = tmp.groupby('topic', as_index=False)['topic_score'].mean()['topic_score']
-        calc['ranking_score'] = calc['count'] * calc['mean_topic_score']
+        calc = tmp.groupby('topic', as_index=False)['topic_score'].sum()
+        calc = calc.merge(topic_df, how='left', on='topic')
+        calc = calc.set_index(['topic', 'topic_score']).apply(pd.Series.explode).reset_index()
+        calc['word_rank_score'] = calc['topic_score'].astype('float') * calc['scores'].astype('float')
         
-        # get highest ranked topic
-        topic = int(calc.loc[calc['ranking_score'].idxmax()]['topic'])
-        topic_list.append(topic)
+        # get highest ranked words
+        top_words = calc.nlargest(10, columns='word_rank_score')['topic_words'].tolist()
+        top_scores = calc.nlargest(10, columns='word_rank_score')['word_rank_score'].tolist()
+
+        word_list.append(top_words)
+        score_list.append(top_scores)
     
-    output = pd.DataFrame({'hashtag':hashtag_list, 'topic':topic_list})
+    output = pd.DataFrame({'hashtag':hashtag_list, 'topic_words':word_list, 'scores':score_list})
     return output
         
 

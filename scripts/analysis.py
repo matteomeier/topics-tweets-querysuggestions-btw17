@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from tqdm.notebook import tqdm
 from gensim import models
+from scipy import stats
 
 # define function vectorize_hashtags
 # to vectorize the hashtags via word2vec
@@ -97,8 +98,7 @@ def get_correlation(delay, hashtag_df, cluster_df, cluster_gender_df, cluster_pa
     :params sim_df: df with relevant hashtags and cluster
     :return: output dict
     '''
-
-    output = {'hashtags':[], 'cluster':[], 'party':[], 'gender':[], 'correlation':[]}
+    output = {'hashtags':[], 'cluster':[], 'party':[], 'gender':[], 'pearsonr':[], 'p_value':[]}
 
     for i in tqdm(range(len(sim_df))):
         hashtag = sim_df['hashtags'][i]
@@ -121,15 +121,22 @@ def get_correlation(delay, hashtag_df, cluster_df, cluster_gender_df, cluster_pa
         for party in set(cluster_party_df['party']):
             tmp = ts[ts['party']==party]
             
-            # get correlation for party
-            corr = tmp['hashtag_count'].corr(tmp['cluster_count'].shift(periods=delay), method='pearson')
+            tmp['cluster_count'] = tmp['cluster_count'].shift(periods=delay)
+            tmp = tmp.dropna().reset_index(drop=True)
             
+            # get correlation for party
+            try:
+                corr, p = stats.pearsonr(tmp['hashtag_count'].to_numpy(), tmp['cluster_count'].to_numpy())
+            except:
+                corr, p = None, None
+
             # append to output df
             output['hashtags'].append(hashtag)
             output['cluster'].append(cluster)
             output['party'].append(party)
             output['gender'].append('all')
-            output['correlation'].append(corr)
+            output['pearsonr'].append(corr)
+            output['p_value'].append(p)
 
         # define time series cluster
         ts_cluster = cluster_gender_df[cluster_gender_df['cluster']==cluster][['date', 'gender', 'cluster_count']]
@@ -144,15 +151,23 @@ def get_correlation(delay, hashtag_df, cluster_df, cluster_gender_df, cluster_pa
         for gender in set(cluster_gender_df['gender']):
             tmp = ts[ts['gender']==gender]
             
+            tmp['cluster_count'] = tmp['cluster_count'].shift(periods=delay)
+            tmp = tmp.dropna().reset_index(drop=True)
+
             # get correlation for gender
-            corr = tmp['hashtag_count'].corr(tmp['cluster_count'].shift(periods=delay), method='pearson')
-            
+            try:
+                corr, p = stats.pearsonr(tmp['hashtag_count'].to_numpy(), tmp['cluster_count'].to_numpy())
+            except:
+                corr, p = None, None
+
             # append to output df
             output['hashtags'].append(hashtag)
             output['cluster'].append(cluster)
             output['party'].append('all')
             output['gender'].append(gender)
-            output['correlation'].append(corr)
+            output['pearsonr'].append(corr)
+            output['p_value'].append(p)
+
 
         # get correlation for all
         
@@ -165,35 +180,23 @@ def get_correlation(delay, hashtag_df, cluster_df, cluster_gender_df, cluster_pa
         ts['date'] = pd.date_range(start='2017-05-29', end='2017-10-08')
         ts = ts.merge(ts_cluster, how='left', on='date')
         ts = ts.merge(ts_hashtag, how='left', on='date')
-        corr = ts['hashtag_count'].corr(ts['cluster_count'].shift(periods=delay), method='pearson')
-            
+
+        ts['cluster_count'] = ts['cluster_count'].shift(periods=delay)
+        ts = ts.dropna().reset_index(drop=True)
+        
+        try:
+            corr, p = stats.pearsonr(ts['hashtag_count'].to_numpy(), ts['cluster_count'].to_numpy())
+        except:
+            corr, p = None, None
+
         # append to output df
         output['hashtags'].append(hashtag)
         output['cluster'].append(cluster)
         output['party'].append('all')
         output['gender'].append('all')
-        output['correlation'].append(corr)
+        output['pearsonr'].append(corr)
+        output['p_value'].append(p)
 
     output = sim_df.merge(pd.DataFrame(output), how='left', on=['cluster', 'hashtags'])
     
     return output
-
-def crosscorr(datax, datay, lag=0, wrap=False):
-    """ Lag-N cross correlation. 
-    Shifted data filled with NaNs
-    Code from https://towardsdatascience.com/four-ways-to-quantify-synchrony-between-time-series-data-b99136c4a9c9
-    
-    Parameters
-    ----------
-    lag : int, default 0
-    datax, datay : pandas.Series objects of equal length
-    Returns
-    ----------
-    crosscorr : float
-    """
-    if wrap:
-        shiftedy = datay.shift(lag)
-        shiftedy.iloc[:lag] = datay.iloc[-lag:].values
-        return datax.corr(shiftedy)
-    else: 
-        return datax.corr(datay.shift(lag))

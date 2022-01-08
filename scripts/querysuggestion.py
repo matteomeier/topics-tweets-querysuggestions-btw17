@@ -89,6 +89,7 @@ def vectorize_suggestions(input_df):
         vector = np.average(mean_vector, axis=0)
         vector_data.append(vector)
     vector_data = [x for x in vector_data if x.shape==(100,)]
+
     vector_data = np.asarray(vector_data)
 
     return suggestions, vector_data

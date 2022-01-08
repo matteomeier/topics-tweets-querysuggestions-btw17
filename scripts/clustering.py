@@ -41,9 +41,8 @@ def dbscan_suggestions(vectorized_suggestions):
     :params vectorized_suggestions: vectorized suggestions as list
     :return: dict of scores and parameters
     '''
-    
-    scores = {'eps':[], 'min_samples':[], 'silhouette_score':[], 'num_cluster':[], 'num_noise':[]}
 
+    scores = {'eps':[], 'min_samples':[], 'silhouette_score':[], 'num_cluster':[], 'num_noise':[]}
     # dbscan clustering for different eps and different min_samples and return silhuoette
     for i in tqdm(np.arange(0.05, 1, 0.05)):
         for j in np.arange(5, 16):
@@ -57,11 +56,14 @@ def dbscan_suggestions(vectorized_suggestions):
             tmp = tmp[tmp['labels']!=-1]
             labels_clean = tmp['labels'].tolist()
             vectors_clean = np.array(tmp['vector'].tolist())
-
+            
             # append to dict
             scores['eps'].append(i)
             scores['min_samples'].append(j)
-            scores['silhouette_score'].append(metrics.silhouette_score(vectors_clean, labels_clean))
-            scores['num_cluster'].append(len(set(labels_clean)) - (1 if -1 in labels else 0))
+            try:
+                scores['silhouette_score'].append(metrics.silhouette_score(vectors_clean, labels_clean))
+            except:
+                scores['silhouette_score'].append(1)
+            scores['num_cluster'].append(len(set(labels)) - (1 if -1 in labels else 0))
             scores['num_noise'].append(list(labels).count(-1))
     return scores
