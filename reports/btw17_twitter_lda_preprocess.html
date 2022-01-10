@@ -13161,13 +13161,13 @@ div#notebook {
 
  
  
-<div id="59299a14-1826-4bf7-aba3-821d5bcf185b"></div>
+<div id="a1d41a39-5a2c-4b12-9b37-edcce53fc0e5"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#59299a14-1826-4bf7-aba3-821d5bcf185b');
+var element = $('#a1d41a39-5a2c-4b12-9b37-edcce53fc0e5');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "5a32341e8d02487d915339585edd4179", "version_major": 2, "version_minor": 0}
+{"model_id": "63a755012be143e0a19fbc37ce506d5b", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -13333,13 +13333,13 @@ var element = $('#59299a14-1826-4bf7-aba3-821d5bcf185b');
 
  
  
-<div id="8a54adb6-5e9f-45f1-820f-9c9e65709a69"></div>
+<div id="6c17ffcd-26f3-4ff1-b2b7-ac921fb8e91b"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#8a54adb6-5e9f-45f1-820f-9c9e65709a69');
+var element = $('#6c17ffcd-26f3-4ff1-b2b7-ac921fb8e91b');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c0e16ad39cc54d1085a3931c67915b44", "version_major": 2, "version_minor": 0}
+{"model_id": "facfcfeef20b49eb8120b730bb1effdd", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -13402,7 +13402,7 @@ var element = $('#8a54adb6-5e9f-45f1-820f-9c9e65709a69');
       <th>hashtag</th>
       <td>162</td>
       <td>162</td>
-      <td>hütter</td>
+      <td>antifa</td>
       <td>1</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -13415,9 +13415,9 @@ var element = $('#8a54adb6-5e9f-45f1-820f-9c9e65709a69');
     <tr>
       <th>lda_dates</th>
       <td>162</td>
-      <td>38</td>
-      <td>[2017-09-20, 2017-09-21, 2017-09-22, 2017-09-2...</td>
-      <td>22</td>
+      <td>162</td>
+      <td>[2017-06-05, 2017-06-06, 2017-06-07, 2017-06-0...</td>
+      <td>1</td>
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
@@ -13453,7 +13453,41 @@ var element = $('#8a54adb6-5e9f-45f1-820f-9c9e65709a69');
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+<span class="kn">from</span> <span class="nn">twitter</span> <span class="kn">import</span> <span class="n">filter_tweets</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>The autoreload extension is already loaded. To reload it, use:
+  %reload_ext autoreload
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># set to *.json to load all</span>
@@ -13480,13 +13514,13 @@ var element = $('#8a54adb6-5e9f-45f1-820f-9c9e65709a69');
 
  
  
-<div id="5f2d455e-1d32-41ed-a855-62ee5a58ac76"></div>
+<div id="e3ffa112-4a72-4524-aa30-21753a77471a"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#5f2d455e-1d32-41ed-a855-62ee5a58ac76');
+var element = $('#e3ffa112-4a72-4524-aa30-21753a77471a');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "6f2dc0b8d82944308337394cbab229d1", "version_major": 2, "version_minor": 0}
+{"model_id": "6660e97a10124524a83ff805e89b3759", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -13498,25 +13532,208 @@ var element = $('#5f2d455e-1d32-41ed-a855-62ee5a58ac76');
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># save to json</span>
 <span class="n">lda_tweets</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Twitter/lda/lda_tweets.json&#39;</span><span class="p">)</span>
+<span class="n">lda_tweets</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[18]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>created_at</th>
+      <th>text</th>
+      <th>user</th>
+      <th>extended_tweet</th>
+      <th>retweeted_status</th>
+      <th>tags</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2017-08-02</td>
+      <td>RT @AfD_Bund: 6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #T...</td>
+      <td>{'id': 738771661915344897, 'id_str': '73877166...</td>
+      <td>NaN</td>
+      <td>{'created_at': 'Wed Aug 02 21:28:47 +0000 2017...</td>
+      <td>btw17</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2017-08-02</td>
+      <td>RT @FraukePetry: #OSZE nimmt Sorge der #AfD er...</td>
+      <td>{'id': 855324133, 'id_str': '855324133', 'name...</td>
+      <td>NaN</td>
+      <td>{'created_at': 'Wed Aug 02 11:37:33 +0000 2017...</td>
+      <td>btw17</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2017-08-02</td>
+      <td>RT @AfD_Bund: 6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #T...</td>
+      <td>{'id': 1305881724, 'id_str': '1305881724', 'na...</td>
+      <td>NaN</td>
+      <td>{'created_at': 'Wed Aug 02 21:28:47 +0000 2017...</td>
+      <td>btw17</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lda_tweets</span><span class="p">[</span><span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;extended_tweet&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[20]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>created_at</th>
+      <th>text</th>
+      <th>user</th>
+      <th>extended_tweet</th>
+      <th>retweeted_status</th>
+      <th>tags</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>25438</th>
+      <td>2017-05-29</td>
+      <td>RT @GrueneBundestag: Die #Mietpreisbremse brem...</td>
+      <td>{'id': 236737207, 'id_str': '236737207', 'name...</td>
+      <td></td>
+      <td>{'created_at': 'Mon May 29 08:07:05 +0000 2017...</td>
+      <td>mietpreisbremse</td>
+    </tr>
+    <tr>
+      <th>91140</th>
+      <td>2017-07-16</td>
+      <td>RT @Eckleben: #Rentner in #Berlin glücklich + ...</td>
+      <td>{'id': 3610063162, 'id_str': '3610063162', 'na...</td>
+      <td></td>
+      <td>{'created_at': 'Sat Jul 15 17:12:15 +0000 2017...</td>
+      <td>berlin</td>
+    </tr>
+    <tr>
+      <th>117607</th>
+      <td>2017-06-17</td>
+      <td>RT @Joerg_Meuthen: Die sogenannten "#Grünen“ s...</td>
+      <td>{'id': 2817555377, 'id_str': '2817555377', 'na...</td>
+      <td></td>
+      <td>{'created_at': 'Sun Jun 11 12:45:53 +0000 2017...</td>
+      <td>grünen</td>
+    </tr>
+    <tr>
+      <th>117608</th>
+      <td>2017-06-17</td>
+      <td>RT @AfD_Bund: Dr. Alexander #Gauland:\n»Richti...</td>
+      <td>{'id': 867849125009645568, 'id_str': '86784912...</td>
+      <td></td>
+      <td>{'created_at': 'Thu Jun 15 15:39:07 +0000 2017...</td>
+      <td>gauland</td>
+    </tr>
+    <tr>
+      <th>117609</th>
+      <td>2017-06-17</td>
+      <td>RT @AfD_Bund: Das #BAMF (Bundesamt für Migrati...</td>
+      <td>{'id': 749574693636730880, 'id_str': '74957469...</td>
+      <td></td>
+      <td>{'created_at': 'Fri Jun 16 12:27:23 +0000 2017...</td>
+      <td>heimat</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get full tweets text</span>
 <span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;retweeted_status&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;extended_tweet&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">to_replace</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;extended_tweet&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;full_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lda_tweets</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">get_text</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;extended_tweet&#39;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;retweeted_status&#39;</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
@@ -13534,7 +13751,7 @@ var element = $('#5f2d455e-1d32-41ed-a855-62ee5a58ac76');
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># preprocess tokens</span>
@@ -13562,13 +13779,13 @@ var element = $('#5f2d455e-1d32-41ed-a855-62ee5a58ac76');
 
  
  
-<div id="a6824ebc-4755-43c8-85ce-575adc63854b"></div>
+<div id="957c1700-0a68-4c15-b2c6-301bc0c444a3"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#a6824ebc-4755-43c8-85ce-575adc63854b');
+var element = $('#957c1700-0a68-4c15-b2c6-301bc0c444a3');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "8910fbdbcc25401787d770696d621107", "version_major": 2, "version_minor": 0}
+{"model_id": "831567cc92544f2db2db1d26340708cb", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -13580,30 +13797,118 @@ var element = $('#a6824ebc-4755-43c8-85ce-575adc63854b');
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tokens</span>
 
 <span class="c1"># save preprocessed tweets</span>
 <span class="n">lda_tweets</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Twitter/lda/preprocessed_lda_tweets.json&#39;</span><span class="p">)</span>
+<span class="n">lda_tweets</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[37]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>created_at</th>
+      <th>text</th>
+      <th>user</th>
+      <th>extended_tweet</th>
+      <th>retweeted_status</th>
+      <th>tags</th>
+      <th>full_text</th>
+      <th>full_text_processed</th>
+      <th>tokens</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2017-08-02</td>
+      <td>RT @AfD_Bund: 6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #T...</td>
+      <td>{'id': 738771661915344897, 'id_str': '73877166...</td>
+      <td>0</td>
+      <td>{'created_at': 'Wed Aug 02 21:28:47 +0000 2017...</td>
+      <td>btw17</td>
+      <td>6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #Twitter!\nDie #...</td>
+      <td>️⃣️⃣.️⃣️⃣️⃣ Follower auf #Twitter!\nDie #AfD-P...</td>
+      <td>[follower, twitter, finden, immer, mehr, anklang]</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2017-08-02</td>
+      <td>RT @FraukePetry: #OSZE nimmt Sorge der #AfD er...</td>
+      <td>{'id': 855324133, 'id_str': '855324133', 'name...</td>
+      <td>0</td>
+      <td>{'created_at': 'Wed Aug 02 11:37:33 +0000 2017...</td>
+      <td>btw17</td>
+      <td>#OSZE nimmt Sorge der #AfD ernst und schickt T...</td>
+      <td>#OSZE nimmt Sorge der #AfD ernst und schickt T...</td>
+      <td>[osze, nehmen, sorge, afd, ernst, schicken, te...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2017-08-02</td>
+      <td>RT @AfD_Bund: 6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #T...</td>
+      <td>{'id': 1305881724, 'id_str': '1305881724', 'na...</td>
+      <td>0</td>
+      <td>{'created_at': 'Wed Aug 02 21:28:47 +0000 2017...</td>
+      <td>btw17</td>
+      <td>6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #Twitter!\nDie #...</td>
+      <td>️⃣️⃣.️⃣️⃣️⃣ Follower auf #Twitter!\nDie #AfD-P...</td>
+      <td>[follower, twitter, finden, immer, mehr, anklang]</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># evaluate preprocessing</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;original document: &#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;full_text&#39;</span><span class="p">][</span><span class="mi">100</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;full_text&#39;</span><span class="p">][</span><span class="mi">120</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">tokenized and lemmatized document: &#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">][</span><span class="mi">100</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lda_tweets</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">][</span><span class="mi">120</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -13621,10 +13926,14 @@ var element = $('#a6824ebc-4755-43c8-85ce-575adc63854b');
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>original document: 
-&#34;Wir werden der soziale Oppositionsführer bleiben. Und wir werden den Regierenden Beine machen.&#34; @SWagenknecht #btw17
+Presseerklärung zu Aussagen von Martin Schulz (#SPD) 
+
+#afd #poggenburg #schulz
+
+https://t.co/WMZxoPKicq https://t.co/ibaYniIh59
 
 tokenized and lemmatized document: 
-[&#39;soziale&#39;, &#39;oppositionsführer&#39;, &#39;bleiben&#39;, &#39;regierende&#39;, &#39;bein&#39;, &#39;btw&#39;]
+[&#39;presseerklärung&#39;, &#39;aussage&#39;, &#39;martin&#39;, &#39;schulz&#39;, &#39;spd&#39;, &#39;afd&#39;, &#39;poggenburg&#39;, &#39;schulz&#39;]
 </pre>
 </div>
 </div>

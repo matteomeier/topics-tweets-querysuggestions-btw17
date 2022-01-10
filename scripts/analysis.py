@@ -1,6 +1,7 @@
 # functions for analysis
 import pandas as pd
 import numpy as np
+from datetime import datetime, timedelta
 from tqdm.notebook import tqdm
 from gensim import models
 from scipy import stats
@@ -199,4 +200,44 @@ def get_correlation(delay, hashtag_df, cluster_df, cluster_gender_df, cluster_pa
 
     output = sim_df.merge(pd.DataFrame(output), how='left', on=['cluster', 'hashtags'])
     
+    return output
+
+# define function peak_analysis
+def peak_analysis(test_range, sim_df, peaks_df, cluster_df):
+    '''
+    :params range: days around peak in int
+    :params sim_df: df with combinations cluster, hashtga
+    :params peaks_df: df with peak days per hashtag
+    :params cluster_df: df with cluster timeseries
+    :return: vectorized hashtags
+    '''
+
+    output = {'hashtag':[], 'cluster':[], 't':[], 'p':[]}
+
+    for i in tqdm(range(len(sim_df))):
+        hashtag = sim_df['hashtags'][i]
+        cluster = sim_df['cluster'][i]
+        
+        tmp = peaks_df[peaks_df['hashtag']==hashtag].reset_index(drop=True)
+        peak_start = pd.to_datetime(min(tmp['lda_dates'][0]))
+        peak_end = pd.to_datetime(max(tmp['lda_dates'][0]))
+        
+        start = peak_start - timedelta(days=test_range)
+        end = peak_end + timedelta(days=test_range)
+        
+        tmp = cluster_df[cluster_df['cluster']==cluster]
+        before = tmp[(tmp['date']>=start)&(tmp['date']<=peak_start)]['cluster_count']
+        after = tmp[(tmp['date']>=peak_end)&(tmp['date']<=end)]['cluster_count']
+        
+        l, p_levene = stats.levene(after, before)
+        if p_levene < 0.05:
+            t, p = stats.ttest_ind(after, before, equal_var=False)
+        else:
+            t, p = stats.ttest_ind(after, before, equal_var=True)
+        
+        output['hashtag'].append(hashtag)
+        output['cluster'].append(cluster)
+        output['t'].append(round(t,3))
+        output['p'].append(round(p,3))
+
     return output

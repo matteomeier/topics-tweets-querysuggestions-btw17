@@ -13164,7 +13164,6 @@ div#notebook {
     <tr style="text-align: right;">
       <th></th>
       <th>created_at</th>
-      <th>id</th>
       <th>text</th>
       <th>user</th>
       <th>extended_tweet</th>
@@ -13180,44 +13179,41 @@ div#notebook {
     <tr>
       <th>0</th>
       <td>2017-08-02</td>
-      <td>892868367195025408</td>
-      <td>RT @Beatrix_vStorch: Ja zum #Diesel. https://t...</td>
-      <td>{'id': 2746361571, 'id_str': '2746361571', 'na...</td>
+      <td>RT @AfD_Bund: 6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #T...</td>
+      <td>{'id': 738771661915344897, 'id_str': '73877166...</td>
       <td>0</td>
-      <td>{'created_at': 'Wed Aug 02 16:23:23 +0000 2017...</td>
-      <td>diesel</td>
-      <td>Ja zum #Diesel. https://t.co/NCcsfSkBl7</td>
-      <td>Ja zum #Diesel. https://t.co/NCcsfSkBl</td>
-      <td>[diesel]</td>
-      <td>UweWolff966</td>
+      <td>{'created_at': 'Wed Aug 02 21:28:47 +0000 2017...</td>
+      <td>btw17</td>
+      <td>6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #Twitter!\nDie #...</td>
+      <td>️⃣️⃣.️⃣️⃣️⃣ Follower auf #Twitter!\nDie #AfD-P...</td>
+      <td>[follower, twitter, finden, immer, mehr, anklang]</td>
+      <td>AfD_HD</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2017-08-02</td>
-      <td>892890742905081856</td>
-      <td>RT @Beatrix_vStorch: Ja zum #Diesel. https://t...</td>
-      <td>{'id': 4379225363, 'id_str': '4379225363', 'na...</td>
+      <td>RT @FraukePetry: #OSZE nimmt Sorge der #AfD er...</td>
+      <td>{'id': 855324133, 'id_str': '855324133', 'name...</td>
       <td>0</td>
-      <td>{'created_at': 'Wed Aug 02 16:23:23 +0000 2017...</td>
-      <td>diesel</td>
-      <td>Ja zum #Diesel. https://t.co/NCcsfSkBl7</td>
-      <td>Ja zum #Diesel. https://t.co/NCcsfSkBl</td>
-      <td>[diesel]</td>
-      <td>F_von_Steiner</td>
+      <td>{'created_at': 'Wed Aug 02 11:37:33 +0000 2017...</td>
+      <td>btw17</td>
+      <td>#OSZE nimmt Sorge der #AfD ernst und schickt T...</td>
+      <td>#OSZE nimmt Sorge der #AfD ernst und schickt T...</td>
+      <td>[osze, nehmen, sorge, afd, ernst, schicken, te...</td>
+      <td>83Schildi</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2017-08-03</td>
-      <td>892911669633966080</td>
-      <td>#Diesel #Dobrindt's schützende Hand über Autok...</td>
-      <td>{'id': 22900494, 'id_str': '22900494', 'name':...</td>
+      <td>2017-08-02</td>
+      <td>RT @AfD_Bund: 6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #T...</td>
+      <td>{'id': 1305881724, 'id_str': '1305881724', 'na...</td>
       <td>0</td>
-      <td>0</td>
-      <td>diesel</td>
-      <td>#Diesel #Dobrindt's schützende Hand über Autok...</td>
-      <td>#Diesel #Dobrindt's schützende Hand über Autok...</td>
-      <td>[diesel, schützend, hand, autokonzerne, mensch...</td>
-      <td>BaerbelHoehn</td>
+      <td>{'created_at': 'Wed Aug 02 21:28:47 +0000 2017...</td>
+      <td>btw17</td>
+      <td>6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #Twitter!\nDie #...</td>
+      <td>️⃣️⃣.️⃣️⃣️⃣ Follower auf #Twitter!\nDie #AfD-P...</td>
+      <td>[follower, twitter, finden, immer, mehr, anklang]</td>
+      <td>helmut_hedrich</td>
     </tr>
   </tbody>
 </table>
@@ -13257,13 +13253,13 @@ div#notebook {
 
  
  
-<div id="3f00c19d-f91d-41c2-857d-74ed48836d79"></div>
+<div id="6bb3267c-6214-478b-9e83-252ccb027be9"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#3f00c19d-f91d-41c2-857d-74ed48836d79');
+var element = $('#6bb3267c-6214-478b-9e83-252ccb027be9');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "7ab28f68722a46db84855b281c41328e", "version_major": 2, "version_minor": 0}
+{"model_id": "495b14bfa03d49da9da3c06e563ab391", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -13281,7 +13277,8 @@ var element = $('#3f00c19d-f91d-41c2-857d-74ed48836d79');
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># run lda for different num_topics and plot coherence scores</span>
 <span class="n">model_list</span><span class="p">,</span> <span class="n">coherence_scores</span> <span class="o">=</span> <span class="n">run_ldas</span><span class="p">(</span><span class="n">documents</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">coherence_scores</span><span class="p">[</span><span class="s1">&#39;Coherence Score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">coherence_scores</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;c_v&#39;</span><span class="p">)</span>
-<span class="n">coherence_scores</span><span class="p">[</span><span class="s1">&#39;Anzahl Topics&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">coherence_scores</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;num_topics&#39;</span><span class="p">)</span>
+<span class="n">coherence_scores</span><span class="p">[</span><span class="s1">&#39;Anzahl Topics&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">coherence_scores</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;num_topics&#39;</span>
+                                                        <span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">coherence_scores</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Anzahl Topics&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Coherence Score&#39;</span><span class="p">,</span>
               <span class="n">template</span><span class="o">=</span><span class="s1">&#39;simple_white&#39;</span><span class="p">,</span> <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">qualitative</span><span class="o">.</span><span class="n">Antique</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">font</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s1">&#39;Computer Modern&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">))</span>
@@ -13295,6 +13292,28 @@ var element = $('#3f00c19d-f91d-41c2-857d-74ed48836d79');
 <div class="output_wrapper">
 <div class="output">
 
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+ 
+ 
+<div id="ab95ed44-1851-4090-b529-17ef8a67ad55"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#ab95ed44-1851-4090-b529-17ef8a67ad55');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "009e09b2e64248dc8f574308c3c99421", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
 
 <div class="output_area">
 
@@ -13388,9 +13407,9 @@ var n,i=t("./lib/build-log"),a=t("./lib/epsilon"),o=t("./lib/intersecter"),s=t("
 
 
 <div class="output_html rendered_html output_subarea ">
-<div>                            <div id="c000b7b6-8c1f-4328-b77c-298c5795530e" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("c000b7b6-8c1f-4328-b77c-298c5795530e")) {                    Plotly.newPlot(                        "c000b7b6-8c1f-4328-b77c-298c5795530e",                        [{"hovertemplate": "Anzahl Topics=%{x}<br>Coherence Score=%{y}<extra></extra>", "legendgroup": "", "line": {"color": "rgb(133, 92, 117)", "dash": "solid"}, "mode": "lines", "name": "", "orientation": "v", "showlegend": false, "type": "scatter", "x": [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100], "xaxis": "x", "y": [0.37356872127825935, 0.3137120584226992, 0.38442512674767376, 0.3659649498351692, 0.37653156375412294, 0.3881760414874897, 0.3922833638497084, 0.41559134596869407, 0.3963880482761875, 0.40774565950692093, 0.371231996145236, 0.4007277200299305, 0.36797191242946686, 0.39979362227157167, 0.3947586821878703, 0.394255140860532, 0.3812090874137101, 0.3804616593764661, 0.39505256886085627, 0.4013648091885337, 0.38281856696904065, 0.38015446369117833, 0.39473551271801577, 0.39960860616111143, 0.39221620717338845, 0.3802262277246848, 0.3955639935194823, 0.3989864630919394, 0.3965059203354009, 0.39355298518428566, 0.3864774301396337, 0.3864938700002657, 0.4036431763453856, 0.39913704594052724, 0.40383556266411885, 0.4022097190610514, 0.39834547960351846, 0.38151654426291925, 0.37926995964027377, 0.3909550012857752, 0.3827653061514436, 0.39408026273540175, 0.3852764366028517, 0.3800670916344332, 0.38753045518390755, 0.37815890624504095, 0.38847863277823586, 0.3681841543776225, 0.39485208135006195, 0.3739611751849248, 0.3804127568440398, 0.35950627320106077, 0.38942725754059404, 0.3739623204647902, 0.3833751185142695, 0.3742519493682845, 0.37666191098110224, 0.4053329673995243, 0.41665986945067085, 0.4307727821454856, 0.40999514871471576, 0.4050467234694584, 0.449456640051502, 0.4227551254143125, 0.44562542526472376, 0.4206223762841171, 0.4562894386910171, 0.4518142165563792, 0.495942706783008, 0.4907503845014247, 0.47046055412333915, 0.4785571647706525, 0.4822474654009897, 0.49533957755778507, 0.50356497504475, 0.5259186682947417, 0.4761234536886507, 0.5536281874978227, 0.49993412446866786, 0.5081696314081756, 0.5203671501460682, 0.4904994287629805, 0.5244663067095159, 0.5448383886551272, 0.4979506771480615, 0.46439028574559743, 0.504461079603968, 0.45037168524115967, 0.4880011890058116, 0.483197915314645, 0.4656803777044811], "yaxis": "y"}],                        {"font": {"color": "black", "family": "Computer Modern", "size": 15}, "legend": {"tracegroupgap": 0}, "margin": {"t": 60}, "template": {"data": {"bar": [{"error_x": {"color": "rgb(36,36,36)"}, "error_y": {"color": "rgb(36,36,36)"}, "marker": {"line": {"color": "white", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "white", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "rgb(36,36,36)", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "rgb(36,36,36)"}, "baxis": {"endlinecolor": "rgb(36,36,36)", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "rgb(36,36,36)"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "heatmapgl"}], "histogram": [{"marker": {"line": {"color": "white", "width": 0.6}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "rgb(237,237,237)"}, "line": {"color": "white"}}, "header": {"fill": {"color": "rgb(217,217,217)"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowhead": 0, "arrowwidth": 1}, "autotypenumbers": "strict", "coloraxis": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "colorscale": {"diverging": [[0.0, "rgb(103,0,31)"], [0.1, "rgb(178,24,43)"], [0.2, "rgb(214,96,77)"], [0.3, "rgb(244,165,130)"], [0.4, "rgb(253,219,199)"], [0.5, "rgb(247,247,247)"], [0.6, "rgb(209,229,240)"], [0.7, "rgb(146,197,222)"], [0.8, "rgb(67,147,195)"], [0.9, "rgb(33,102,172)"], [1.0, "rgb(5,48,97)"]], "sequential": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "sequentialminus": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]]}, "colorway": ["#1F77B4", "#FF7F0E", "#2CA02C", "#D62728", "#9467BD", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF"], "font": {"color": "rgb(36,36,36)"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "white", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "white", "polar": {"angularaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "bgcolor": "white", "radialaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}}, "scene": {"xaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "yaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "zaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}}, "shapedefaults": {"fillcolor": "black", "line": {"width": 0}, "opacity": 0.3}, "ternary": {"aaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "baxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "bgcolor": "white", "caxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside", "title": {"standoff": 15}, "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "yaxis": {"automargin": true, "gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside", "title": {"standoff": 15}, "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}}}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Anzahl Topics"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Coherence Score"}}},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="df78188e-5e32-458c-9940-71c693fc8772" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("df78188e-5e32-458c-9940-71c693fc8772")) {                    Plotly.newPlot(                        "df78188e-5e32-458c-9940-71c693fc8772",                        [{"hovertemplate": "Anzahl Topics=%{x}<br>Coherence Score=%{y}<extra></extra>", "legendgroup": "", "line": {"color": "rgb(133, 92, 117)", "dash": "solid"}, "mode": "lines", "name": "", "orientation": "v", "showlegend": false, "type": "scatter", "x": [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100], "xaxis": "x", "y": [0.2879549122774746, 0.3318225021806059, 0.289032931057237, 0.29906757432679537, 0.3559347070971843, 0.335834112458194, 0.32824473399447024, 0.33991471812561985, 0.3257448495150676, 0.3296651237624106, 0.33799942429248814, 0.33515212292324276, 0.34169844595983806, 0.34480093506914417, 0.3437956468807837, 0.337796934235203, 0.33859179615358403, 0.3459739088703022, 0.3371136227304472, 0.34427875151725135, 0.3290425817767823, 0.3583554733078028, 0.33795341115983457, 0.3382568500517958, 0.3434531772123444, 0.33662199476533156, 0.345865378906041, 0.3492269573373717, 0.3311135388698706, 0.3277179231362496, 0.32257596579044157, 0.33912637255759037, 0.329908261473235, 0.32810655922913884, 0.32556951027188713, 0.33818870376473, 0.3214091801847897, 0.3258683168006548, 0.3124084115525314, 0.32487211249970477, 0.3199701883237767, 0.3307197311966364, 0.323144409186239, 0.3376653693000729, 0.33531113235084653, 0.3288755222022626, 0.3260441472211405, 0.3297417296029683, 0.3232920068432344, 0.31683522773984907, 0.3281848370349842, 0.3277013812321003, 0.3223255126185683, 0.32226711012178993, 0.33370551003613846, 0.3280375733170953, 0.3243431407457258, 0.31416167483046653, 0.31110478357527926, 0.3107992511373999, 0.3226763721037715, 0.32256144376329066, 0.3121108460486332, 0.322848141771013, 0.3420865948942524, 0.3473514410424848, 0.3495729430848748, 0.3211234943734952, 0.34370831799731205, 0.35347961286642615, 0.35180653282114605, 0.3644874390175784, 0.3534686387200279, 0.34833235572226623, 0.36529921496671713, 0.35514493512398754, 0.36937683814816713, 0.4084560051452677, 0.3597145244823219, 0.3983195049055147, 0.3964988102077616, 0.4117127364514749, 0.4396143121198989, 0.4250356090185308, 0.3870747131888442, 0.4205113215790758, 0.43986712297302316, 0.42551860597728197, 0.41436714204624825, 0.4429146197937351, 0.45058151254092854], "yaxis": "y"}],                        {"font": {"color": "black", "family": "Computer Modern", "size": 15}, "legend": {"tracegroupgap": 0}, "margin": {"t": 60}, "template": {"data": {"bar": [{"error_x": {"color": "rgb(36,36,36)"}, "error_y": {"color": "rgb(36,36,36)"}, "marker": {"line": {"color": "white", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "white", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "rgb(36,36,36)", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "rgb(36,36,36)"}, "baxis": {"endlinecolor": "rgb(36,36,36)", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "rgb(36,36,36)"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "heatmapgl"}], "histogram": [{"marker": {"line": {"color": "white", "width": 0.6}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "rgb(237,237,237)"}, "line": {"color": "white"}}, "header": {"fill": {"color": "rgb(217,217,217)"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowhead": 0, "arrowwidth": 1}, "autotypenumbers": "strict", "coloraxis": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "colorscale": {"diverging": [[0.0, "rgb(103,0,31)"], [0.1, "rgb(178,24,43)"], [0.2, "rgb(214,96,77)"], [0.3, "rgb(244,165,130)"], [0.4, "rgb(253,219,199)"], [0.5, "rgb(247,247,247)"], [0.6, "rgb(209,229,240)"], [0.7, "rgb(146,197,222)"], [0.8, "rgb(67,147,195)"], [0.9, "rgb(33,102,172)"], [1.0, "rgb(5,48,97)"]], "sequential": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "sequentialminus": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]]}, "colorway": ["#1F77B4", "#FF7F0E", "#2CA02C", "#D62728", "#9467BD", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF"], "font": {"color": "rgb(36,36,36)"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "white", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "white", "polar": {"angularaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "bgcolor": "white", "radialaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}}, "scene": {"xaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "yaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "zaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}}, "shapedefaults": {"fillcolor": "black", "line": {"width": 0}, "opacity": 0.3}, "ternary": {"aaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "baxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "bgcolor": "white", "caxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside", "title": {"standoff": 15}, "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "yaxis": {"automargin": true, "gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside", "title": {"standoff": 15}, "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}}}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Anzahl Topics"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Coherence Score"}}},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('c000b7b6-8c1f-4328-b77c-298c5795530e');
+var gd = document.getElementById('df78188e-5e32-458c-9940-71c693fc8772');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -13423,12 +13442,162 @@ if (outputEl) {{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">run_ldas</span><span class="p">(</span><span class="n">documents</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+ 
+ 
+<div id="54267678-fc0d-4437-afaf-952cff066699"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#54267678-fc0d-4437-afaf-952cff066699');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "dd842ce84214427fbe14168493682311", "version_major": 2, "version_minor": 0}
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[15]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;num_topics&#39;: [200, 201], &#39;c_v&#39;: [0.8044460718847263, 0.8044460718847263]}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Coherence alleine funktioniert nicht, siehe Experimente mit 200 und 201 Topics.
+Dementsprechend wird dies angereichert mit der Anzahl einzigartiger Topics.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">n_topics</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">model_list</span><span class="p">:</span>
+    <span class="n">ntopics</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">print_topics</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">ntopics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">topic</span><span class="p">)</span>
+    <span class="n">n_topics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ntopics</span><span class="p">)))</span>
+    
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">101</span><span class="p">),</span> <span class="n">y</span><span class="o">=</span><span class="n">n_topics</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="s1">&#39;Anzahl Topics&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="s1">&#39;Anzahl eindeutiger Topics&#39;</span><span class="p">},</span>
+              <span class="n">template</span><span class="o">=</span><span class="s1">&#39;simple_white&#39;</span><span class="p">,</span> <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">qualitative</span><span class="o">.</span><span class="n">Antique</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">font</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s1">&#39;Computer Modern&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>                            <div id="1f9beb09-b4e3-4c0f-ae5e-6e58a69febf2" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("1f9beb09-b4e3-4c0f-ae5e-6e58a69febf2")) {                    Plotly.newPlot(                        "1f9beb09-b4e3-4c0f-ae5e-6e58a69febf2",                        [{"hovertemplate": "Anzahl Topics=%{x}<br>Anzahl eindeutiger Topics=%{y}<extra></extra>", "legendgroup": "", "line": {"color": "rgb(133, 92, 117)", "dash": "solid"}, "mode": "lines", "name": "", "orientation": "v", "showlegend": false, "type": "scatter", "x": [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100], "xaxis": "x", "y": [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 86, 88, 89, 90, 89, 91, 91, 94, 93, 93, 97, 96, 93, 91], "yaxis": "y"}],                        {"font": {"color": "black", "family": "Computer Modern", "size": 15}, "legend": {"tracegroupgap": 0}, "margin": {"t": 60}, "template": {"data": {"bar": [{"error_x": {"color": "rgb(36,36,36)"}, "error_y": {"color": "rgb(36,36,36)"}, "marker": {"line": {"color": "white", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "white", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "rgb(36,36,36)", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "rgb(36,36,36)"}, "baxis": {"endlinecolor": "rgb(36,36,36)", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "rgb(36,36,36)"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "heatmapgl"}], "histogram": [{"marker": {"line": {"color": "white", "width": 0.6}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "rgb(237,237,237)"}, "line": {"color": "white"}}, "header": {"fill": {"color": "rgb(217,217,217)"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowhead": 0, "arrowwidth": 1}, "autotypenumbers": "strict", "coloraxis": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "colorscale": {"diverging": [[0.0, "rgb(103,0,31)"], [0.1, "rgb(178,24,43)"], [0.2, "rgb(214,96,77)"], [0.3, "rgb(244,165,130)"], [0.4, "rgb(253,219,199)"], [0.5, "rgb(247,247,247)"], [0.6, "rgb(209,229,240)"], [0.7, "rgb(146,197,222)"], [0.8, "rgb(67,147,195)"], [0.9, "rgb(33,102,172)"], [1.0, "rgb(5,48,97)"]], "sequential": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "sequentialminus": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]]}, "colorway": ["#1F77B4", "#FF7F0E", "#2CA02C", "#D62728", "#9467BD", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF"], "font": {"color": "rgb(36,36,36)"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "white", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "white", "polar": {"angularaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "bgcolor": "white", "radialaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}}, "scene": {"xaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "yaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "zaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}}, "shapedefaults": {"fillcolor": "black", "line": {"width": 0}, "opacity": 0.3}, "ternary": {"aaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "baxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "bgcolor": "white", "caxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside", "title": {"standoff": 15}, "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "yaxis": {"automargin": true, "gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside", "title": {"standoff": 15}, "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}}}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Anzahl Topics"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Anzahl eindeutiger Topics"}}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('1f9beb09-b4e3-4c0f-ae5e-6e58a69febf2');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get best performing lda model</span>
-<span class="n">best_model_index</span> <span class="o">=</span> <span class="n">coherence_scores</span><span class="p">[</span><span class="s1">&#39;Coherence Score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">coherence_scores</span><span class="p">[</span><span class="s1">&#39;Coherence Score&#39;</span><span class="p">]))</span>
-<span class="n">lda_model</span> <span class="o">=</span> <span class="n">model_list</span><span class="p">[</span><span class="n">best_model_index</span><span class="p">]</span>
+<span class="n">lda_model</span> <span class="o">=</span> <span class="n">model_list</span><span class="p">[</span><span class="mi">87</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -13438,7 +13607,7 @@ if (outputEl) {{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># print topics</span>
@@ -13461,179 +13630,199 @@ if (outputEl) {{
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Topic: 0 
-Words: 0.000*&#34;bewerben&#34; + 0.000*&#34;frazrn&#34; + 0.000*&#34;zerfleischen&#34; + 0.000*&#34;erstaunen&#34; + 0.000*&#34;feuer&#34; + 0.000*&#34;klartextfraumerkel&#34; + 0.000*&#34;chicken&#34; + 0.000*&#34;feigling&#34; + 0.000*&#34;thewestwing&#34; + 0.000*&#34;wbh&#34;
+Words: 0.132*&#34;ehefüralle&#34; + 0.097*&#34;stegner&#34; + 0.085*&#34;nrw&#34; + 0.048*&#34;ltnrw&#34; + 0.039*&#34;sofort&#34; + 0.039*&#34;lang&#34; + 0.037*&#34;steigen&#34; + 0.025*&#34;raus&#34; + 0.024*&#34;schande&#34; + 0.021*&#34;diplomatisch&#34;
 Topic: 1 
-Words: 0.270*&#34;fedidwgugl&#34; + 0.062*&#34;unverantwortlich&#34; + 0.046*&#34;cdu&#34; + 0.038*&#34;gelten&#34; + 0.034*&#34;nix&#34; + 0.028*&#34;tzt&#34; + 0.026*&#34;infostand&#34; + 0.018*&#34;mal&#34; + 0.018*&#34;früh&#34; + 0.018*&#34;haustürwahlkampf&#34;
+Words: 0.041*&#34;rufen&#34; + 0.036*&#34;eigentlich&#34; + 0.034*&#34;drehhofer&#34; + 0.031*&#34;erzählen&#34; + 0.026*&#34;zwingen&#34; + 0.025*&#34;kapitulieren&#34; + 0.025*&#34;staatstrojaner&#34; + 0.024*&#34;bundesrat&#34; + 0.023*&#34;cdu&#34; + 0.022*&#34;grüner&#34;
 Topic: 2 
-Words: 0.104*&#34;bundesregierung&#34; + 0.060*&#34;wähler&#34; + 0.056*&#34;grüne&#34; + 0.055*&#34;entzaubern&#34; + 0.047*&#34;völlig&#34; + 0.035*&#34;mitglied&#34; + 0.033*&#34;fünfkampf&#34; + 0.032*&#34;traudichdeutschland&#34; + 0.028*&#34;gehen&#34; + 0.028*&#34;nazi&#34;
+Words: 0.059*&#34;krieg&#34; + 0.046*&#34;dresden&#34; + 0.039*&#34;frau&#34; + 0.030*&#34;martin&#34; + 0.030*&#34;verteidigen&#34; + 0.029*&#34;merkel&#34; + 0.028*&#34;islamistische&#34; + 0.027*&#34;bekämpfen&#34; + 0.027*&#34;dank&#34; + 0.026*&#34;fluchtursachen&#34;
 Topic: 3 
-Words: 0.118*&#34;grüner&#34; + 0.059*&#34;zahlen&#34; + 0.054*&#34;pflegenotstand&#34; + 0.052*&#34;letzt&#34; + 0.052*&#34;jahr&#34; + 0.046*&#34;spd&#34; + 0.045*&#34;opposition&#34; + 0.042*&#34;entdecken&#34; + 0.042*&#34;unglaubwürdiger&#34; + 0.042*&#34;wahlkampfmetern&#34;
+Words: 0.103*&#34;job&#34; + 0.101*&#34;beschimpfen&#34; + 0.092*&#34;super&#34; + 0.062*&#34;überfällig&#34; + 0.060*&#34;fürsieda&#34; + 0.051*&#34;steineke&#34; + 0.045*&#34;oben&#34; + 0.026*&#34;zustand&#34; + 0.015*&#34;ganz&#34; + 0.013*&#34;neuruppin&#34;
 Topic: 4 
-Words: 0.001*&#34;link&#34; + 0.001*&#34;linke&#34; + 0.001*&#34;btw&#34; + 0.000*&#34;darumgrün&#34; + 0.000*&#34;live&#34; + 0.000*&#34;grün&#34; + 0.000*&#34;wählen&#34; + 0.000*&#34;stimme&#34; + 0.000*&#34;gehen&#34; + 0.000*&#34;winner&#34;
+Words: 0.013*&#34;ohnehin&#34; + 0.011*&#34;wirrockendeutschland&#34; + 0.010*&#34;retweeten&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;zählen&#34; + 0.000*&#34;retweete&#34; + 0.000*&#34;heute&#34; + 0.000*&#34;fragselbst&#34;
 Topic: 5 
-Words: 0.156*&#34;frau&#34; + 0.114*&#34;eigen&#34; + 0.079*&#34;merkel&#34; + 0.071*&#34;dank&#34; + 0.053*&#34;traudichdeutschland&#34; + 0.042*&#34;afd&#34; + 0.038*&#34;land&#34; + 0.034*&#34;können&#34; + 0.033*&#34;zurück&#34; + 0.032*&#34;holen&#34;
+Words: 0.132*&#34;sachsen&#34; + 0.089*&#34;erhalten&#34; + 0.078*&#34;nächst&#34; + 0.058*&#34;dabei&#34; + 0.053*&#34;politische&#34; + 0.037*&#34;juso&#34; + 0.030*&#34;pressekonferenz&#34; + 0.023*&#34;vertrauen&#34; + 0.021*&#34;rund&#34; + 0.016*&#34;wieviel&#34;
 Topic: 6 
-Words: 0.345*&#34;deutschland&#34; + 0.289*&#34;drücken&#34; + 0.020*&#34;nutzen&#34; + 0.001*&#34;btw&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;amp&#34; + 0.000*&#34;tag&#34; + 0.000*&#34;fühlen&#34; + 0.000*&#34;iloveafd&#34; + 0.000*&#34;danken&#34;
+Words: 0.046*&#34;wahlkampfauftakt&#34; + 0.041*&#34;düsseldorf&#34; + 0.007*&#34;henkelsaal&#34; + 0.003*&#34;vertiefen&#34; + 0.001*&#34;btw&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;zeit&#34; + 0.000*&#34;teil&#34; + 0.000*&#34;spd&#34;
 Topic: 7 
-Words: 0.139*&#34;lindner&#34; + 0.097*&#34;herr&#34; + 0.081*&#34;fdp&#34; + 0.039*&#34;schämen&#34; + 0.035*&#34;schmidt&#34; + 0.033*&#34;helmut&#34; + 0.030*&#34;touché&#34; + 0.030*&#34;schulz&#34; + 0.026*&#34;folge&#34; + 0.022*&#34;finde&#34;
+Words: 0.000*&#34;btw&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;teil&#34; + 0.000*&#34;kollaps&#34; + 0.000*&#34;zeit&#34; + 0.000*&#34;asylantragablehnung&#34; + 0.000*&#34;gauland&#34; + 0.000*&#34;tritt&#34; + 0.000*&#34;selber&#34;
 Topic: 8 
-Words: 0.108*&#34;geh&#34; + 0.089*&#34;afdwaehlen&#34; + 0.047*&#34;wahlbeobachter&#34; + 0.045*&#34;wahlbetrug&#34; + 0.042*&#34;wendewahl&#34; + 0.029*&#34;traudichdeutschland&#34; + 0.026*&#34;gehtwaehlen&#34; + 0.018*&#34;schicksalswahl&#34; + 0.015*&#34;blaueswunder&#34; + 0.013*&#34;holdirdeinlandzurueck&#34;
+Words: 0.066*&#34;gütersloh&#34; + 0.045*&#34;wen&#34; + 0.045*&#34;report&#34; + 0.029*&#34;sowieso&#34; + 0.014*&#34;fazit&#34; + 0.014*&#34;teilweise&#34; + 0.011*&#34;piraten&#34; + 0.011*&#34;gewinner&#34; + 0.007*&#34;mitgliedschaft&#34; + 0.005*&#34;daily&#34;
 Topic: 9 
-Words: 0.048*&#34;gutachten&#34; + 0.021*&#34;grenzöffnung&#34; + 0.016*&#34;unklar&#34; + 0.015*&#34;rechtsgrundlage&#34; + 0.008*&#34;sehen&#34; + 0.005*&#34;merkelmussweg&#34; + 0.001*&#34;traudichdeutschland&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;bürger&#34;
+Words: 0.060*&#34;katrin&#34; + 0.033*&#34;dirk&#34; + 0.027*&#34;ausgerechnet&#34; + 0.015*&#34;komm&#34; + 0.010*&#34;land&#34; + 0.010*&#34;abhalten&#34; + 0.006*&#34;merkel&#34; + 0.004*&#34;traudichdeutschland&#34; + 0.003*&#34;afd&#34; + 0.003*&#34;triffkatrin&#34;
 Topic: 10 
-Words: 0.193*&#34;leben&#34; + 0.096*&#34;land&#34; + 0.090*&#34;gut&#34; + 0.067*&#34;gerne&#34; + 0.024*&#34;motiv&#34; + 0.018*&#34;btw&#34; + 0.007*&#34;traudichdeutschland&#34; + 0.006*&#34;wählen&#34; + 0.005*&#34;afd&#34; + 0.003*&#34;bitte&#34;
+Words: 0.062*&#34;großartig&#34; + 0.054*&#34;mehrer&#34; + 0.049*&#34;meinfrankfurt&#34; + 0.039*&#34;begehen&#34; + 0.032*&#34;frankfurter&#34; + 0.023*&#34;fortschritt&#34; + 0.018*&#34;schwierig&#34; + 0.010*&#34;spot&#34; + 0.001*&#34;views&#34; + 0.000*&#34;heute&#34;
 Topic: 11 
-Words: 0.080*&#34;per&#34; + 0.007*&#34;dafü&#34; + 0.007*&#34;beweggründe&#34; + 0.004*&#34;videobotschaft&#34; + 0.001*&#34;herzliche&#34; + 0.001*&#34;bundessprecherin&#34; + 0.001*&#34;wahlaufruf&#34; + 0.001*&#34;fühlen&#34; + 0.001*&#34;dabei&#34; + 0.001*&#34;wahlkampfabschluss&#34;
+Words: 0.209*&#34;liegen&#34; + 0.058*&#34;niemals&#34; + 0.039*&#34;rechtswidrig&#34; + 0.012*&#34;grenzöffnung&#34; + 0.007*&#34;bürger&#34; + 0.006*&#34;zuwachs&#34; + 0.005*&#34;leichter&#34; + 0.001*&#34;btw&#34; + 0.000*&#34;yougov&#34; + 0.000*&#34;merkel&#34;
 Topic: 12 
-Words: 0.087*&#34;verraten&#34; + 0.041*&#34;gibts&#34; + 0.040*&#34;ding&#34; + 0.033*&#34;nachbarschaft&#34; + 0.027*&#34;traudichdeutschland&#34; + 0.019*&#34;afd&#34; + 0.015*&#34;herz&#34; + 0.015*&#34;zwei&#34; + 0.014*&#34;potsdam&#34; + 0.013*&#34;btw&#34;
+Words: 0.128*&#34;thüringen&#34; + 0.075*&#34;wagenknecht&#34; + 0.075*&#34;million&#34; + 0.053*&#34;brief&#34; + 0.042*&#34;marx&#34; + 0.041*&#34;gutes&#34; + 0.039*&#34;deutlich&#34; + 0.022*&#34;schicken&#34; + 0.016*&#34;bringen&#34; + 0.015*&#34;wund&#34;
 Topic: 13 
-Words: 0.197*&#34;retweete&#34; + 0.142*&#34;haben&#34; + 0.121*&#34;traudichdeutschland&#34; + 0.104*&#34;wählen&#34; + 0.102*&#34;afd&#34; + 0.088*&#34;unterstützung&#34; + 0.078*&#34;zeigen&#34; + 0.062*&#34;btw&#34; + 0.011*&#34;wert&#34; + 0.009*&#34;unterst&#34;
+Words: 0.123*&#34;gibt&#34; + 0.076*&#34;löschen&#34; + 0.040*&#34;traudichdeutschland&#34; + 0.035*&#34;afd&#34; + 0.030*&#34;klar&#34; + 0.029*&#34;vorstellen&#34; + 0.026*&#34;facebook&#34; + 0.026*&#34;kosten&#34; + 0.025*&#34;bringen&#34; + 0.023*&#34;kritisieren&#34;
 Topic: 14 
-Words: 0.143*&#34;politisch&#34; + 0.064*&#34;afd&#34; + 0.048*&#34;bitter&#34; + 0.046*&#34;arroganz&#34; + 0.046*&#34;vorbei&#34; + 0.045*&#34;rächen&#34; + 0.045*&#34;genosse&#34; + 0.045*&#34;vier&#34; + 0.045*&#34;linkstrend&#34; + 0.040*&#34;leben&#34;
+Words: 0.112*&#34;leeren&#34; + 0.039*&#34;wahlbetrug&#34; + 0.001*&#34;anschaulich&#34; + 0.001*&#34;gähnende&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;schulz&#34; + 0.000*&#34;zeigen&#34; + 0.000*&#34;kollaps&#34;
 Topic: 15 
-Words: 0.098*&#34;schon&#34; + 0.066*&#34;verändern&#34; + 0.065*&#34;ganz&#34; + 0.064*&#34;wort&#34; + 0.062*&#34;dank&#34; + 0.042*&#34;frei&#34; + 0.035*&#34;darum&#34; + 0.028*&#34;polizei&#34; + 0.026*&#34;entscheiden&#34; + 0.023*&#34;dürfen&#34;
+Words: 0.118*&#34;fühlen&#34; + 0.068*&#34;bundessprecherin&#34; + 0.061*&#34;wahlaufruf&#34; + 0.059*&#34;lage&#34; + 0.035*&#34;europäisch&#34; + 0.015*&#34;traudichdeutschand&#34; + 0.014*&#34;sichern&#34; + 0.012*&#34;außengrenzen&#34; + 0.010*&#34;fünfkampf&#34; + 0.006*&#34;gebieten&#34;
 Topic: 16 
-Words: 0.083*&#34;bürger&#34; + 0.080*&#34;unternehmen&#34; + 0.079*&#34;vergessen&#34; + 0.075*&#34;wahlversprechen&#34; + 0.075*&#34;brechen&#34; + 0.073*&#34;nrw&#34; + 0.054*&#34;fdp&#34; + 0.047*&#34;wer&#34; + 0.040*&#34;traudichdeutschland&#34; + 0.035*&#34;afd&#34;
+Words: 0.095*&#34;russland&#34; + 0.079*&#34;usa&#34; + 0.059*&#34;bundeswehr&#34; + 0.056*&#34;dieselgate&#34; + 0.056*&#34;syrien&#34; + 0.042*&#34;abstimmung&#34; + 0.035*&#34;incirlik&#34; + 0.033*&#34;amp&#34; + 0.032*&#34;wachsen&#34; + 0.026*&#34;abzug&#34;
 Topic: 17 
-Words: 0.011*&#34;moment&#34; + 0.001*&#34;afd&#34; + 0.001*&#34;btw&#34; + 0.001*&#34;herzliche&#34; + 0.001*&#34;videobotschaft&#34; + 0.001*&#34;wählen&#34; + 0.000*&#34;retweete&#34; + 0.000*&#34;unterstützung&#34; + 0.000*&#34;bitte&#34; + 0.000*&#34;dank&#34;
+Words: 0.090*&#34;schauen&#34; + 0.061*&#34;sendung&#34; + 0.007*&#34;wehrpflicht&#34; + 0.002*&#34;tvduell&#34; + 0.002*&#34;wiedereinsetzung&#34; + 0.001*&#34;wohl&#34; + 0.001*&#34;traudichdeutschland&#34; + 0.001*&#34;merkel&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;btw&#34;
 Topic: 18 
-Words: 0.119*&#34;islamisierung&#34; + 0.077*&#34;hoffen&#34; + 0.064*&#34;puste&#34; + 0.027*&#34;wahlkampf&#34; + 0.024*&#34;gehen&#34; + 0.021*&#34;land&#34; + 0.015*&#34;gefahr&#34; + 0.014*&#34;traudichdeutschland&#34; + 0.009*&#34;afd&#34; + 0.005*&#34;btw&#34;
+Words: 0.095*&#34;nato&#34; + 0.061*&#34;csu&#34; + 0.059*&#34;autobahnprivatisierung&#34; + 0.048*&#34;präambel&#34; + 0.048*&#34;despotie&#34; + 0.034*&#34;wegen&#34; + 0.033*&#34;cdu&#34; + 0.032*&#34;witz&#34; + 0.030*&#34;demokratie&#34; + 0.028*&#34;gez&#34;
 Topic: 19 
-Words: 0.001*&#34;afd&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;unterstützung&#34; + 0.000*&#34;bundessprecherin&#34; + 0.000*&#34;heute&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;wählen&#34; + 0.000*&#34;fühlen&#34; + 0.000*&#34;mein&#34; + 0.000*&#34;retweete&#34;
+Words: 0.095*&#34;bundesregierung&#34; + 0.064*&#34;grueneversenken&#34; + 0.062*&#34;offenbaren&#34; + 0.044*&#34;tolerant&#34; + 0.032*&#34;abschiebung&#34; + 0.032*&#34;polizei&#34; + 0.026*&#34;nix&#34; + 0.025*&#34;eben&#34; + 0.024*&#34;priorität&#34; + 0.024*&#34;scheinen&#34;
 Topic: 20 
-Words: 0.001*&#34;linke&#34; + 0.001*&#34;link&#34; + 0.000*&#34;soziale&#34; + 0.000*&#34;gesundheitsberufen&#34; + 0.000*&#34;notstand&#34; + 0.000*&#34;gesundheitsberufe&#34; + 0.000*&#34;haftungsfonds&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;berlin&#34; + 0.000*&#34;gehen&#34;
+Words: 0.122*&#34;tun&#34; + 0.074*&#34;handel&#34; + 0.070*&#34;heißen&#34; + 0.058*&#34;falsch&#34; + 0.056*&#34;lässt&#34; + 0.043*&#34;richtig&#34; + 0.042*&#34;and&#34; + 0.034*&#34;gibts&#34; + 0.029*&#34;mensch&#34; + 0.027*&#34;waffenexporte&#34;
 Topic: 21 
-Words: 0.158*&#34;immer&#34; + 0.078*&#34;warum&#34; + 0.069*&#34;mehr&#34; + 0.054*&#34;amp&#34; + 0.052*&#34;darumgruen&#34; + 0.047*&#34;stunde&#34; + 0.038*&#34;wach&#34; + 0.038*&#34;wahlschlaf&#34; + 0.024*&#34;wahlkampf&#34; + 0.023*&#34;unentschlossene&#34;
+Words: 0.076*&#34;denkenwirneu&#34; + 0.071*&#34;schlussrunde&#34; + 0.071*&#34;lindner&#34; + 0.059*&#34;flüchtling&#34; + 0.053*&#34;amtlich&#34; + 0.052*&#34;fdp&#34; + 0.038*&#34;annewill&#34; + 0.034*&#34;ehefüralle&#34; + 0.024*&#34;schön&#34; + 0.023*&#34;zukunftsthemen&#34;
 Topic: 22 
-Words: 0.083*&#34;gute&#34; + 0.081*&#34;inhalt&#34; + 0.067*&#34;online&#34; + 0.057*&#34;morgen&#34; + 0.049*&#34;danke&#34; + 0.048*&#34;arbeiten&#34; + 0.041*&#34;feiern&#34; + 0.038*&#34;wahlabend&#34; + 0.030*&#34;eindrücke&#34; + 0.024*&#34;spannen&#34;
+Words: 0.063*&#34;egal&#34; + 0.057*&#34;rechts&#34; + 0.054*&#34;spannen&#34; + 0.054*&#34;name&#34; + 0.054*&#34;weitergehen&#34; + 0.053*&#34;weder&#34; + 0.045*&#34;wiederholen&#34; + 0.045*&#34;welt&#34; + 0.044*&#34;flüchtlingspolitik&#34; + 0.035*&#34;schulz&#34;
 Topic: 23 
-Words: 0.019*&#34;hbf&#34; + 0.014*&#34;rein&#34; + 0.014*&#34;schaut&#34; + 0.005*&#34;darumgrün&#34; + 0.004*&#34;studio&#34; + 0.004*&#34;stunde&#34; + 0.004*&#34;darumgruen&#34; + 0.003*&#34;spontandemo&#34; + 0.003*&#34;kaisersack&#34; + 0.003*&#34;live&#34;
+Words: 0.157*&#34;erdogan&#34; + 0.124*&#34;türkei&#34; + 0.074*&#34;trump&#34; + 0.041*&#34;nehmen&#34; + 0.040*&#34;wirken&#34; + 0.031*&#34;deutschland&#34; + 0.026*&#34;gruene&#34; + 0.024*&#34;statt&#34; + 0.019*&#34;umgehen&#34; + 0.018*&#34;geld&#34;
 Topic: 24 
-Words: 0.099*&#34;weiterso&#34; + 0.050*&#34;verhindern&#34; + 0.038*&#34;kreuz&#34; + 0.037*&#34;persönlich&#34; + 0.034*&#34;manipulation&#34; + 0.034*&#34;wahlmission&#34; + 0.034*&#34;begib&#34; + 0.028*&#34;traudichdeutschland&#34; + 0.023*&#34;mahe&#34; + 0.022*&#34;gelegenheit&#34;
+Words: 0.038*&#34;erdogans&#34; + 0.034*&#34;armut&#34; + 0.034*&#34;warum&#34; + 0.034*&#34;prinzip&#34; + 0.026*&#34;wissen&#34; + 0.024*&#34;mitglied&#34; + 0.019*&#34;darum&#34; + 0.017*&#34;richtig&#34; + 0.017*&#34;abgeordnete&#34; + 0.016*&#34;entscheiden&#34;
 Topic: 25 
-Words: 0.191*&#34;dielinke&#34; + 0.029*&#34;pascalmeiser&#34; + 0.023*&#34;bühne&#34; + 0.016*&#34;linke&#34; + 0.015*&#34;diepartei&#34; + 0.013*&#34;kancler&#34; + 0.013*&#34;somuncu&#34; + 0.006*&#34;gehen&#34; + 0.006*&#34;link&#34; + 0.006*&#34;friedliche&#34;
+Words: 0.132*&#34;plötzlich&#34; + 0.124*&#34;menschenrechte&#34; + 0.033*&#34;wandel&#34; + 0.031*&#34;sammeln&#34; + 0.014*&#34;völkerrecht&#34; + 0.014*&#34;cemsession&#34; + 0.013*&#34;gegenwind&#34; + 0.013*&#34;find&#34; + 0.012*&#34;melden&#34; + 0.012*&#34;mehr&#34;
 Topic: 26 
-Words: 0.172*&#34;bekämpfen&#34; + 0.076*&#34;schützen&#34; + 0.064*&#34;kinderarmut&#34; + 0.037*&#34;gestalten&#34; + 0.035*&#34;klima&#34; + 0.035*&#34;darumgruen&#34; + 0.031*&#34;sozial&#34; + 0.030*&#34;kurz&#34; + 0.024*&#34;europa&#34; + 0.020*&#34;vielfalt&#34;
+Words: 0.124*&#34;zeitfürmartin&#34; + 0.088*&#34;großspenden&#34; + 0.026*&#34;dennoch&#34; + 0.024*&#34;rentenkürzungen&#34; + 0.020*&#34;ziemlich&#34; + 0.020*&#34;love&#34; + 0.019*&#34;bein&#34; + 0.012*&#34;sieht&#34; + 0.009*&#34;trier&#34; + 0.006*&#34;gültig&#34;
 Topic: 27 
-Words: 0.008*&#34;mietpreisbremse&#34; + 0.001*&#34;link&#34; + 0.001*&#34;erleben&#34; + 0.001*&#34;seifenkistenrennen&#34; + 0.001*&#34;richtigrot&#34; + 0.001*&#34;wund&#34; + 0.001*&#34;helfen&#34; + 0.001*&#34;verfassungsgemäß&#34; + 0.001*&#34;flächendeckend&#34; + 0.001*&#34;linke&#34;
+Words: 0.057*&#34;peinlich&#34; + 0.049*&#34;wundern&#34; + 0.046*&#34;europa&#34; + 0.035*&#34;euro&#34; + 0.035*&#34;präsentieren&#34; + 0.032*&#34;welt&#34; + 0.031*&#34;erneut&#34; + 0.030*&#34;wahnsinn&#34; + 0.028*&#34;gerechtigkeit&#34; + 0.025*&#34;afd&#34;
 Topic: 28 
-Words: 0.119*&#34;europa&#34; + 0.093*&#34;miete&#34; + 0.076*&#34;löhne&#34; + 0.060*&#34;runter&#34; + 0.051*&#34;linke&#34; + 0.049*&#34;rauf&#34; + 0.046*&#34;beid&#34; + 0.036*&#34;sonntag&#34; + 0.031*&#34;stimme&#34; + 0.028*&#34;sowie&#34;
+Words: 0.090*&#34;gauland&#34; + 0.082*&#34;alexander&#34; + 0.043*&#34;afd&#34; + 0.036*&#34;schnellen&#34; + 0.035*&#34;traudichdeutschland&#34; + 0.035*&#34;btw&#34; + 0.032*&#34;spitzenkandidaten&#34; + 0.027*&#34;wahlwerbespot&#34; + 0.027*&#34;umso&#34; + 0.025*&#34;geht&#34;
 Topic: 29 
-Words: 0.000*&#34;bewerben&#34; + 0.000*&#34;frazrn&#34; + 0.000*&#34;zerfleischen&#34; + 0.000*&#34;erstaunen&#34; + 0.000*&#34;feuer&#34; + 0.000*&#34;klartextfraumerkel&#34; + 0.000*&#34;chicken&#34; + 0.000*&#34;feigling&#34; + 0.000*&#34;thewestwing&#34; + 0.000*&#34;wbh&#34;
+Words: 0.000*&#34;spdneindanke&#34; + 0.000*&#34;speiübel&#34; + 0.000*&#34;sozismüssenweg&#34; + 0.000*&#34;sozisversenken&#34; + 0.000*&#34;spaniel&#34; + 0.000*&#34;spanisch&#34; + 0.000*&#34;spazieren&#34; + 0.000*&#34;sozialromantische&#34; + 0.000*&#34;spielgeld&#34; + 0.000*&#34;spieltag&#34;
 Topic: 30 
-Words: 0.054*&#34;ard&#34; + 0.051*&#34;zdf&#34; + 0.029*&#34;sachsen&#34; + 0.028*&#34;amp&#34; + 0.026*&#34;altmaier&#34; + 0.026*&#34;kämpfen&#34; + 0.025*&#34;bundestagswahl&#34; + 0.024*&#34;echt&#34; + 0.022*&#34;klimaschutz&#34; + 0.021*&#34;ebene&#34;
+Words: 0.142*&#34;viel&#34; + 0.052*&#34;hartz&#34; + 0.033*&#34;leicht&#34; + 0.028*&#34;sozial&#34; + 0.027*&#34;medium&#34; + 0.025*&#34;wort&#34; + 0.024*&#34;mut&#34; + 0.019*&#34;neues&#34; + 0.018*&#34;wieso&#34; + 0.018*&#34;grund&#34;
 Topic: 31 
-Words: 0.216*&#34;politik&#34; + 0.136*&#34;groß&#34; + 0.092*&#34;möglich&#34; + 0.035*&#34;freue&#34; + 0.019*&#34;zuschauerzuspruch&#34; + 0.011*&#34;mist&#34; + 0.010*&#34;groko&#34; + 0.008*&#34;münchner&#34; + 0.003*&#34;darumgrün&#34; + 0.002*&#34;platz&#34;
+Words: 0.035*&#34;freuen&#34; + 0.035*&#34;gar&#34; + 0.028*&#34;afd&#34; + 0.024*&#34;traudichdeutschland&#34; + 0.022*&#34;offen&#34; + 0.022*&#34;verfassung&#34; + 0.022*&#34;neue&#34; + 0.021*&#34;flug&#34; + 0.019*&#34;korrekt&#34; + 0.018*&#34;partei&#34;
 Topic: 32 
-Words: 0.213*&#34;endlich&#34; + 0.055*&#34;bleiben&#34; + 0.045*&#34;opfer&#34; + 0.027*&#34;bein&#34; + 0.025*&#34;menschenverachtende&#34; + 0.024*&#34;ideologie&#34; + 0.018*&#34;merkel&#34; + 0.017*&#34;regierende&#34; + 0.017*&#34;oppositionsführer&#34; + 0.014*&#34;soziale&#34;
+Words: 0.077*&#34;waffe&#34; + 0.070*&#34;gabriel&#34; + 0.057*&#34;liefern&#34; + 0.042*&#34;warum&#34; + 0.038*&#34;sinn&#34; + 0.036*&#34;glücklich&#34; + 0.036*&#34;amp&#34; + 0.034*&#34;bundeswehr&#34; + 0.029*&#34;retten&#34; + 0.027*&#34;mehr&#34;
 Topic: 33 
-Words: 0.000*&#34;bewerben&#34; + 0.000*&#34;frazrn&#34; + 0.000*&#34;zerfleischen&#34; + 0.000*&#34;erstaunen&#34; + 0.000*&#34;feuer&#34; + 0.000*&#34;klartextfraumerkel&#34; + 0.000*&#34;chicken&#34; + 0.000*&#34;feigling&#34; + 0.000*&#34;thewestwing&#34; + 0.000*&#34;wbh&#34;
+Words: 0.136*&#34;fedidwgugl&#34; + 0.099*&#34;politisch&#34; + 0.054*&#34;betreffen&#34; + 0.034*&#34;dank&#34; + 0.033*&#34;junge&#34; + 0.033*&#34;heute&#34; + 0.032*&#34;viel&#34; + 0.031*&#34;merkel&#34; + 0.031*&#34;cdu&#34; + 0.026*&#34;veranstaltung&#34;
 Topic: 34 
-Words: 0.246*&#34;beim&#34; + 0.065*&#34;prognose&#34; + 0.044*&#34;demnächst&#34; + 0.031*&#34;gleich&#34; + 0.028*&#34;wahlbeobachtung&#34; + 0.027*&#34;september&#34; + 0.010*&#34;mdr&#34; + 0.009*&#34;flächendeckender&#34; + 0.006*&#34;fordern&#34; + 0.006*&#34;traudichdeutschand&#34;
+Words: 0.398*&#34;doppeln&#34; + 0.123*&#34;staatsbürgerschaft&#34; + 0.004*&#34;föcking&#34; + 0.003*&#34;eva&#34; + 0.001*&#34;landesumweltministerin&#34; + 0.001*&#34;schulze&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;prozentpunkte&#34;
 Topic: 35 
-Words: 0.001*&#34;linke&#34; + 0.001*&#34;spd&#34; + 0.001*&#34;weiterso&#34; + 0.001*&#34;link&#34; + 0.001*&#34;cdu&#34; + 0.001*&#34;afdwaehlen&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;starke&#34;
+Words: 0.150*&#34;gerade&#34; + 0.073*&#34;möglich&#34; + 0.068*&#34;finden&#34; + 0.054*&#34;integration&#34; + 0.048*&#34;bestimmen&#34; + 0.038*&#34;überall&#34; + 0.035*&#34;eidbrecherin&#34; + 0.034*&#34;statt&#34; + 0.033*&#34;morgen&#34; + 0.028*&#34;gespräch&#34;
 Topic: 36 
-Words: 0.138*&#34;gauland&#34; + 0.129*&#34;alexander&#34; + 0.073*&#34;demokrat&#34; + 0.047*&#34;rufen&#34; + 0.045*&#34;sollen&#34; + 0.040*&#34;mein&#34; + 0.036*&#34;spitzenkandidat&#34; + 0.035*&#34;erläutern&#34; + 0.032*&#34;warum&#34; + 0.025*&#34;fühlen&#34;
+Words: 0.117*&#34;presse&#34; + 0.053*&#34;berechtigen&#34; + 0.052*&#34;lügen&#34; + 0.045*&#34;bild&#34; + 0.011*&#34;tatort&#34; + 0.002*&#34;merkelwegpfeifen&#34; + 0.000*&#34;minute&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;hamburg&#34; + 0.000*&#34;afd&#34;
 Topic: 37 
-Words: 0.001*&#34;afd&#34; + 0.001*&#34;heute&#34; + 0.001*&#34;btw&#34; + 0.001*&#34;unterstützung&#34; + 0.000*&#34;herzliche&#34; + 0.000*&#34;prognose&#34; + 0.000*&#34;rund&#34; + 0.000*&#34;retweete&#34; + 0.000*&#34;abend&#34; + 0.000*&#34;stimme&#34;
+Words: 0.143*&#34;noafd&#34; + 0.061*&#34;demokratische&#34; + 0.054*&#34;sehen&#34; + 0.053*&#34;richten&#34; + 0.046*&#34;besonders&#34; + 0.042*&#34;bauen&#34; + 0.041*&#34;klartext&#34; + 0.037*&#34;verbieten&#34; + 0.034*&#34;btw&#34; + 0.030*&#34;vorsitzende&#34;
 Topic: 38 
-Words: 0.063*&#34;gez&#34; + 0.060*&#34;einfach&#34; + 0.059*&#34;wund&#34; + 0.055*&#34;dabei&#34; + 0.050*&#34;erleben&#34; + 0.049*&#34;helfen&#34; + 0.046*&#34;blau&#34; + 0.039*&#34;problem&#34; + 0.038*&#34;lösung&#34; + 0.037*&#34;traudichdeutschland&#34;
+Words: 0.089*&#34;köln&#34; + 0.088*&#34;thema&#34; + 0.086*&#34;muslim&#34; + 0.076*&#34;terror&#34; + 0.059*&#34;oktoberfest&#34; + 0.057*&#34;merkelmussweg&#34; + 0.043*&#34;schon&#34; + 0.037*&#34;zensur&#34; + 0.030*&#34;freier&#34; + 0.025*&#34;traudichdeutschland&#34;
 Topic: 39 
-Words: 0.141*&#34;obergrenze&#34; + 0.059*&#34;neu&#34; + 0.054*&#34;prozentpunkt&#34; + 0.044*&#34;wenig&#34; + 0.044*&#34;aufgabe&#34; + 0.042*&#34;digitalisierung&#34; + 0.034*&#34;unterschied&#34; + 0.034*&#34;berlinerrunde&#34; + 0.031*&#34;sprechen&#34; + 0.031*&#34;kampf&#34;
+Words: 0.125*&#34;schule&#34; + 0.055*&#34;nerv&#34; + 0.044*&#34;schließlich&#34; + 0.029*&#34;demdeutschenvolke&#34; + 0.017*&#34;gründen&#34; + 0.005*&#34;hadjimohamadvali&#34; + 0.004*&#34;laleh&#34; + 0.002*&#34;kollaps&#34; + 0.001*&#34;erwarten&#34; + 0.000*&#34;btw&#34;
 Topic: 40 
-Words: 0.054*&#34;argument&#34; + 0.052*&#34;btwcountdown&#34; + 0.051*&#34;ward&#34; + 0.031*&#34;innen&#34; + 0.030*&#34;erreichen&#34; + 0.024*&#34;eva&#34; + 0.024*&#34;gedenken&#34; + 0.024*&#34;wählt&#34; + 0.016*&#34;sorge&#34; + 0.013*&#34;mischen&#34;
+Words: 0.110*&#34;herr&#34; + 0.095*&#34;vergessen&#34; + 0.090*&#34;kritik&#34; + 0.071*&#34;meinungsfreiheit&#34; + 0.050*&#34;sicherheit&#34; + 0.043*&#34;wirklich&#34; + 0.042*&#34;lieber&#34; + 0.025*&#34;traudichdeutschland&#34; + 0.024*&#34;verkaufen&#34; + 0.023*&#34;brechen&#34;
 Topic: 41 
-Words: 0.230*&#34;einschalten&#34; + 0.094*&#34;darumgrün&#34; + 0.072*&#34;grün&#34; + 0.053*&#34;darumgruen&#34; + 0.044*&#34;zweitstimme&#34; + 0.042*&#34;klimaschutz&#34; + 0.030*&#34;stillstand&#34; + 0.029*&#34;rückschritt&#34; + 0.027*&#34;gerechtigkeit&#34; + 0.026*&#34;umwelt&#34;
+Words: 0.108*&#34;obergrenze&#34; + 0.067*&#34;wählen&#34; + 0.065*&#34;irrsinn&#34; + 0.054*&#34;traudichdeutschland&#34; + 0.040*&#34;retweete&#34; + 0.039*&#34;afd&#34; + 0.037*&#34;btw&#34; + 0.035*&#34;haben&#34; + 0.021*&#34;csu&#34; + 0.018*&#34;stimme&#34;
 Topic: 42 
-Words: 0.000*&#34;bewerben&#34; + 0.000*&#34;frazrn&#34; + 0.000*&#34;zerfleischen&#34; + 0.000*&#34;erstaunen&#34; + 0.000*&#34;feuer&#34; + 0.000*&#34;klartextfraumerkel&#34; + 0.000*&#34;chicken&#34; + 0.000*&#34;feigling&#34; + 0.000*&#34;thewestwing&#34; + 0.000*&#34;wbh&#34;
+Words: 0.064*&#34;polit&#34; + 0.016*&#34;dokumentation&#34; + 0.015*&#34;vorfeld&#34; + 0.014*&#34;übereicht&#34; + 0.014*&#34;wahlkampfstörungen&#34; + 0.003*&#34;verfolgt&#34; + 0.002*&#34;traudichdeutschland&#34; + 0.001*&#34;afd&#34; + 0.001*&#34;btw&#34; + 0.001*&#34;ausbaden&#34;
 Topic: 43 
-Words: 0.082*&#34;brauchen&#34; + 0.054*&#34;mensch&#34; + 0.044*&#34;solidarität&#34; + 0.043*&#34;rot&#34; + 0.039*&#34;unterstützen&#34; + 0.035*&#34;rassismus&#34; + 0.032*&#34;finden&#34; + 0.032*&#34;sichern&#34; + 0.030*&#34;soziale&#34; + 0.029*&#34;gerechtigkeit&#34;
+Words: 0.110*&#34;eigen&#34; + 0.089*&#34;schäuble&#34; + 0.048*&#34;steuerzahler&#34; + 0.041*&#34;ltnrw&#34; + 0.038*&#34;zusammen&#34; + 0.034*&#34;entlarven&#34; + 0.032*&#34;landtag&#34; + 0.026*&#34;gefährder&#34; + 0.024*&#34;guten&#34; + 0.023*&#34;morgen&#34;
 Topic: 44 
-Words: 0.154*&#34;regierung&#34; + 0.117*&#34;fordern&#34; + 0.113*&#34;stark&#34; + 0.092*&#34;spielen&#34; + 0.051*&#34;kaum&#34; + 0.048*&#34;obwohl&#34; + 0.027*&#34;versprechen&#34; + 0.012*&#34;toll&#34; + 0.011*&#34;klimapolitik&#34; + 0.011*&#34;grüne&#34;
+Words: 0.064*&#34;gegner&#34; + 0.054*&#34;abschieben&#34; + 0.038*&#34;klaren&#34; + 0.029*&#34;merkel&#34; + 0.027*&#34;frankfurt&#34; + 0.025*&#34;recht&#34; + 0.024*&#34;aufgabe&#34; + 0.023*&#34;antwort&#34; + 0.022*&#34;lehnen&#34; + 0.021*&#34;hart&#34;
 Topic: 45 
-Words: 0.059*&#34;freuen&#34; + 0.051*&#34;stehen&#34; + 0.047*&#34;flüchtling&#34; + 0.040*&#34;spaß&#34; + 0.039*&#34;leipzig&#34; + 0.037*&#34;traudichdeutschland&#34; + 0.034*&#34;werden&#34; + 0.029*&#34;gut&#34; + 0.021*&#34;btw&#34; + 0.021*&#34;legen&#34;
+Words: 0.148*&#34;nonazis&#34; + 0.098*&#34;staat&#34; + 0.086*&#34;nein&#34; + 0.084*&#34;bald&#34; + 0.065*&#34;verstehen&#34; + 0.051*&#34;heute&#34; + 0.038*&#34;anschlag&#34; + 0.032*&#34;solidarität&#34; + 0.027*&#34;dürfen&#34; + 0.021*&#34;auge&#34;
 Topic: 46 
-Words: 0.254*&#34;schulz&#34; + 0.090*&#34;merkel&#34; + 0.048*&#34;abend&#34; + 0.029*&#34;heute&#34; + 0.026*&#34;heimat&#34; + 0.026*&#34;cdu&#34; + 0.024*&#34;liegen&#34; + 0.023*&#34;spd&#34; + 0.021*&#34;btw&#34; + 0.020*&#34;fürsieda&#34;
+Words: 0.225*&#34;ehefueralle&#34; + 0.084*&#34;beschließen&#34; + 0.059*&#34;lieben&#34; + 0.050*&#34;frei&#34; + 0.049*&#34;wow&#34; + 0.049*&#34;bundestag&#34; + 0.046*&#34;seit&#34; + 0.038*&#34;gewinnen&#34; + 0.024*&#34;stets&#34; + 0.021*&#34;rücken&#34;
 Topic: 47 
-Words: 0.260*&#34;mietpreisbremse&#34; + 0.063*&#34;lösen&#34; + 0.016*&#34;verfassungsgemäß&#34; + 0.016*&#34;flächendeckend&#34; + 0.008*&#34;linke&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;hilsenrath&#34; + 0.000*&#34;holocaustüberlebender&#34; + 0.000*&#34;schriftsteller&#34; + 0.000*&#34;afd&#34;
+Words: 0.227*&#34;the&#34; + 0.120*&#34;winner&#34; + 0.029*&#34;duverdienstmehr&#34; + 0.018*&#34;solidarische&#34; + 0.002*&#34;btw&#34; + 0.002*&#34;einefueralle&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;linke&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;teil&#34;
 Topic: 48 
-Words: 0.001*&#34;afd&#34; + 0.001*&#34;retweete&#34; + 0.001*&#34;wählen&#34; + 0.001*&#34;btw&#34; + 0.001*&#34;unterstützung&#34; + 0.001*&#34;traudichdeutschland&#34; + 0.000*&#34;bundessprecherin&#34; + 0.000*&#34;heute&#34; + 0.000*&#34;wahlaufruf&#34; + 0.000*&#34;tag&#34;
+Words: 0.086*&#34;arbeit&#34; + 0.066*&#34;netzdg&#34; + 0.050*&#34;leipzig&#34; + 0.032*&#34;ganz&#34; + 0.028*&#34;hashtag&#34; + 0.025*&#34;ändern&#34; + 0.024*&#34;verlieren&#34; + 0.024*&#34;amp&#34; + 0.023*&#34;danach&#34; + 0.022*&#34;deutsch&#34;
 Topic: 49 
-Words: 0.293*&#34;zusammen&#34; + 0.059*&#34;and&#34; + 0.018*&#34;this&#34; + 0.012*&#34;cem&#34; + 0.011*&#34;grüne&#34; + 0.011*&#34;starke&#34; + 0.010*&#34;guter&#34; + 0.010*&#34;laune&#34; + 0.006*&#34;amp&#34; + 0.004*&#34;saarbrücken&#34;
+Words: 0.071*&#34;kommentar&#34; + 0.068*&#34;wichtig&#34; + 0.049*&#34;gesetzlich&#34; + 0.048*&#34;opposition&#34; + 0.041*&#34;übrigens&#34; + 0.040*&#34;namens&#34; + 0.040*&#34;erklären&#34; + 0.038*&#34;ehrlich&#34; + 0.034*&#34;platz&#34; + 0.032*&#34;tvduell&#34;
 Topic: 50 
-Words: 0.087*&#34;csu&#34; + 0.079*&#34;merkel&#34; + 0.074*&#34;erzählen&#34; + 0.042*&#34;putin&#34; + 0.034*&#34;staatliche&#34; + 0.034*&#34;flüchtlingspolitik&#34; + 0.033*&#34;interview&#34; + 0.030*&#34;angela&#34; + 0.028*&#34;cdu&#34; + 0.025*&#34;nehmen&#34;
+Words: 0.163*&#34;regel&#34; + 0.152*&#34;linke&#34; + 0.106*&#34;asylpolitik&#34; + 0.036*&#34;endgültig&#34; + 0.035*&#34;leiden&#34; + 0.029*&#34;reaktion&#34; + 0.024*&#34;schulzzug&#34; + 0.022*&#34;nötigen&#34; + 0.018*&#34;größenwahn&#34; + 0.016*&#34;kapitel&#34;
 Topic: 51 
-Words: 0.071*&#34;landtag&#34; + 0.050*&#34;hart&#34; + 0.046*&#34;linken&#34; + 0.044*&#34;wahlkampfendspurt&#34; + 0.037*&#34;spüren&#34; + 0.037*&#34;kommend&#34; + 0.035*&#34;gegner&#34; + 0.031*&#34;übrigens&#34; + 0.029*&#34;abgeordnete&#34; + 0.009*&#34;finden&#34;
+Words: 0.000*&#34;btw&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;zeit&#34; + 0.000*&#34;sonntagsfrage&#34; + 0.000*&#34;fünfkampf&#34; + 0.000*&#34;feigenblatt&#34; + 0.000*&#34;bitte&#34; + 0.000*&#34;legen&#34; + 0.000*&#34;asylantrag&#34;
 Topic: 52 
-Words: 0.206*&#34;terror&#34; + 0.180*&#34;darüber&#34; + 0.068*&#34;lässt&#34; + 0.058*&#34;gruene&#34; + 0.034*&#34;schaden&#34; + 0.032*&#34;rassisten&#34; + 0.018*&#34;jahr&#34; + 0.018*&#34;trotzdem&#34; + 0.015*&#34;ordentlich&#34; + 0.014*&#34;nacht&#34;
+Words: 0.094*&#34;antifa&#34; + 0.048*&#34;mögen&#34; + 0.045*&#34;land&#34; + 0.044*&#34;werden&#34; + 0.035*&#34;danken&#34; + 0.033*&#34;ehe&#34; + 0.032*&#34;können&#34; + 0.028*&#34;ehefueralle&#34; + 0.025*&#34;deshalb&#34; + 0.025*&#34;dramatisch&#34;
 Topic: 53 
-Words: 0.303*&#34;stoppen&#34; + 0.057*&#34;schlecht&#34; + 0.053*&#34;oben&#34; + 0.034*&#34;wachsen&#34; + 0.027*&#34;zuvor&#34; + 0.009*&#34;umverteilung&#34; + 0.009*&#34;leid&#34; + 0.008*&#34;gehen&#34; + 0.007*&#34;zustand&#34; + 0.007*&#34;umdrehen&#34;
+Words: 0.055*&#34;mehrheit&#34; + 0.047*&#34;unglaublich&#34; + 0.046*&#34;freuen&#34; + 0.035*&#34;bereits&#34; + 0.034*&#34;auftritt&#34; + 0.028*&#34;ernsthaft&#34; + 0.026*&#34;btw&#34; + 0.022*&#34;freund&#34; + 0.021*&#34;traudichdeutschland&#34; + 0.020*&#34;afd&#34;
 Topic: 54 
-Words: 0.000*&#34;bewerben&#34; + 0.000*&#34;frazrn&#34; + 0.000*&#34;zerfleischen&#34; + 0.000*&#34;erstaunen&#34; + 0.000*&#34;feuer&#34; + 0.000*&#34;klartextfraumerkel&#34; + 0.000*&#34;chicken&#34; + 0.000*&#34;feigling&#34; + 0.000*&#34;thewestwing&#34; + 0.000*&#34;wbh&#34;
+Words: 0.063*&#34;gerechtigkeit&#34; + 0.044*&#34;mensch&#34; + 0.043*&#34;brauchen&#34; + 0.034*&#34;linke&#34; + 0.032*&#34;union&#34; + 0.030*&#34;bleiben&#34; + 0.030*&#34;nsu&#34; + 0.029*&#34;haus&#34; + 0.024*&#34;soziale&#34; + 0.023*&#34;rente&#34;
 Topic: 55 
-Words: 0.070*&#34;gleichen&#34; + 0.068*&#34;schlussrunde&#34; + 0.067*&#34;uhr&#34; + 0.061*&#34;platz&#34; + 0.060*&#34;wahl&#34; + 0.053*&#34;zdf&#34; + 0.051*&#34;kämpfen&#34; + 0.049*&#34;ard&#34; + 0.046*&#34;amp&#34; + 0.022*&#34;partei&#34;
+Words: 0.143*&#34;schämen&#34; + 0.095*&#34;friedlich&#34; + 0.051*&#34;schmidt&#34; + 0.035*&#34;helmut&#34; + 0.017*&#34;herr&#34; + 0.014*&#34;touché&#34; + 0.006*&#34;mdr&#34; + 0.006*&#34;hamburg&#34; + 0.005*&#34;schulz&#34; + 0.003*&#34;veto&#34;
 Topic: 56 
-Words: 0.187*&#34;zukunft&#34; + 0.126*&#34;darumgrün&#34; + 0.109*&#34;arbeit&#34; + 0.068*&#34;berlin&#34; + 0.038*&#34;tegel&#34; + 0.033*&#34;mutludirekt&#34; + 0.032*&#34;verlieren&#34; + 0.030*&#34;stimmen&#34; + 0.021*&#34;erststimme&#34; + 0.019*&#34;endspurt&#34;
+Words: 0.121*&#34;petry&#34; + 0.052*&#34;frauke&#34; + 0.022*&#34;schicksahlswahl&#34; + 0.009*&#34;entsenden&#34; + 0.006*&#34;nonsens&#34; + 0.003*&#34;btw&#34; + 0.000*&#34;sichern&#34; + 0.000*&#34;außengrenzen&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;grüner&#34;
 Topic: 57 
-Words: 0.160*&#34;wahlkampf&#34; + 0.145*&#34;köln&#34; + 0.079*&#34;allee&#34; + 0.063*&#34;blau&#34; + 0.062*&#34;heißen&#34; + 0.028*&#34;ändern&#34; + 0.025*&#34;chance&#34; + 0.023*&#34;afd&#34; + 0.015*&#34;hol&#34; + 0.012*&#34;btw&#34;
+Words: 0.092*&#34;esistzeit&#34; + 0.087*&#34;kanzler&#34; + 0.066*&#34;wut&#34; + 0.043*&#34;gerecht&#34; + 0.037*&#34;kommt&#34; + 0.031*&#34;rechtfertigen&#34; + 0.030*&#34;dieselgipfel&#34; + 0.030*&#34;kubicki&#34; + 0.028*&#34;deswegen&#34; + 0.027*&#34;tragen&#34;
 Topic: 58 
-Words: 0.057*&#34;meinung&#34; + 0.053*&#34;erwarten&#34; + 0.042*&#34;nunmehr&#34; + 0.035*&#34;umfrage&#34; + 0.030*&#34;ergebnis&#34; + 0.007*&#34;letzt&#34; + 0.005*&#34;afd&#34; + 0.005*&#34;videobotschaft&#34; + 0.004*&#34;bild&#34; + 0.003*&#34;btw&#34;
+Words: 0.188*&#34;inhalt&#34; + 0.033*&#34;kampagne&#34; + 0.030*&#34;intern&#34; + 0.024*&#34;neugierig&#34; + 0.020*&#34;dritt&#34; + 0.019*&#34;komplette&#34; + 0.013*&#34;feueralarm&#34; + 0.012*&#34;liefern&#34; + 0.009*&#34;populisten&#34; + 0.007*&#34;btw&#34;
 Topic: 59 
-Words: 0.178*&#34;demokratie&#34; + 0.178*&#34;freiheit&#34; + 0.110*&#34;umwelt&#34; + 0.075*&#34;darumgrün&#34; + 0.063*&#34;schnellen&#34; + 0.059*&#34;wagenknecht&#34; + 0.054*&#34;danach&#34; + 0.027*&#34;frankfurt&#34; + 0.020*&#34;gehen&#34; + 0.019*&#34;meinfrankfurt&#34;
+Words: 0.044*&#34;freiheit&#34; + 0.040*&#34;umwelt&#34; + 0.038*&#34;tiefpunkt&#34; + 0.037*&#34;diskussionskultur&#34; + 0.036*&#34;grün&#34; + 0.033*&#34;grüne&#34; + 0.032*&#34;zukunftwirdausmutgemacht&#34; + 0.027*&#34;politisch&#34; + 0.026*&#34;darumgrün&#34; + 0.021*&#34;kommen&#34;
 Topic: 60 
-Words: 0.125*&#34;sitzen&#34; + 0.089*&#34;falsch&#34; + 0.072*&#34;mal&#34; + 0.062*&#34;amp&#34; + 0.048*&#34;lassen&#34; + 0.044*&#34;weit&#34; + 0.039*&#34;geschichte&#34; + 0.031*&#34;erinnerung&#34; + 0.024*&#34;voll&#34; + 0.021*&#34;lernen&#34;
+Words: 0.164*&#34;demokratie&#34; + 0.073*&#34;verändern&#34; + 0.050*&#34;unterstützen&#34; + 0.039*&#34;twitter&#34; + 0.038*&#34;video&#34; + 0.038*&#34;antrag&#34; + 0.031*&#34;realität&#34; + 0.027*&#34;wusste&#34; + 0.026*&#34;wahlkreis&#34; + 0.025*&#34;direkt&#34;
 Topic: 61 
-Words: 0.180*&#34;patriot&#34; + 0.078*&#34;monat&#34; + 0.062*&#34;holdirdeinlandzurück&#34; + 0.044*&#34;mutzurwahrheit&#34; + 0.023*&#34;eher&#34; + 0.019*&#34;mach&#34; + 0.014*&#34;traudichdeutschland&#34; + 0.014*&#34;bundestagswahl&#34; + 0.009*&#34;erinnerung&#34; + 0.008*&#34;nichtmeinekanzlerin&#34;
+Words: 0.000*&#34;btw&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;teil&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;zeit&#34; + 0.000*&#34;wählen&#34; + 0.000*&#34;videobotschaft&#34; + 0.000*&#34;sonntag&#34; + 0.000*&#34;wahlaufruf&#34; + 0.000*&#34;bundessprecherin&#34;
 Topic: 62 
-Words: 0.070*&#34;beid&#34; + 0.064*&#34;sumpf&#34; + 0.064*&#34;beliebkeit&#34; + 0.038*&#34;stimme&#34; + 0.015*&#34;traudichdeutschland&#34; + 0.015*&#34;wählen&#34; + 0.012*&#34;afd&#34; + 0.007*&#34;btw&#34; + 0.004*&#34;sonntag&#34; + 0.004*&#34;unterstützung&#34;
+Words: 0.106*&#34;zdf&#34; + 0.074*&#34;ard&#34; + 0.059*&#34;mindestlohn&#34; + 0.051*&#34;kämpfen&#34; + 0.050*&#34;union&#34; + 0.044*&#34;platz&#34; + 0.036*&#34;uhr&#34; + 0.031*&#34;wahl&#34; + 0.026*&#34;amp&#34; + 0.022*&#34;facebook&#34;
 Topic: 63 
-Words: 0.154*&#34;sein&#34; + 0.101*&#34;hoch&#34; + 0.098*&#34;recht&#34; + 0.082*&#34;gerechtigkeit&#34; + 0.078*&#34;österreich&#34; + 0.051*&#34;gehen&#34; + 0.047*&#34;rechts&#34; + 0.045*&#34;lassen&#34; + 0.031*&#34;link&#34; + 0.019*&#34;deutlich&#34;
+Words: 0.078*&#34;lösen&#34; + 0.047*&#34;infostand&#34; + 0.042*&#34;anzeige&#34; + 0.031*&#34;jugend&#34; + 0.028*&#34;bad&#34; + 0.020*&#34;podiumsdiskussion&#34; + 0.020*&#34;erneuern&#34; + 0.019*&#34;mainz&#34; + 0.015*&#34;kotzen&#34; + 0.012*&#34;organisation&#34;
 Topic: 64 
-Words: 0.089*&#34;öffnen&#34; + 0.088*&#34;wahllokale&#34; + 0.080*&#34;gib&#34; + 0.064*&#34;stimme&#34; + 0.044*&#34;fast&#34; + 0.040*&#34;twitter&#34; + 0.037*&#34;traudichdeutschland&#34; + 0.036*&#34;rente&#34; + 0.030*&#34;afd&#34; + 0.025*&#34;einzahlen&#34;
+Words: 0.190*&#34;aktuell&#34; + 0.069*&#34;linksextremisten&#34; + 0.008*&#34;anmelden&#34; + 0.001*&#34;afd&#34; + 0.001*&#34;neckarschiffahrt&#34; + 0.001*&#34;startpunkt&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;heidelberg&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;teil&#34;
 Topic: 65 
-Words: 0.162*&#34;verteidigen&#34; + 0.124*&#34;wer&#34; + 0.114*&#34;zeit&#34; + 0.055*&#34;neue&#34; + 0.051*&#34;afd&#34; + 0.050*&#34;ende&#34; + 0.042*&#34;wirklich&#34; + 0.031*&#34;bekommen&#34; + 0.028*&#34;reden&#34; + 0.015*&#34;illegal&#34;
+Words: 0.073*&#34;stadt&#34; + 0.049*&#34;gemeinsam&#34; + 0.045*&#34;familiennachzug&#34; + 0.041*&#34;angela&#34; + 0.035*&#34;münchen&#34; + 0.033*&#34;tegel&#34; + 0.032*&#34;lächerlich&#34; + 0.031*&#34;spitzenkandidatin&#34; + 0.029*&#34;weiß&#34; + 0.025*&#34;berlin&#34;
 Topic: 66 
-Words: 0.308*&#34;kind&#34; + 0.176*&#34;richtig&#34; + 0.132*&#34;nie&#34; + 0.024*&#34;dafür&#34; + 0.020*&#34;miete&#34; + 0.003*&#34;tag&#34; + 0.002*&#34;mensch&#34; + 0.002*&#34;dank&#34; + 0.001*&#34;btw&#34; + 0.001*&#34;amp&#34;
+Words: 0.222*&#34;drücken&#34; + 0.079*&#34;berlin&#34; + 0.063*&#34;stunde&#34; + 0.053*&#34;schöneberg&#34; + 0.031*&#34;mutlu&#34; + 0.030*&#34;kreuz&#34; + 0.027*&#34;gelegenheit&#34; + 0.023*&#34;this&#34; + 0.022*&#34;gang&#34; + 0.018*&#34;stand&#34;
 Topic: 67 
-Words: 0.228*&#34;sagen&#34; + 0.103*&#34;unglaublich&#34; + 0.078*&#34;krieg&#34; + 0.074*&#34;martin&#34; + 0.070*&#34;gut&#34; + 0.046*&#34;mehr&#34; + 0.028*&#34;amp&#34; + 0.028*&#34;starke&#34; + 0.027*&#34;volk&#34; + 0.018*&#34;werben&#34;
+Words: 0.077*&#34;mitglied&#34; + 0.068*&#34;schönes&#34; + 0.061*&#34;wahlboykott&#34; + 0.032*&#34;markt&#34; + 0.027*&#34;puste&#34; + 0.026*&#34;zitieren&#34; + 0.024*&#34;tritt&#34; + 0.018*&#34;eng&#34; + 0.014*&#34;marx&#34; + 0.013*&#34;btw&#34;
 Topic: 68 
-Words: 0.064*&#34;heutig&#34; + 0.063*&#34;sozial&#34; + 0.050*&#34;erst&#34; + 0.049*&#34;rente&#34; + 0.040*&#34;einkommen&#34; + 0.034*&#34;jahr&#34; + 0.034*&#34;lustauflinks&#34; + 0.031*&#34;oppositionsführer&#34; + 0.029*&#34;wählbar&#34; + 0.027*&#34;wissen&#34;
+Words: 0.124*&#34;stimmen&#34; + 0.082*&#34;ehefueralle&#34; + 0.072*&#34;bundestag&#34; + 0.048*&#34;islamisierung&#34; + 0.043*&#34;gewalt&#34; + 0.030*&#34;frage&#34; + 0.030*&#34;bund&#34; + 0.029*&#34;nennen&#34; + 0.018*&#34;wahlkampf&#34; + 0.017*&#34;fragen&#34;
 Topic: 69 
-Words: 0.037*&#34;klasse&#34; + 0.002*&#34;tollen&#34; + 0.001*&#34;btw&#34; + 0.001*&#34;afd&#34; + 0.001*&#34;stimme&#34; + 0.001*&#34;retweete&#34; + 0.001*&#34;salzgitter&#34; + 0.001*&#34;wolfenbüttel&#34; + 0.001*&#34;wählen&#34; + 0.001*&#34;unterstützung&#34;
+Words: 0.210*&#34;schreiben&#34; + 0.072*&#34;beschäftigen&#34; + 0.058*&#34;verschieden&#34; + 0.054*&#34;wär&#34; + 0.046*&#34;überlassen&#34; + 0.041*&#34;maßnahme&#34; + 0.014*&#34;eingeladen&#34; + 0.013*&#34;dieanstalt&#34; + 0.013*&#34;drüber&#34; + 0.013*&#34;lachen&#34;
 Topic: 70 
-Words: 0.440*&#34;maas&#34; + 0.168*&#34;gabriel&#34; + 0.053*&#34;merkel&#34; + 0.039*&#34;laut&#34; + 0.013*&#34;spd&#34; + 0.009*&#34;afd&#34; + 0.004*&#34;tor&#34; + 0.003*&#34;verfassungsfeinde&#34; + 0.001*&#34;zdf&#34; + 0.001*&#34;stehen&#34;
+Words: 0.139*&#34;maas&#34; + 0.114*&#34;netzdg&#34; + 0.042*&#34;leben&#34; + 0.032*&#34;afd&#34; + 0.029*&#34;gerne&#34; + 0.028*&#34;regierung&#34; + 0.026*&#34;spd&#34; + 0.024*&#34;hoch&#34; + 0.023*&#34;bitter&#34; + 0.022*&#34;gewinnen&#34;
 Topic: 71 
-Words: 0.118*&#34;klartext&#34; + 0.047*&#34;brandenburg&#34; + 0.027*&#34;prenzlau&#34; + 0.021*&#34;holdirdeinlandzurück&#34; + 0.005*&#34;traudichdeutschland&#34; + 0.005*&#34;afd&#34; + 0.003*&#34;btw&#34; + 0.002*&#34;wendewahl&#34; + 0.001*&#34;uhr&#34; + 0.001*&#34;nunmehr&#34;
+Words: 0.013*&#34;see&#34; + 0.005*&#34;must&#34; + 0.000*&#34;cdu&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;merkel&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;amp&#34; + 0.000*&#34;spd&#34; + 0.000*&#34;seite&#34;
 Topic: 72 
-Words: 0.236*&#34;statt&#34; + 0.082*&#34;denkenwirneu&#34; + 0.062*&#34;egal&#34; + 0.055*&#34;lindner&#34; + 0.047*&#34;geh&#34; + 0.045*&#34;wählen&#34; + 0.044*&#34;merkel&#34; + 0.035*&#34;gut&#34; + 0.031*&#34;gehen&#34; + 0.027*&#34;böse&#34;
+Words: 0.117*&#34;txl&#34; + 0.105*&#34;rechtsausschuss&#34; + 0.071*&#34;art&#34; + 0.046*&#34;pro&#34; + 0.041*&#34;position&#34; + 0.029*&#34;twesten&#34; + 0.021*&#34;günstig&#34; + 0.019*&#34;grüner&#34; + 0.019*&#34;nachdem&#34; + 0.019*&#34;blockade&#34;
 Topic: 73 
-Words: 0.001*&#34;afd&#34; + 0.001*&#34;retweete&#34; + 0.001*&#34;unterstützung&#34; + 0.001*&#34;heute&#34; + 0.001*&#34;btw&#34; + 0.001*&#34;wählen&#34; + 0.001*&#34;wahltag&#34; + 0.001*&#34;traudichdeutschland&#34; + 0.001*&#34;stimme&#34; + 0.001*&#34;geben&#34;
+Words: 0.038*&#34;fakenews&#34; + 0.030*&#34;klimaschutz&#34; + 0.025*&#34;klimawandel&#34; + 0.016*&#34;wirtschaft&#34; + 0.016*&#34;altersarmut&#34; + 0.015*&#34;afd&#34; + 0.015*&#34;darumgrün&#34; + 0.014*&#34;trump&#34; + 0.014*&#34;echt&#34; + 0.013*&#34;angst&#34;
 Topic: 74 
-Words: 0.325*&#34;klaren&#34; + 0.186*&#34;denken&#34; + 0.048*&#34;traudichdeutschland&#34; + 0.028*&#34;stehen&#34; + 0.026*&#34;btw&#34; + 0.021*&#34;poggenburg&#34; + 0.016*&#34;minute&#34; + 0.009*&#34;nationalkonservative&#34; + 0.009*&#34;liberalisierung&#34; + 0.009*&#34;waffenrechts&#34;
+Words: 0.127*&#34;wiegehtsd&#34; + 0.079*&#34;neuland&#34; + 0.070*&#34;migration&#34; + 0.058*&#34;gefährlich&#34; + 0.048*&#34;afrika&#34; + 0.034*&#34;lösung&#34; + 0.031*&#34;stärken&#34; + 0.031*&#34;aufgeben&#34; + 0.031*&#34;diskussion&#34; + 0.030*&#34;nachher&#34;
 Topic: 75 
-Words: 0.202*&#34;grueneversenken&#34; + 0.162*&#34;klimawandel&#34; + 0.136*&#34;spitzenkandidatin&#34; + 0.079*&#34;wohl&#34; + 0.050*&#34;traudichdeutschland&#34; + 0.031*&#34;schaffen&#34; + 0.019*&#34;grüne&#34; + 0.012*&#34;entsorgen&#34; + 0.010*&#34;freund&#34; + 0.008*&#34;schicksahlswahl&#34;
+Words: 0.084*&#34;inklusion&#34; + 0.083*&#34;unterwegs&#34; + 0.046*&#34;lammert&#34; + 0.046*&#34;viersen&#34; + 0.030*&#34;termin&#34; + 0.027*&#34;willich&#34; + 0.024*&#34;norbert&#34; + 0.024*&#34;erfahrung&#34; + 0.013*&#34;demokratie&#34; + 0.013*&#34;kreis&#34;
 Topic: 76 
-Words: 0.001*&#34;afd&#34; + 0.001*&#34;sonntag&#34; + 0.001*&#34;btw&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;blick&#34; + 0.000*&#34;lassen&#34; + 0.000*&#34;blau&#34; + 0.000*&#34;bitte&#34; + 0.000*&#34;umfrage&#34; + 0.000*&#34;eintragen&#34;
+Words: 0.048*&#34;bildung&#34; + 0.039*&#34;gleichen&#34; + 0.037*&#34;klima&#34; + 0.035*&#34;zukunft&#34; + 0.035*&#34;digitalisierung&#34; + 0.029*&#34;europa&#34; + 0.028*&#34;debatte&#34; + 0.024*&#34;fahren&#34; + 0.020*&#34;durchsetzen&#34; + 0.020*&#34;integration&#34;
 Topic: 77 
-Words: 0.120*&#34;deshalb&#34; + 0.097*&#34;deutsch&#34; + 0.077*&#34;kommen&#34; + 0.029*&#34;aufstellen&#34; + 0.027*&#34;traudichdeutschland&#34; + 0.024*&#34;absolut&#34; + 0.023*&#34;alternative&#34; + 0.022*&#34;afd&#34; + 0.021*&#34;einzig&#34; + 0.021*&#34;traudichdeutschand&#34;
+Words: 0.091*&#34;wann&#34; + 0.090*&#34;interessant&#34; + 0.071*&#34;reiche&#34; + 0.063*&#34;einzig&#34; + 0.054*&#34;angesichts&#34; + 0.048*&#34;aufrüstung&#34; + 0.030*&#34;spät&#34; + 0.026*&#34;nürnberg&#34; + 0.023*&#34;beamte&#34; + 0.022*&#34;endlich&#34;
 Topic: 78 
-Words: 0.000*&#34;bewerben&#34; + 0.000*&#34;frazrn&#34; + 0.000*&#34;zerfleischen&#34; + 0.000*&#34;erstaunen&#34; + 0.000*&#34;feuer&#34; + 0.000*&#34;klartextfraumerkel&#34; + 0.000*&#34;chicken&#34; + 0.000*&#34;feigling&#34; + 0.000*&#34;thewestwing&#34; + 0.000*&#34;wbh&#34;
+Words: 0.061*&#34;stoppen&#34; + 0.045*&#34;gesetz&#34; + 0.045*&#34;zahlen&#34; + 0.036*&#34;miete&#34; + 0.034*&#34;heutig&#34; + 0.033*&#34;koalition&#34; + 0.030*&#34;linke&#34; + 0.028*&#34;lieb&#34; + 0.025*&#34;löhne&#34; + 0.024*&#34;csu&#34;
 Topic: 79 
-Words: 0.002*&#34;stimme&#34; + 0.001*&#34;beliebkeit&#34; + 0.001*&#34;sumpf&#34; + 0.001*&#34;gib&#34; + 0.001*&#34;afd&#34; + 0.001*&#34;öffnen&#34; + 0.001*&#34;wahllokale&#34; + 0.001*&#34;traudichdeutschland&#34; + 0.001*&#34;beid&#34; + 0.001*&#34;btw&#34;
+Words: 0.055*&#34;rein&#34; + 0.031*&#34;schaut&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;darumgrün&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;eckpfeiler&#34; + 0.000*&#34;grün&#34; + 0.000*&#34;fünfkampf&#34; + 0.000*&#34;teil&#34;
 Topic: 80 
-Words: 0.178*&#34;islam&#34; + 0.092*&#34;geht&#34; + 0.049*&#34;veränderung&#34; + 0.034*&#34;stelle&#34; + 0.031*&#34;afdwaehlen&#34; + 0.030*&#34;grueneversenken&#34; + 0.027*&#34;traudichdeutschland&#34; + 0.024*&#34;wählen&#34; + 0.021*&#34;afd&#34; + 0.021*&#34;passieren&#34;
+Words: 0.092*&#34;wahlarena&#34; + 0.084*&#34;idee&#34; + 0.067*&#34;konkret&#34; + 0.046*&#34;völlig&#34; + 0.043*&#34;druck&#34; + 0.038*&#34;unverantwortlich&#34; + 0.037*&#34;drei&#34; + 0.035*&#34;luft&#34; + 0.032*&#34;nochmal&#34; + 0.025*&#34;unwählbar&#34;
 Topic: 81 
-Words: 0.081*&#34;video&#34; + 0.078*&#34;the&#34; + 0.074*&#34;lieb&#34; + 0.071*&#34;herzliche&#34; + 0.054*&#34;frage&#34; + 0.041*&#34;dank&#34; + 0.039*&#34;vertrauen&#34; + 0.033*&#34;tollen&#34; + 0.030*&#34;unterstützen&#34; + 0.024*&#34;winner&#34;
+Words: 0.178*&#34;schröder&#34; + 0.080*&#34;spdbpt&#34; + 0.064*&#34;stellen&#34; + 0.053*&#34;spd&#34; + 0.047*&#34;info&#34; + 0.046*&#34;überwachung&#34; + 0.046*&#34;weit&#34; + 0.037*&#34;machen&#34; + 0.035*&#34;unfassbar&#34; + 0.028*&#34;funktionieren&#34;
 Topic: 82 
-Words: 0.000*&#34;bewerben&#34; + 0.000*&#34;frazrn&#34; + 0.000*&#34;zerfleischen&#34; + 0.000*&#34;erstaunen&#34; + 0.000*&#34;feuer&#34; + 0.000*&#34;klartextfraumerkel&#34; + 0.000*&#34;chicken&#34; + 0.000*&#34;feigling&#34; + 0.000*&#34;thewestwing&#34; + 0.000*&#34;wbh&#34;
+Words: 0.042*&#34;argument&#34; + 0.040*&#34;ghh&#34; + 0.039*&#34;verbrecher&#34; + 0.025*&#34;hamburg&#34; + 0.025*&#34;linksextreme&#34; + 0.023*&#34;mietpreisbremse&#34; + 0.018*&#34;protest&#34; + 0.017*&#34;gham&#34; + 0.017*&#34;sitzen&#34; + 0.015*&#34;hören&#34;
 Topic: 83 
-Words: 0.071*&#34;cdu&#34; + 0.068*&#34;halten&#34; + 0.052*&#34;zensur&#34; + 0.051*&#34;wahltag&#34; + 0.051*&#34;afdwählen&#34; + 0.048*&#34;merkelmussweg&#34; + 0.044*&#34;traudichdeutschland&#34; + 0.038*&#34;überwinden&#34; + 0.037*&#34;merkel&#34; + 0.034*&#34;afd&#34;
+Words: 0.006*&#34;unklar&#34; + 0.001*&#34;bericht&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;alexander&#34; + 0.000*&#34;weiterhin&#34; + 0.000*&#34;zeit&#34; + 0.000*&#34;afdwaehlen&#34; + 0.000*&#34;gauland&#34;
 Topic: 84 
-Words: 0.201*&#34;fakenews&#34; + 0.073*&#34;bildung&#34; + 0.071*&#34;wegen&#34; + 0.059*&#34;klar&#34; + 0.057*&#34;eben&#34; + 0.057*&#34;bundestag&#34; + 0.054*&#34;rede&#34; + 0.040*&#34;koalition&#34; + 0.026*&#34;beginnen&#34; + 0.022*&#34;fehlen&#34;
+Words: 0.230*&#34;einschalten&#34; + 0.087*&#34;schnell&#34; + 0.074*&#34;aufs&#34; + 0.062*&#34;lasst&#34; + 0.055*&#34;toleranz&#34; + 0.049*&#34;unabhängig&#34; + 0.028*&#34;livestream&#34; + 0.025*&#34;vereinbarkeit&#34; + 0.023*&#34;hamburg&#34; + 0.021*&#34;btwahl&#34;
 Topic: 85 
-Words: 0.086*&#34;noafd&#34; + 0.057*&#34;sehen&#34; + 0.056*&#34;nonazis&#34; + 0.039*&#34;heute&#34; + 0.037*&#34;weitergehen&#34; + 0.036*&#34;wohl&#34; + 0.032*&#34;btw&#34; + 0.032*&#34;tag&#34; + 0.032*&#34;seit&#34; + 0.028*&#34;position&#34;
+Words: 0.095*&#34;sorgen&#34; + 0.082*&#34;mein&#34; + 0.045*&#34;groko&#34; + 0.042*&#34;blockieren&#34; + 0.039*&#34;letzt&#34; + 0.038*&#34;denken&#34; + 0.036*&#34;kind&#34; + 0.033*&#34;pflegenotstand&#34; + 0.032*&#34;ziel&#34; + 0.031*&#34;entdecken&#34;
 Topic: 86 
-Words: 0.230*&#34;mindestlohn&#34; + 0.044*&#34;respekt&#34; + 0.030*&#34;erhöhen&#34; + 0.022*&#34;erinnern&#34; + 0.020*&#34;zeugen&#34; + 0.012*&#34;holocaust&#34; + 0.008*&#34;link&#34; + 0.008*&#34;schwur&#34; + 0.008*&#34;buchenwald&#34; + 0.008*&#34;tilgen&#34;
+Words: 0.159*&#34;dienen&#34; + 0.137*&#34;haustür&#34; + 0.086*&#34;obwohl&#34; + 0.026*&#34;bundeskanzlerin&#34; + 0.023*&#34;nachbarschaft&#34; + 0.015*&#34;brunnenstraße&#34; + 0.015*&#34;daneben&#34; + 0.011*&#34;angelamerkel&#34; + 0.009*&#34;gießen&#34; + 0.008*&#34;woran&#34;
+Topic: 87 
+Words: 0.000*&#34;btw&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;teil&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;eckpfeiler&#34; + 0.000*&#34;zeit&#34; + 0.000*&#34;umfrage&#34; + 0.000*&#34;nunmehr&#34; + 0.000*&#34;programm&#34; + 0.000*&#34;sicherheit&#34;
+Topic: 88 
+Words: 0.214*&#34;massiv&#34; + 0.044*&#34;ausbaden&#34; + 0.042*&#34;nation&#34; + 0.033*&#34;disqualifizieren&#34; + 0.014*&#34;zeigen&#34; + 0.013*&#34;ichwähleafd&#34; + 0.009*&#34;osteuropäer&#34; + 0.001*&#34;afd&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;btw&#34;
+Topic: 89 
+Words: 0.180*&#34;überhaupt&#34; + 0.105*&#34;nahles&#34; + 0.050*&#34;parlament&#34; + 0.045*&#34;dank&#34; + 0.041*&#34;kollege&#34; + 0.041*&#34;notwendig&#34; + 0.035*&#34;gedenken&#34; + 0.032*&#34;bedeuten&#34; + 0.032*&#34;statement&#34; + 0.021*&#34;wahlwerbung&#34;
+Topic: 90 
+Words: 0.179*&#34;darüber&#34; + 0.100*&#34;putin&#34; + 0.072*&#34;verabschieden&#34; + 0.068*&#34;schützen&#34; + 0.061*&#34;vertagen&#34; + 0.035*&#34;kretschmann&#34; + 0.027*&#34;integrieren&#34; + 0.025*&#34;bahn&#34; + 0.022*&#34;rassisten&#34; + 0.016*&#34;bundestag&#34;
+Topic: 91 
+Words: 0.102*&#34;legen&#34; + 0.063*&#34;programm&#34; + 0.033*&#34;zustimmung&#34; + 0.033*&#34;aufbauen&#34; + 0.028*&#34;insa&#34; + 0.028*&#34;kraft&#34; + 0.027*&#34;sonntagsfrage&#34; + 0.025*&#34;ttip&#34; + 0.019*&#34;vorankommen&#34; + 0.016*&#34;traudichdeutschland&#34;
+Topic: 92 
+Words: 0.081*&#34;hoffnung&#34; + 0.079*&#34;unterstützung&#34; + 0.069*&#34;weidel&#34; + 0.060*&#34;retweete&#34; + 0.053*&#34;zeigen&#34; + 0.051*&#34;sensation&#34; + 0.042*&#34;traudichdeutschland&#34; + 0.034*&#34;btw&#34; + 0.031*&#34;afd&#34; + 0.028*&#34;schließung&#34;
+Topic: 93 
+Words: 0.142*&#34;vermögensteuer&#34; + 0.033*&#34;btwcountdown&#34; + 0.027*&#34;erinnern&#34; + 0.018*&#34;gesetzliche&#34; + 0.014*&#34;kneipenwahlkampf&#34; + 0.007*&#34;personalbemessung&#34; + 0.004*&#34;link&#34; + 0.000*&#34;pflegekräfte&#34; + 0.000*&#34;btw&#34; + 0.000*&#34;linke&#34;
+Topic: 94 
+Words: 0.332*&#34;teilnehmer&#34; + 0.058*&#34;wahlabend&#34; + 0.045*&#34;begrüßen&#34; + 0.043*&#34;genauso&#34; + 0.024*&#34;elefantenrunde&#34; + 0.018*&#34;naja&#34; + 0.013*&#34;weitere&#34; + 0.006*&#34;abschließen&#34; + 0.006*&#34;toller&#34; + 0.005*&#34;sehe&#34;
+Topic: 95 
+Words: 0.104*&#34;darstellen&#34; + 0.097*&#34;polizist&#34; + 0.077*&#34;ordentlich&#34; + 0.030*&#34;lohn&#34; + 0.029*&#34;koalieren&#34; + 0.026*&#34;ruck&#34; + 0.025*&#34;wäh&#34; + 0.022*&#34;mieter&#34; + 0.019*&#34;tvduell&#34; + 0.016*&#34;haben&#34;
+Topic: 96 
+Words: 0.000*&#34;btw&#34; + 0.000*&#34;afd&#34; + 0.000*&#34;traudichdeutschland&#34; + 0.000*&#34;zeit&#34; + 0.000*&#34;teil&#34; + 0.000*&#34;spd&#34; + 0.000*&#34;fragselbst&#34; + 0.000*&#34;fünfkampf&#34; + 0.000*&#34;sonntagsfrage&#34; + 0.000*&#34;amp&#34;
 </pre>
 </div>
 </div>
@@ -13644,7 +13833,7 @@ Words: 0.230*&#34;mindestlohn&#34; + 0.044*&#34;respekt&#34; + 0.030*&#34;erhöh
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get words and scores and save</span>
@@ -13659,7 +13848,7 @@ Words: 0.230*&#34;mindestlohn&#34; + 0.044*&#34;respekt&#34; + 0.030*&#34;erhöh
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># get tweet topics</span>
@@ -13684,13 +13873,13 @@ Words: 0.230*&#34;mindestlohn&#34; + 0.044*&#34;respekt&#34; + 0.030*&#34;erhöh
 
  
  
-<div id="314c626a-3d2d-4776-84f8-73ad28c8adfc"></div>
+<div id="20963fda-44b5-4af0-bb63-d387ef880a45"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#314c626a-3d2d-4776-84f8-73ad28c8adfc');
+var element = $('#20963fda-44b5-4af0-bb63-d387ef880a45');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "1b6478a4ef2042e5bb924610b1cc8a22", "version_major": 2, "version_minor": 0}
+{"model_id": "c0b6bafb34444be9a5cd5f56319da018", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -13702,7 +13891,7 @@ var element = $('#314c626a-3d2d-4776-84f8-73ad28c8adfc');
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">output_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
@@ -13718,7 +13907,7 @@ var element = $('#314c626a-3d2d-4776-84f8-73ad28c8adfc');
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[43]:</div>
 
 
 
@@ -13742,7 +13931,6 @@ var element = $('#314c626a-3d2d-4776-84f8-73ad28c8adfc');
     <tr style="text-align: right;">
       <th></th>
       <th>created_at</th>
-      <th>id</th>
       <th>text</th>
       <th>user</th>
       <th>extended_tweet</th>
@@ -13760,50 +13948,47 @@ var element = $('#314c626a-3d2d-4776-84f8-73ad28c8adfc');
     <tr>
       <th>0</th>
       <td>2017-08-02</td>
-      <td>892868367195025408</td>
-      <td>RT @Beatrix_vStorch: Ja zum #Diesel. https://t...</td>
-      <td>{'id': 2746361571, 'id_str': '2746361571', 'na...</td>
+      <td>RT @AfD_Bund: 6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #T...</td>
+      <td>{'id': 738771661915344897, 'id_str': '73877166...</td>
       <td>0</td>
-      <td>{'created_at': 'Wed Aug 02 16:23:23 +0000 2017...</td>
-      <td>diesel</td>
-      <td>Ja zum #Diesel. https://t.co/NCcsfSkBl7</td>
-      <td>Ja zum #Diesel. https://t.co/NCcsfSkBl</td>
-      <td>[diesel]</td>
-      <td>UweWolff966</td>
-      <td>0</td>
-      <td>0.011494</td>
+      <td>{'created_at': 'Wed Aug 02 21:28:47 +0000 2017...</td>
+      <td>btw17</td>
+      <td>6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #Twitter!\nDie #...</td>
+      <td>️⃣️⃣.️⃣️⃣️⃣ Follower auf #Twitter!\nDie #AfD-P...</td>
+      <td>[follower, twitter, finden, immer, mehr, anklang]</td>
+      <td>AfD_HD</td>
+      <td>44</td>
+      <td>0.190122</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2017-08-02</td>
-      <td>892890742905081856</td>
-      <td>RT @Beatrix_vStorch: Ja zum #Diesel. https://t...</td>
-      <td>{'id': 4379225363, 'id_str': '4379225363', 'na...</td>
+      <td>RT @FraukePetry: #OSZE nimmt Sorge der #AfD er...</td>
+      <td>{'id': 855324133, 'id_str': '855324133', 'name...</td>
       <td>0</td>
-      <td>{'created_at': 'Wed Aug 02 16:23:23 +0000 2017...</td>
-      <td>diesel</td>
-      <td>Ja zum #Diesel. https://t.co/NCcsfSkBl7</td>
-      <td>Ja zum #Diesel. https://t.co/NCcsfSkBl</td>
-      <td>[diesel]</td>
-      <td>F_von_Steiner</td>
-      <td>0</td>
-      <td>0.011494</td>
+      <td>{'created_at': 'Wed Aug 02 11:37:33 +0000 2017...</td>
+      <td>btw17</td>
+      <td>#OSZE nimmt Sorge der #AfD ernst und schickt T...</td>
+      <td>#OSZE nimmt Sorge der #AfD ernst und schickt T...</td>
+      <td>[osze, nehmen, sorge, afd, ernst, schicken, te...</td>
+      <td>83Schildi</td>
+      <td>31</td>
+      <td>0.400907</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>2017-08-03</td>
-      <td>892911669633966080</td>
-      <td>#Diesel #Dobrindt's schützende Hand über Autok...</td>
-      <td>{'id': 22900494, 'id_str': '22900494', 'name':...</td>
+      <td>2017-08-02</td>
+      <td>RT @AfD_Bund: 6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #T...</td>
+      <td>{'id': 1305881724, 'id_str': '1305881724', 'na...</td>
       <td>0</td>
-      <td>0</td>
-      <td>diesel</td>
-      <td>#Diesel #Dobrindt's schützende Hand über Autok...</td>
-      <td>#Diesel #Dobrindt's schützende Hand über Autok...</td>
-      <td>[diesel, schützend, hand, autokonzerne, mensch...</td>
-      <td>BaerbelHoehn</td>
-      <td>55</td>
-      <td>0.354692</td>
+      <td>{'created_at': 'Wed Aug 02 21:28:47 +0000 2017...</td>
+      <td>btw17</td>
+      <td>6️⃣5️⃣.0️⃣0️⃣0️⃣ Follower auf #Twitter!\nDie #...</td>
+      <td>️⃣️⃣.️⃣️⃣️⃣ Follower auf #Twitter!\nDie #AfD-P...</td>
+      <td>[follower, twitter, finden, immer, mehr, anklang]</td>
+      <td>helmut_hedrich</td>
+      <td>44</td>
+      <td>0.244921</td>
     </tr>
   </tbody>
 </table>
@@ -13818,7 +14003,7 @@ var element = $('#314c626a-3d2d-4776-84f8-73ad28c8adfc');
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># plot number of topics per hashtag</span>
@@ -13846,9 +14031,9 @@ var element = $('#314c626a-3d2d-4776-84f8-73ad28c8adfc');
 
 
 <div class="output_html rendered_html output_subarea ">
-<div>                            <div id="f136cccc-a4c8-46bb-b567-30498287174e" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("f136cccc-a4c8-46bb-b567-30498287174e")) {                    Plotly.newPlot(                        "f136cccc-a4c8-46bb-b567-30498287174e",                        [{"alignmentgroup": "True", "hovertemplate": "Anzahl Topics=%{x}<br>Hashtag=%{y}<extra></extra>", "legendgroup": "", "marker": {"color": "rgb(133, 92, 117)"}, "name": "", "offsetgroup": "", "orientation": "h", "showlegend": false, "textposition": "auto", "type": "bar", "x": [1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11, 11, 12, 12, 12, 12, 12, 13, 13, 13, 13, 13, 14, 14, 14, 14, 14, 15, 15, 15, 15, 15, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 18, 18, 18, 19, 19, 19, 20, 20, 20, 21, 21, 21, 22, 23, 24, 24, 24, 25, 26, 27, 27, 27, 28, 29, 31, 31, 32, 32, 32, 33, 34, 34, 34, 38, 39, 39, 39, 39, 44, 45, 45, 46, 49, 49, 51, 53, 54, 58, 58, 62, 62, 69], "xaxis": "x", "y": ["elektromobilit\u00e4t", "nato", "th\u00fcringen", "bayern", "bge", "twitter", "steineke", "brandenburg", "f\u00fcrsieda", "bonn", "heimat", "schulzzug", "bureg", "nahles", "m\u00fcnchen", "mindestlohn", "schr\u00f6der", "polizei", "fail", "grundeinkommen", "verkehrswende", "union", "frankfurt", "zeitf\u00fcrmartin", "usa", "ehefueralle", "dresden", "nsu", "obergrenze", "migration", "zensur", "ehef\u00fcralle", "wirtschaft", "armut", "asyl", "populismus", "glyphosat", "ddr", "rlp", "russland", "klimawandel", "unw\u00e4hlbar", "sch\u00f6neberg", "hartz4", "demaizi\u00e8re", "kinderarmut", "hartziv", "inklusion", "antisemitismus", "kretschmann", "dortmund", "txl", "gesundheit", "linken", "klima", "politik", "sachsen", "sicherheit", "viersen", "zukunftwirdausmutgemacht", "dieselgate", "afghanistan", "brexit", "arbeit", "energiewende", "umwelt", "petry", "nazis", "erdogan", "altersarmut", "g20", "gabriel", "gr\u00fcn", "gr\u00fcneversenken", "nordkorea", "hatespeech", "wagenknecht", "sch\u00e4uble", "antifa", "k\u00f6ln", "freiheit", "dobrindt", "bundeswehr", "bundesregierung", "gerechtigkeit", "zdf", "islamisierung", "heuchler", "putin", "hamburg", "zukunft", "integration", "leipzig", "bildung", "freedeniz", "ard", "tegel", "tzt", "nrw", "digitalisierung", "tegelschliessen", "nonazis", "afdw\u00e4hlen", "islam", "fl\u00fcchtlinge", "mahe", "eu", "fakenews", "gez", "demokratie", "t\u00fcrkei", "klimaschutz", "stegner", "maas", "h\u00fctter", "lindner", "gruenen", "seehofer", "zeitfuermartin", "mietpreisbremse", "mutludirekt", "denkenwirneu", "terror", "sed", "netzdg", "rente", "r2g", "europa", "gauland", "martinschulz", "wahlkampf", "diesel", "pflege", "merkelmussweg", "berlin", "deutschland", "fckafd", "trump", "bundestagswahl", "ltnrw", "dielinke", "groko", "gruene", "gr\u00fcnen", "csu", "darumgr\u00fcn", "fedidwgugl", "gr\u00fcne", "bundestag", "darumgruen", "grueneversenken", "cdu", "schulz", "noafd", "btw", "linke", "spd", "merkel", "fdp", "traudichdeutschland", "btw2017", "btw17"], "yaxis": "y"}],                        {"barmode": "relative", "font": {"color": "black", "family": "Computer Modern", "size": 15}, "legend": {"tracegroupgap": 0}, "margin": {"t": 60}, "template": {"data": {"bar": [{"error_x": {"color": "rgb(36,36,36)"}, "error_y": {"color": "rgb(36,36,36)"}, "marker": {"line": {"color": "white", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "white", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "rgb(36,36,36)", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "rgb(36,36,36)"}, "baxis": {"endlinecolor": "rgb(36,36,36)", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "rgb(36,36,36)"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "heatmapgl"}], "histogram": [{"marker": {"line": {"color": "white", "width": 0.6}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "rgb(237,237,237)"}, "line": {"color": "white"}}, "header": {"fill": {"color": "rgb(217,217,217)"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowhead": 0, "arrowwidth": 1}, "autotypenumbers": "strict", "coloraxis": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "colorscale": {"diverging": [[0.0, "rgb(103,0,31)"], [0.1, "rgb(178,24,43)"], [0.2, "rgb(214,96,77)"], [0.3, "rgb(244,165,130)"], [0.4, "rgb(253,219,199)"], [0.5, "rgb(247,247,247)"], [0.6, "rgb(209,229,240)"], [0.7, "rgb(146,197,222)"], [0.8, "rgb(67,147,195)"], [0.9, "rgb(33,102,172)"], [1.0, "rgb(5,48,97)"]], "sequential": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "sequentialminus": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]]}, "colorway": ["#1F77B4", "#FF7F0E", "#2CA02C", "#D62728", "#9467BD", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF"], "font": {"color": "rgb(36,36,36)"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "white", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "white", "polar": {"angularaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "bgcolor": "white", "radialaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}}, "scene": {"xaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "yaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "zaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}}, "shapedefaults": {"fillcolor": "black", "line": {"width": 0}, "opacity": 0.3}, "ternary": {"aaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "baxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "bgcolor": "white", "caxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside", "title": {"standoff": 15}, "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "yaxis": {"automargin": true, "gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside", "title": {"standoff": 15}, "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}}}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Anzahl Topics"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Hashtag"}}},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="5d42ba55-a318-4e8d-9dc8-b4001ca74552" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("5d42ba55-a318-4e8d-9dc8-b4001ca74552")) {                    Plotly.newPlot(                        "5d42ba55-a318-4e8d-9dc8-b4001ca74552",                        [{"alignmentgroup": "True", "hovertemplate": "Anzahl Topics=%{x}<br>Hashtag=%{y}<extra></extra>", "legendgroup": "", "marker": {"color": "rgb(133, 92, 117)"}, "name": "", "offsetgroup": "", "orientation": "h", "showlegend": false, "textposition": "auto", "type": "bar", "x": [2, 4, 5, 5, 7, 7, 9, 9, 10, 11, 11, 11, 11, 12, 12, 12, 13, 13, 14, 14, 14, 14, 15, 15, 15, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 20, 20, 21, 21, 22, 22, 22, 22, 23, 23, 24, 24, 24, 24, 25, 25, 26, 27, 27, 28, 28, 28, 28, 29, 29, 29, 29, 29, 29, 29, 30, 30, 31, 31, 31, 31, 31, 31, 31, 32, 32, 32, 32, 32, 32, 33, 33, 34, 34, 35, 35, 35, 35, 35, 36, 36, 36, 37, 37, 37, 38, 38, 38, 38, 38, 39, 39, 40, 41, 41, 41, 42, 43, 43, 44, 44, 45, 47, 48, 49, 49, 50, 50, 51, 51, 52, 52, 53, 54, 55, 55, 56, 56, 58, 59, 61, 61, 62, 62, 63, 64, 64, 65, 65, 65, 68, 68, 68, 69, 70, 70, 71, 71, 72, 73, 73, 75, 76, 77, 77, 81, 81, 83, 85, 85, 89, 89], "xaxis": "x", "y": ["bureg", "kinderarmut", "grundeinkommen", "dresden", "f\u00fcrsieda", "viersen", "populismus", "unw\u00e4hlbar", "putin", "nahles", "steineke", "migration", "h\u00fctter", "mindestlohn", "brexit", "freedeniz", "m\u00fcnchen", "hartziv", "russland", "heuchler", "wirtschaft", "petry", "ddr", "inklusion", "armut", "gr\u00fcn", "wagenknecht", "zensur", "altersarmut", "fail", "freiheit", "sicherheit", "k\u00f6ln", "zukunft", "sch\u00f6neberg", "rlp", "txl", "umwelt", "seehofer", "islamisierung", "bayern", "klimawandel", "leipzig", "obergrenze", "nonazis", "hatespeech", "twitter", "gerechtigkeit", "afdw\u00e4hlen", "frankfurt", "union", "integration", "fl\u00fcchtlinge", "hartz4", "zukunftwirdausmutgemacht", "zeitf\u00fcrmartin", "verkehrswende", "terror", "sch\u00e4uble", "schulzzug", "bundesregierung", "pflege", "elektromobilit\u00e4t", "fckafd", "glyphosat", "gruenen", "mietpreisbremse", "stegner", "brandenburg", "arbeit", "heimat", "gabriel", "demaizi\u00e8re", "gez", "afghanistan", "nordkorea", "asyl", "fakenews", "nsu", "bge", "dortmund", "kretschmann", "schr\u00f6der", "martinschulz", "ltnrw", "nazis", "sed", "denkenwirneu", "linken", "sachsen", "usa", "antisemitismus", "tegel", "rente", "bundeswehr", "energiewende", "gesundheit", "gruene", "bonn", "diesel", "nato", "bundestagswahl", "tegelschliessen", "politik", "th\u00fcringen", "mahe", "polizei", "ard", "mutludirekt", "gr\u00fcneversenken", "antifa", "zdf", "klimaschutz", "dobrindt", "tzt", "klima", "maas", "wahlkampf", "zeitfuermartin", "groko", "demokratie", "darumgr\u00fcn", "csu", "deutschland", "bildung", "gr\u00fcnen", "digitalisierung", "lindner", "islam", "grueneversenken", "merkelmussweg", "trump", "t\u00fcrkei", "linke", "noafd", "dieselgate", "europa", "netzdg", "gauland", "btw", "schulz", "r2g", "dielinke", "erdogan", "ehef\u00fcralle", "fedidwgugl", "hamburg", "bundestag", "btw2017", "darumgruen", "gr\u00fcne", "eu", "nrw", "g20", "berlin", "ehefueralle", "fdp", "merkel", "traudichdeutschland", "cdu", "spd", "btw17"], "yaxis": "y"}],                        {"barmode": "relative", "font": {"color": "black", "family": "Computer Modern", "size": 15}, "legend": {"tracegroupgap": 0}, "margin": {"t": 60}, "template": {"data": {"bar": [{"error_x": {"color": "rgb(36,36,36)"}, "error_y": {"color": "rgb(36,36,36)"}, "marker": {"line": {"color": "white", "width": 0.5}}, "type": "bar"}], "barpolar": [{"marker": {"line": {"color": "white", "width": 0.5}}, "type": "barpolar"}], "carpet": [{"aaxis": {"endlinecolor": "rgb(36,36,36)", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "rgb(36,36,36)"}, "baxis": {"endlinecolor": "rgb(36,36,36)", "gridcolor": "white", "linecolor": "white", "minorgridcolor": "white", "startlinecolor": "rgb(36,36,36)"}, "type": "carpet"}], "choropleth": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "choropleth"}], "contour": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "contour"}], "contourcarpet": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "contourcarpet"}], "heatmap": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "heatmap"}], "heatmapgl": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "heatmapgl"}], "histogram": [{"marker": {"line": {"color": "white", "width": 0.6}}, "type": "histogram"}], "histogram2d": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "histogram2d"}], "histogram2dcontour": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "histogram2dcontour"}], "mesh3d": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "type": "mesh3d"}], "parcoords": [{"line": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "parcoords"}], "pie": [{"automargin": true, "type": "pie"}], "scatter": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatter"}], "scatter3d": [{"line": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatter3d"}], "scattercarpet": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattercarpet"}], "scattergeo": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattergeo"}], "scattergl": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattergl"}], "scattermapbox": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scattermapbox"}], "scatterpolar": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterpolar"}], "scatterpolargl": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterpolargl"}], "scatterternary": [{"marker": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "type": "scatterternary"}], "surface": [{"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}, "colorscale": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "type": "surface"}], "table": [{"cells": {"fill": {"color": "rgb(237,237,237)"}, "line": {"color": "white"}}, "header": {"fill": {"color": "rgb(217,217,217)"}, "line": {"color": "white"}}, "type": "table"}]}, "layout": {"annotationdefaults": {"arrowhead": 0, "arrowwidth": 1}, "autotypenumbers": "strict", "coloraxis": {"colorbar": {"outlinewidth": 1, "tickcolor": "rgb(36,36,36)", "ticks": "outside"}}, "colorscale": {"diverging": [[0.0, "rgb(103,0,31)"], [0.1, "rgb(178,24,43)"], [0.2, "rgb(214,96,77)"], [0.3, "rgb(244,165,130)"], [0.4, "rgb(253,219,199)"], [0.5, "rgb(247,247,247)"], [0.6, "rgb(209,229,240)"], [0.7, "rgb(146,197,222)"], [0.8, "rgb(67,147,195)"], [0.9, "rgb(33,102,172)"], [1.0, "rgb(5,48,97)"]], "sequential": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]], "sequentialminus": [[0.0, "#440154"], [0.1111111111111111, "#482878"], [0.2222222222222222, "#3e4989"], [0.3333333333333333, "#31688e"], [0.4444444444444444, "#26828e"], [0.5555555555555556, "#1f9e89"], [0.6666666666666666, "#35b779"], [0.7777777777777778, "#6ece58"], [0.8888888888888888, "#b5de2b"], [1.0, "#fde725"]]}, "colorway": ["#1F77B4", "#FF7F0E", "#2CA02C", "#D62728", "#9467BD", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF"], "font": {"color": "rgb(36,36,36)"}, "geo": {"bgcolor": "white", "lakecolor": "white", "landcolor": "white", "showlakes": true, "showland": true, "subunitcolor": "white"}, "hoverlabel": {"align": "left"}, "hovermode": "closest", "mapbox": {"style": "light"}, "paper_bgcolor": "white", "plot_bgcolor": "white", "polar": {"angularaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "bgcolor": "white", "radialaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}}, "scene": {"xaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "yaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "zaxis": {"backgroundcolor": "white", "gridcolor": "rgb(232,232,232)", "gridwidth": 2, "linecolor": "rgb(36,36,36)", "showbackground": true, "showgrid": false, "showline": true, "ticks": "outside", "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}}, "shapedefaults": {"fillcolor": "black", "line": {"width": 0}, "opacity": 0.3}, "ternary": {"aaxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "baxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}, "bgcolor": "white", "caxis": {"gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside"}}, "title": {"x": 0.05}, "xaxis": {"automargin": true, "gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside", "title": {"standoff": 15}, "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}, "yaxis": {"automargin": true, "gridcolor": "rgb(232,232,232)", "linecolor": "rgb(36,36,36)", "showgrid": false, "showline": true, "ticks": "outside", "title": {"standoff": 15}, "zeroline": false, "zerolinecolor": "rgb(36,36,36)"}}}, "xaxis": {"anchor": "y", "domain": [0.0, 1.0], "title": {"text": "Anzahl Topics"}}, "yaxis": {"anchor": "x", "domain": [0.0, 1.0], "title": {"text": "Hashtag"}}},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('f136cccc-a4c8-46bb-b567-30498287174e');
+var gd = document.getElementById('5d42ba55-a318-4e8d-9dc8-b4001ca74552');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -13881,41 +14066,7 @@ if (outputEl) {{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[53]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
-<span class="o">%</span><span class="k">autoreload</span> 2
-<span class="kn">from</span> <span class="nn">lda</span> <span class="kn">import</span> <span class="n">get_hashtag_topic</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>The autoreload extension is already loaded. To reload it, use:
-  %reload_ext autoreload
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[55]:</div>
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">hashtag_topics</span> <span class="o">=</span> <span class="n">get_hashtag_topic</span><span class="p">(</span><span class="n">output_df</span><span class="p">,</span> <span class="n">topic_df</span><span class="p">)</span>
@@ -13940,13 +14091,13 @@ if (outputEl) {{
 
  
  
-<div id="2a3fb3a1-cc3e-451d-a3c0-70b76acba49b"></div>
+<div id="b544c080-b937-4078-a38e-0a39bf067376"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#2a3fb3a1-cc3e-451d-a3c0-70b76acba49b');
+var element = $('#b544c080-b937-4078-a38e-0a39bf067376');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "dafc5b7e804b4555a992e82ba3c53030", "version_major": 2, "version_minor": 0}
+{"model_id": "590d6395d0034b3a850cb486345a2287", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -13954,7 +14105,7 @@ var element = $('#2a3fb3a1-cc3e-451d-a3c0-70b76acba49b');
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[55]:</div>
+    <div class="prompt output_prompt">Out[45]:</div>
 
 
 
@@ -13985,21 +14136,21 @@ var element = $('#2a3fb3a1-cc3e-451d-a3c0-70b76acba49b');
   <tbody>
     <tr>
       <th>0</th>
-      <td>diesel</td>
-      <td>[deshalb, deutsch, politisch, kommen, grüner, ...</td>
-      <td>[1.658752664923668, 1.3408250708132983, 1.1157...</td>
+      <td>btw17</td>
+      <td>[demokratie, arbeit, doppeln, gibt, netzdg, ma...</td>
+      <td>[113.66572658698261, 78.95472493836283, 78.441...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>denkenwirneu</td>
-      <td>[öffnen, wahllokale, gib, stimme, politisch, b...</td>
-      <td>[7.352945652335882, 7.270328285455704, 6.60938...</td>
+      <td>cdu</td>
+      <td>[ehefueralle, wiegehtsd, obergrenze, nonazis, ...</td>
+      <td>[16.715352406539022, 16.275444381132722, 13.55...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>bundestag</td>
-      <td>[retweete, haben, csu, traudichdeutschland, me...</td>
-      <td>[7.897844382114709, 5.692862448021769, 5.24106...</td>
+      <td>dobrindt</td>
+      <td>[maas, netzdg, darüber, stadt, argument, putin...</td>
+      <td>[8.469245705097915, 6.94600007468462, 5.973529...</td>
     </tr>
   </tbody>
 </table>
@@ -14014,7 +14165,7 @@ var element = $('#2a3fb3a1-cc3e-451d-a3c0-70b76acba49b');
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># save to json</span>

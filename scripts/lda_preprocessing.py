@@ -5,6 +5,7 @@ from tqdm.notebook import tqdm
 from datetime import datetime, timedelta
 import spacy
 nlp = spacy.load('de_dep_news_trf')
+nlp.disable_pipes('transformer', 'tagger', 'morphologizer', 'parser', 'attribute_ruler')
 from nltk.corpus import stopwords
 stopwords = stopwords.words('german')
 
@@ -47,11 +48,11 @@ def retrieve_peak_dates(hashtag_df, input_df):
     for i in tqdm(range(len(hashtag_list))):
         hashtag = hashtag_list[i]
         peak_dates = input_df[(input_df['peak']==1)&(input_df['hashtag']==hashtag)]['date'].tolist()
+        output_dates = []
         for peak in peak_dates:
             start = str(datetime.strptime(str(peak), '%Y-%m-%d %H:%M:%S').date() - timedelta(days=3))
             end = str(datetime.strptime(str(peak), '%Y-%m-%d %H:%M:%S').date() + timedelta(days=3))
             daterange = pd.date_range(start, end)
-            output_dates = []
             for date in daterange:
                 output_dates.append(date.strftime('%Y-%m-%d'))
         if peak_dates:

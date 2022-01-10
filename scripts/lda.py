@@ -53,7 +53,7 @@ def run_ldas(documents, min_num_topics, max_num_topics):
     corpus_tfidf = tfidf[bow_corpus]
 
     # run lda models for different num_topics and extract coherence scores
-    for i in range(min_num_topics, max_num_topics+1):
+    for i in tqdm(range(min_num_topics, max_num_topics+1)):
         lda_model = gensim.models.LdaMulticore(corpus_tfidf, num_topics=i, id2word=dictionary, passes=2, workers=4, random_state=1410)
         coherence_model_lda = CoherenceModel(model=lda_model, texts=documents, dictionary=dictionary, coherence='c_v')  
         coherence_lda = coherence_model_lda.get_coherence()     

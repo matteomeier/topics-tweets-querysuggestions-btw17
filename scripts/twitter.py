@@ -150,7 +150,10 @@ def filter_tweets(input_files, dates_df):
                     id_list.append(temp_df['id'].tolist())
                     text_list.append(temp_df['text'].tolist())
                     user_list.append(temp_df['user'].tolist())
-                    extended_tweet_list.append(temp_df['extended_tweet'].tolist())
+                    try:
+                        extended_tweet_list.append(temp_df['extended_tweet'].tolist())
+                    except:
+                        extended_tweet_list.append('')
                     retweeted_status_list.append(temp_df['retweeted_status'].tolist())
                     tags_list.append(temp_df['tags'].tolist())
 
