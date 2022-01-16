@@ -13099,7 +13099,7 @@ div#notebook {
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># import relevant moduls</span>
@@ -13110,7 +13110,7 @@ div#notebook {
 <span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../scripts/&#39;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">analysis</span> <span class="kn">import</span> <span class="n">vectorize_hashtags</span><span class="p">,</span> <span class="n">compare_vectors</span>
+<span class="kn">from</span> <span class="nn">analysis</span> <span class="kn">import</span> <span class="n">vectorize_topics</span><span class="p">,</span> <span class="n">compare_vectors</span>
 </pre></div>
 
     </div>
@@ -13261,6 +13261,7 @@ div#notebook {
     <tr style="text-align: right;">
       <th></th>
       <th>hashtag</th>
+      <th>topic</th>
       <th>topic_words</th>
       <th>scores</th>
     </tr>
@@ -13268,21 +13269,24 @@ div#notebook {
   <tbody>
     <tr>
       <th>0</th>
-      <td>diesel</td>
-      <td>[deshalb, deutsch, politisch, kommen, grüner, ...</td>
-      <td>[1.6587526649000002, 1.3408250708, 1.115731890...</td>
+      <td>btw17</td>
+      <td>60</td>
+      <td>[erdogan, seehofer, türkei, obergrenze, mögen,...</td>
+      <td>[0.139, 0.064, 0.056, 0.030, 0.029, 0.026, 0.0...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>denkenwirneu</td>
-      <td>[öffnen, wahllokale, gib, stimme, politisch, b...</td>
-      <td>[7.3529456523, 7.2703282855, 6.6093893504, 5.2...</td>
+      <td>traudichdeutschland</td>
+      <td>60</td>
+      <td>[erdogan, seehofer, türkei, obergrenze, mögen,...</td>
+      <td>[0.139, 0.064, 0.056, 0.030, 0.029, 0.026, 0.0...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>bundestag</td>
-      <td>[retweete, haben, csu, traudichdeutschland, me...</td>
-      <td>[7.8978443821, 5.692862448, 5.2410655767, 4.85...</td>
+      <td>gauland</td>
+      <td>60</td>
+      <td>[erdogan, seehofer, türkei, obergrenze, mögen,...</td>
+      <td>[0.139, 0.064, 0.056, 0.030, 0.029, 0.026, 0.0...</td>
     </tr>
   </tbody>
 </table>
@@ -13300,7 +13304,9 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hashtag_vectors</span> <span class="o">=</span> <span class="n">vectorize_hashtags</span><span class="p">(</span><span class="n">topics_df</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tmp</span> <span class="o">=</span> <span class="n">topics_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s1">&#39;hashtag&#39;</span><span class="p">)</span>
+<span class="n">tmp</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;topic&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">topic_vectors</span> <span class="o">=</span> <span class="n">vectorize_topics</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13310,12 +13316,15 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># tsne transformation to 2d</span>
 <span class="n">tsne</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1410</span><span class="p">)</span>
-<span class="n">X_tsne</span> <span class="o">=</span> <span class="n">tsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">hashtag_vectors</span><span class="p">)</span>
+<span class="n">X_tsne</span> <span class="o">=</span> <span class="n">tsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">topic_vectors</span><span class="p">)</span>
+<span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;vector&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X_tsne</span><span class="p">]</span>
+<span class="n">topics_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;topic_words&#39;</span><span class="p">,</span> <span class="s1">&#39;scores&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">topics_df</span> <span class="o">=</span> <span class="n">topics_df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">tmp</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;topic&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13325,10 +13334,10 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">similarity_df</span> <span class="o">=</span> <span class="n">compare_vectors</span><span class="p">(</span><span class="n">X_tsne</span><span class="p">,</span> <span class="n">cluster_df</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">similarity_df</span> <span class="o">=</span> <span class="n">compare_vectors</span><span class="p">(</span><span class="n">topics_df</span><span class="p">[</span><span class="s1">&#39;vector&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">cluster_df</span><span class="p">)</span>
 <span class="n">similarity_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 
@@ -13350,13 +13359,13 @@ div#notebook {
 
  
  
-<div id="6f88052b-7110-4993-a600-a19b55d49439"></div>
+<div id="822892d1-a9ed-44fb-8580-e847963b5b83"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#6f88052b-7110-4993-a600-a19b55d49439');
+var element = $('#822892d1-a9ed-44fb-8580-e847963b5b83');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "d697124eccb14267be2d72e058b989e3", "version_major": 2, "version_minor": 0}
+{"model_id": "719dabdd97d04aa893ee3dc93daa6b4a", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -13364,7 +13373,7 @@ var element = $('#6f88052b-7110-4993-a600-a19b55d49439');
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[9]:</div>
+    <div class="prompt output_prompt">Out[7]:</div>
 
 
 
@@ -13397,19 +13406,19 @@ var element = $('#6f88052b-7110-4993-a600-a19b55d49439');
       <th>0</th>
       <td>[gebrochen]</td>
       <td>0</td>
-      <td>[-0.91, -0.99, -0.92, -0.979, 0.481, -0.776, 0...</td>
+      <td>[0.874, 0.874, 0.874, 0.874, 0.958, 0.958, 0.9...</td>
     </tr>
     <tr>
       <th>1</th>
       <td>[stadt, land, fluss]</td>
       <td>0</td>
-      <td>[-0.899, -0.993, -0.91, -0.974, 0.459, -0.791,...</td>
+      <td>[0.885, 0.885, 0.885, 0.885, 0.965, 0.965, 0.9...</td>
     </tr>
     <tr>
       <th>2</th>
       <td>[konzert, für, dich]</td>
       <td>0</td>
-      <td>[0.104, -0.452, 0.078, -0.118, -0.678, -0.845,...</td>
+      <td>[0.739, 0.739, 0.739, 0.739, 0.576, 0.576, 0.5...</td>
     </tr>
   </tbody>
 </table>
@@ -13424,11 +13433,12 @@ var element = $('#6f88052b-7110-4993-a600-a19b55d49439');
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># save df to json</span>
 <span class="n">similarity_df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Suggestions/suggestions/vector_similarity.json&#39;</span><span class="p">)</span>
+<span class="n">topics_df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="s1">&#39;../../data/BTW17_Twitter/hashtags/hashtag_vectors.json&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
