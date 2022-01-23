@@ -208,93 +208,49 @@ def peak_analysis(test_range, sim_df, peaks_df, cluster_ts_df):
     :params sim_df: df with combinations cluster, hashtga
     :params peaks_df: df with peak days per hashtag
     :params cluster_df: df with cluster timeseries
-    :return: vectorized hashtags
+    :return: t-test results overall and regression input detailed
     '''
-
-    output = {'hashtag':[], 'category':[], 'test_range':[], 't':[], 'p':[]}
-    # test for all
-    for i in range(len(peaks_df)):
-        peak_start = pd.to_datetime(peaks_df['peak_start'][i])
-        peak_end = pd.to_datetime(peaks_df['peak_end'][i])
-        start = peak_start - timedelta(days=test_range)
-        end = peak_end + timedelta(days=test_range)
-
-        before = cluster_ts_df[(cluster_ts_df['date']>=start)&(cluster_ts_df['date']<=peak_start)]['count']
-        after = cluster_ts_df[(cluster_ts_df['date']>=peak_end)&(cluster_ts_df['date']<=end)]['count']
-
-    s, p_levene = stats.levene(after, before)
-    if p_levene < 0.05:
-        t, p = stats.ttest_ind(after, before, equal_var=False)
-    else:
-        t, p = stats.ttest_ind(after, before, equal_var=True)
-
-    output['hashtag'].append('all')
-    output['category'].append('all')
-    output['test_range'].append(test_range)         
-    output['t'].append(round(t,3))
-    output['p'].append(round(p,3))
-
-    # test per hashtag
+    output_detail = pd.DataFrame()
+    
+    # get means before and after for different dims and peaks
     for hashtag in sim_df['hashtags'].unique():
-        tmp = peaks_df[peaks_df['hashtag']==hashtag].reset_index(drop=True)
-        before = pd.Series()
-        after = pd.Series()
-        cluster = sim_df[sim_df['hashtags']==hashtag]['cluster'].unique()
+        try:
+            tmp = peaks_df[peaks_df['hashtag']==hashtag].reset_index(drop=True)
+            cluster = sim_df[sim_df['hashtags']==hashtag]['cluster'].unique()
 
-        for i in range(len(tmp)):
-            peak_start = pd.to_datetime(tmp['peak_start'][i])
-            peak_end = pd.to_datetime(tmp['peak_end'][i])
-            start = peak_start - timedelta(days=test_range)
-            end = peak_end + timedelta(days=test_range)
-            
-            ts = cluster_ts_df[cluster_ts_df['cluster'].isin(cluster)]
-            before = before.append(ts[(ts['date']>=start)&(ts['date']<=peak_start)]['count'])
-            after = after.append(ts[(ts['date']>=peak_end)&(ts['date']<=end)]['count'])
-        
-        s, p_levene = stats.levene(after, before)
-        if p_levene < 0.05:
-            t, p = stats.ttest_ind(after, before, equal_var=False)
-        else:
-            t, p = stats.ttest_ind(after, before, equal_var=True)
-        
-        output['hashtag'].append(hashtag)
-        output['category'].append('all')    
-        output['test_range'].append(test_range)          
-        output['t'].append(round(t,3))
-        output['p'].append(round(p,3))
+            for i in range(len(tmp)):
+                peak_start = pd.to_datetime(tmp['peak_start'][i])
+                peak_end = pd.to_datetime(tmp['peak_end'][i])
+                start = peak_start - timedelta(days=test_range)
+                end = peak_end + timedelta(days=test_range)
+                
+                for i in range(len(cluster)):
+                    ts = cluster_ts_df[cluster_ts_df['cluster']==cluster[i]]
+                    
+                    before = ts[(ts['date']>=start)&(ts['date']<=peak_start)]
+                    after = ts[(ts['date']>=peak_end)&(ts['date']<=end)]
+                    
+                    before_df = before.groupby(['cluster', 'party', 'gender', 'category'], as_index=False).mean()
+                    before_df['time'] = 'before'
 
-    # test per category
-    for category in sim_df['category'].unique():
-        before = pd.Series()
-        after = pd.Series()
-        hashtags = sim_df[sim_df['category']==category]['hashtags'].unique()
-        cluster = sim_df[sim_df['category']==category]['cluster'].unique()
-        
-        tmp = peaks_df[peaks_df['hashtag'].isin(hashtags)].reset_index(drop=True)
+                    after_df = after.groupby(['cluster', 'party', 'gender', 'category'], as_index=False).mean()
+                    after_df['time'] = 'after'
 
-        for i in range(len(tmp)):
-            peak_start = pd.to_datetime(tmp['peak_start'][i])
-            peak_end = pd.to_datetime(tmp['peak_end'][i])
-            start = peak_start - timedelta(days=test_range)
-            end = peak_end + timedelta(days=test_range)
-            
-            ts = cluster_ts_df[cluster_ts_df['cluster'].isin(cluster)]
-            before = before.append(ts[(ts['date']>=start)&(ts['date']<=peak_start)]['count'])
-            after = after.append(ts[(ts['date']>=peak_end)&(ts['date']<=end)]['count'])
-        
-        s, p_levene = stats.levene(after, before)
-        if p_levene < 0.05:
-            t, p = stats.ttest_ind(after, before, equal_var=False)
-        else:
-            t, p = stats.ttest_ind(after, before, equal_var=True)
-        
-        output['hashtag'].append('all')
-        output['category'].append(category)
-        output['test_range'].append(test_range)             
-        output['t'].append(round(t,3))
-        output['p'].append(round(p,3))
+                    if before_df.empty:
+                        pass
+                    elif after_df.empty:
+                        pass
+                    else:
+                        df = pd.concat([before_df, after_df])
+                        df['hashtag'] = hashtag
+                        df['peak'] = peak_start + timedelta(days=3)
+                        df['test_range'] = test_range
+                        output_detail = pd.concat([output_detail, df])
 
-    return output
+        except:
+            pass
+
+    return output_detail
 
 # define function peak_ranges
 # to extract the min and max of lda_dates per peak
