@@ -1,4 +1,4 @@
-# political-topics-in-query-suggestions
+# Topics in Tweets and Query Suggestions (BTW 17)
 
 This is the repository for my Bachelor-Thesis **Topic-Analyse politischer Tweets und Suchvorschläge zur Bundestagswahl 2017** in Data and Information Science at the University of Applied Sciences Cologne.
 #### Structure of this repository
