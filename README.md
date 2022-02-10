@@ -18,7 +18,7 @@ The file names remain unchanged, some files were not uploaded due to restriction
 | `querysuggestions\cluster\cluster.json` | Initial cluster of query suggestions generated with DBSCAN. |
 | `querysuggestions\cluster\cluster_categories.csv` | File to manually match cluster of query suggestions to topic categories. |
 | `twitter\hashtags` | Hashtag time series and vector representations. |
-| `twitter\lda` | Initial LDA topics, topic-hashtag-distribution and preprocessed lda tweets with topic. |
+| `twitter\lda` | Initial LDA topics, topic-hashtag-distribution. |
 | `twitter\peaks` | Detected peak dates for hashtag time series. |
 
 #### Notebook description
