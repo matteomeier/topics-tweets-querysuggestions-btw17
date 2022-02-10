@@ -21,6 +21,8 @@ The file names remain unchanged, some files were not uploaded due to restriction
 | `twitter\lda` | Initial LDA topics, topic-hashtag-distribution. |
 | `twitter\peaks` | Detected peak dates for hashtag time series. |
 
+To view the preprocessed tweets for lda with their defined topics, please visit Zenodo: https://doi.org/10.5281/zenodo.6040081
+
 #### Notebook description
 | filename                    | description                                                                                                                                                         |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
